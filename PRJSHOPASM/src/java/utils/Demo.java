@@ -8,29 +8,18 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
-import java.util.Random;
 
 /**
  *
  * @author DELL
  */
-public class Helper {
-
-    public static String genRandSixDigit() {
-        Random rnd = new Random();
-        int number = rnd.nextInt(999999);
-
-        // this will convert any number sequence into 6 character.
-        return String.format("%06d", number);
-    }
-
-    public static Properties getPropertiesByFileName(String fileName) {
+public class Demo {
+    public static void main(String[] args) {
         Properties properties = new Properties();
-        try ( InputStream inputStream = new FileInputStream(fileName)) {
+        try (InputStream inputStream = new FileInputStream("const.properties")) {
             properties.load(inputStream);
         } catch (IOException e) {
             System.out.println(e);
         }
-        return properties;
     }
 }

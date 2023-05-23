@@ -93,7 +93,9 @@ public class PasswordCreationController extends HttpServlet {
                 .accountDetailName(accountDetailName)
                 .build();
         accountDetailDAO.add(accountDetail);
-
+            
+        session.removeAttribute("email");
+        session.removeAttribute("isOtpConfirmSuccess");
         request.setAttribute("msg", "Register successful");
         request.getRequestDispatcher("sign-in.jsp").forward(request, response);
     }

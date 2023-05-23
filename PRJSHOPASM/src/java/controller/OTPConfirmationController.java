@@ -79,6 +79,7 @@ public class OTPConfirmationController extends HttpServlet {
         
         if (otp.equals(systemOTP)) {
             session.removeAttribute("otp");
+            session.setAttribute("isOtpConfirmSuccess", "true");
             response.sendRedirect("password-creation");
         } else {
             request.setAttribute("msg", "OTP wrong, enter again");

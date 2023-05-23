@@ -3,6 +3,8 @@ package connection;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.Properties;
+import utils.Helper;
 
 /**
  *
@@ -12,23 +14,20 @@ public class SQLServerConnection {
 
     public static final String HOSTNAME = "localhost";
     public static final String PORT = "1433";
-    public static final String DBNAME = "PRJShop";
-    public static final String USERNAME = "sa";
-    public static final String PASSWORD = "sa";
 
     /**
      * Get connection to MSSQL Server
      * @return Connection
      */
     public static Connection getConnection() {
-        
+        Properties properties = Helper.getPropertiesByFileName("const.properties");
         // Create a variable for the connection string.
         String connectionUrl = "jdbc:sqlserver://"+HOSTNAME+":"+PORT+";"
-                             + "databaseName="+DBNAME + ";encrypt=true;trustServerCertificate=true"; 
+                             + "databaseName="+properties.getProperty("databaseName") + ";encrypt=true;trustServerCertificate=true"; 
 
         try {
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            return DriverManager.getConnection(connectionUrl, USERNAME, PASSWORD);
+            return DriverManager.getConnection(connectionUrl, properties.getProperty("databaseUsername"), properties.getProperty("databasePassword"));
         }
         // Handle any errors that may have occurred.
         catch (ClassNotFoundException | SQLException e) {
