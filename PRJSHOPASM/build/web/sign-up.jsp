@@ -103,6 +103,9 @@
                     <div class="input-group input-group-outline mb-3">
                         <input name="email" type="email" class="form-control" placeholder="Email" required="">
                     </div>
+                      <div style="color: red">
+                          ${requestScope.msg}
+                      </div>
                     <div class="text-center">
                       <button type="submit" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">GET OTP</button>
                     </div>

@@ -20,7 +20,7 @@ public class SQLServerConnection {
      * @return Connection
      */
     public static Connection getConnection() {
-        Properties properties = Helper.getPropertiesByFileName("const.properties");
+        Properties properties = Helper.getPropertiesByFileName("const/const.properties");
         // Create a variable for the connection string.
         String connectionUrl = "jdbc:sqlserver://"+HOSTNAME+":"+PORT+";"
                              + "databaseName="+properties.getProperty("databaseName") + ";encrypt=true;trustServerCertificate=true"; 

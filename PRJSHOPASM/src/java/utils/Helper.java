@@ -26,7 +26,7 @@ public class Helper {
 
     public static Properties getPropertiesByFileName(String fileName) {
         Properties properties = new Properties();
-        try ( InputStream inputStream = new FileInputStream(fileName)) {
+        try ( InputStream inputStream = Helper.class.getClassLoader().getResourceAsStream(fileName)) {
             properties.load(inputStream);
         } catch (IOException e) {
             System.out.println(e);

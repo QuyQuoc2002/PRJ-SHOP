@@ -6,6 +6,7 @@ package dao;
 
 import connection.SQLServerConnection;
 import entity.Account;
+import entity.Role;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,7 +38,25 @@ public class AccountDAO {
         return 0;
     }
     
+    public Account getOneByEmail (String email) {
+
+        String sql = "Select * FROM Account WHERE accountEmail = ?";
+
+        try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
+            ps.setObject(1, email);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Account a = Account.builder().accountEmail(rs.getString("accountEmail")).build();
+                return a;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
+    }
+    
     public static void main(String[] args) {
-        System.out.println(new AccountDAO().register(Account.builder().accountEmail("dsa").accountPassword("sadad").build()));
+        System.out.println(new AccountDAO().getOneByEmail("quyquoc2002@gmail.com"));
     }
 }

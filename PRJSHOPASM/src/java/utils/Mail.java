@@ -28,8 +28,10 @@ public class Mail {
 
     public static void send(String toEmail, String subject, String body) {
         try {
-        final String fromEmail = "quocpqhe163061@fpt.edu.vn";
-        final String password = "Shironeko02";
+            
+        Properties properties = Helper.getPropertiesByFileName("const/const.properties");
+        final String fromEmail = properties.getProperty("admin.email");
+        final String password = properties.getProperty("admin.password");
 
         Properties props = new Properties();
         props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host

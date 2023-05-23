@@ -4,6 +4,7 @@
  */
 package controller;
 
+import dao.AccountDAO;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -75,14 +76,20 @@ public class SignUpController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
+        AccountDAO accountDAO = new AccountDAO();
         
         String email = request.getParameter("email");
-        session.setAttribute("email", email);
-        String otp = Helper.genRandSixDigit();
-        session.setAttribute("systemOtp", otp);
-        
-        Mail.send(email, "PRJ Shop send you OTP code to sign up", otp);
-        response.sendRedirect("otp-confirmation");
+        if (accountDAO.getOneByEmail(email) != null) {
+            request.setAttribute("msg", "Email already exist! Input again");
+            request.getRequestDispatcher("sign-up.jsp").forward(request, response);
+        } else {
+            session.setAttribute("email", email);
+            String otp = Helper.genRandSixDigit();
+            session.setAttribute("systemOtp", otp);
+
+            Mail.send(email, "PRJ Shop send you OTP code to sign up", otp);
+            response.sendRedirect("otp-confirmation");
+        }
     }
 
     /**
