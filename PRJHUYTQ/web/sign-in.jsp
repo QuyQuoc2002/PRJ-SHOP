@@ -21,7 +21,7 @@
         <link rel="apple-touch-icon" sizes="76x76" href="assets/img/apple-icon.png">
         <link rel="icon" type="image/png" href="assets/img/favicon.png">
         <title>
-            Material Dashboard 2 by Creative Tim
+            PRJ Shop
         </title>
         <!--     Fonts and icons     -->
         <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900|Roboto+Slab:400,700" />
@@ -39,7 +39,7 @@
         <script defer data-site="YOUR_DOMAIN_HERE" src="https://api.nepcha.com/js/nepcha-analytics.js"></script>
     </head>
 
-    <body class="">
+    <body class="bg-gray-200">
         <div class="container position-sticky z-index-sticky top-0">
             <div class="row">
                 <div class="col-12">
@@ -56,19 +56,19 @@
                             <div class="collapse navbar-collapse" id="navigation">
                                 <ul class="navbar-nav mx-auto">
                                     <li class="nav-item">
-                                        <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="dashboard.html">
+                                        <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="dashboard">
                                             <i class="fa fa-chart-pie opacity-6 text-dark me-1"></i>
                                             PRJ SHOP
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link me-2" href="sign-up.html">
+                                        <a class="nav-link me-2" href="sign-up">
                                             <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
                                             Sign Up
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a class="nav-link me-2" href="sign-in.html">
+                                        <a class="nav-link me-2" href="sign-in">
                                             <i class="fas fa-key opacity-6 text-dark me-1"></i>
                                             Sign In
                                         </a>
@@ -82,51 +82,46 @@
             </div>
         </div>
         <main class="main-content  mt-0">
-            <section>
-                <div class="page-header min-vh-100">
-                    <div class="container">
-                        <div class="row">
-                            <div class="col-6 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 start-0 text-center justify-content-center flex-column">
-                                <div class="position-relative bg-gradient-primary h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center" style="background-image: url('assets/img/illustrations/illustration-signup.jpg'); background-size: cover;">
+            <div class="page-header align-items-start min-vh-100" style="background-image: url('https://images.unsplash.com/photo-1497294815431-9365093b7331?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1950&q=80');">
+                <span class="mask bg-gradient-dark opacity-6"></span>
+                <div class="container my-auto">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-8 col-12 mx-auto">
+                            <div class="card z-index-0 fadeIn3 fadeInBottom">
+                                <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                                    <div class="bg-gradient-primary shadow-primary border-radius-lg py-3 pe-1">
+                                        <h4 class="text-white font-weight-bolder text-center mt-2 mb-0">Sign in</h4>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="col-xl-4 col-lg-5 col-md-7 d-flex flex-column ms-auto me-auto ms-lg-auto me-lg-5">
-                                <div class="card card-plain">
-                                    <div class="card-header">
-                                        <h4 class="font-weight-bolder">Sign Up</h4>
-                                        <p class="mb-0">Enter Nickname and password to register</p>
-                                    </div>
-                                    <div class="card-body">
-                                        <form action="password-creation" method="post" role="form">
-                                            <div class="input-group input-group-outline mb-3">
-                                                <input name="accountDetailName" type="text" class="form-control" placeholder="Name">
-                                            </div>
-                                            <div class="input-group input-group-outline mb-3">
-                                                <input name="accountPassword" type="password" class="form-control" placeholder="Password">
-                                            </div>
-                                            <div class="form-check form-check-info text-start ps-0">
-                                                <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
-                                                <label class="form-check-label" for="flexCheckDefault">
-                                                    I agree the <a href="javascript:;" class="text-dark font-weight-bolder">Terms and Conditions</a>
-                                                </label>
-                                            </div>
-                                            <div class="text-center">
-                                                <button type="submit" class="btn btn-lg bg-gradient-primary btn-lg w-100 mt-4 mb-0">Sign up</button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div class="card-footer text-center pt-0 px-lg-2 px-1">
-                                        <p class="mb-2 text-sm mx-auto">
-                                            Already have an account?
-                                            <a href="sign-in.html" class="text-primary text-gradient font-weight-bold">Sign in</a>
+                                <div style="color: greenyellow">
+                                    ${sessionScope.msg}
+                                </div>
+                                <div class="card-body">
+                                    <form role="form" class="text-start">
+                                        <div class="input-group input-group-outline my-3">
+                                            <input type="email" class="form-control" placeholder="Email">
+                                        </div>
+                                        <div class="input-group input-group-outline mb-3">
+                                            <input type="password" class="form-control" placeholder="password">
+                                        </div>
+                                        <div class="form-check form-switch d-flex align-items-center mb-3">
+                                            <input class="form-check-input" type="checkbox" id="rememberMe" checked>
+                                            <label class="form-check-label mb-0 ms-3" for="rememberMe">Remember me</label>
+                                        </div>
+                                        <div class="text-center">
+                                            <button type="button" class="btn bg-gradient-primary w-100 my-4 mb-2">Sign in</button>
+                                        </div>
+                                        <p class="mt-4 text-sm text-center">
+                                            Don't have an account?
+                                            <a href="sign-up" class="text-primary text-gradient font-weight-bold">Sign up</a>
                                         </p>
-                                    </div>
+                                    </form>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </section>
+            </div>
         </main>
         <!--   Core JS Files   -->
         <script src="assets/js/core/popper.min.js"></script>
@@ -146,6 +141,7 @@
         <script async defer src="https://buttons.github.io/buttons.js"></script>
         <!-- Control Center for Material Dashboard: parallax effects, scripts for the example pages etc -->
         <script src="assets/js/material-dashboard.min.js?v=3.0.5"></script>
+        <% request.getSession().removeAttribute("msg"); %>
     </body>
 
 </html>

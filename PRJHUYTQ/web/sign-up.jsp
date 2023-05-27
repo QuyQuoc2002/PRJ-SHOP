@@ -56,19 +56,19 @@
             <div class="collapse navbar-collapse" id="navigation">
               <ul class="navbar-nav mx-auto">
                 <li class="nav-item">
-                  <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="dashboard.html">
+                  <a class="nav-link d-flex align-items-center me-2 active" aria-current="page" href="dashboard">
                     <i class="fa fa-chart-pie opacity-6 text-dark me-1"></i>
                     PRJ SHOP
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link me-2" href="sign-up.html">
+                  <a class="nav-link me-2" href="sign-up">
                     <i class="fas fa-user-circle opacity-6 text-dark me-1"></i>
                     Sign Up
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link me-2" href="sign-in.html">
+                  <a class="nav-link me-2" href="sign-in">
                     <i class="fas fa-key opacity-6 text-dark me-1"></i>
                     Sign In
                   </a>
@@ -109,7 +109,7 @@
                 <div class="card-footer text-center pt-0 px-lg-2 px-1">
                   <p class="mb-2 text-sm mx-auto">
                     Already have an account?
-                    <a href="sign-in.html" class="text-primary text-gradient font-weight-bold">Sign in</a>
+                    <a href="sign-in" class="text-primary text-gradient font-weight-bold">Sign in</a>
                   </p>
                 </div>
               </div>

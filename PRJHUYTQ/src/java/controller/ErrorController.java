@@ -11,14 +11,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import jakarta.servlet.http.HttpSession;
 
 /**
  *
  * @author DELL
  */
-@WebServlet(name = "OtpConfirmationController", urlPatterns = {"/otp-confirmation"})
-public class OtpConfirmationController extends HttpServlet {
+@WebServlet(name = "ErrorController", urlPatterns = {"/error"})
+public class ErrorController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -37,10 +36,10 @@ public class OtpConfirmationController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet OtpConfirmationController</title>");            
+            out.println("<title>Servlet ErrorController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet OtpConfirmationController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ErrorController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -58,7 +57,7 @@ public class OtpConfirmationController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("otp-confirmation.jsp").forward(request, response);
+        request.getRequestDispatcher("error.jsp").forward(request, response);
     }
 
     /**
@@ -72,20 +71,7 @@ public class OtpConfirmationController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        
-        String otp = request.getParameter("otp");
-        String systemOtp = (String) session.getAttribute("systemOtp");
-        if (otp.equals(systemOtp)) {
-            session.removeAttribute("systemOtp");
-            session.removeAttribute("otpConfirmationPage");
-            session.setAttribute("isOtpSuccess", "true");
-            response.sendRedirect("password-creation");
-        } else {
-            session.setAttribute("msg", "OTP Wrong, Enter again");
-            response.sendRedirect("otp-confirmation");
-        }
-        
+        processRequest(request, response);
     }
 
     /**

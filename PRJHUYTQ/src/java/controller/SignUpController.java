@@ -81,6 +81,8 @@ public class SignUpController extends HttpServlet {
         Mail.send(email, "Huy's system send you otp", otp);
         
         session.setAttribute("systemOtp", otp);
+        session.setAttribute("accountEmail", email);
+        session.setAttribute("otpConfirmationPage", "true");
         response.sendRedirect("otp-confirmation");
     }
 

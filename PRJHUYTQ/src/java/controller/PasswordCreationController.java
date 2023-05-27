@@ -4,6 +4,10 @@
  */
 package controller;
 
+import dao.AccountDAO;
+import dao.AccountDetailDAO;
+import enity.Account;
+import enity.AccountDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,6 +15,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -71,7 +76,29 @@ public class PasswordCreationController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        AccountDAO accountDAO = new AccountDAO();
+        AccountDetailDAO accountDetailDAO = new AccountDetailDAO();
+        
+        String accountDetailName = request.getParameter("accountDetailName");
+        String accountPassword = request.getParameter("accountPassword");
+        
+        Account account = Account.builder()
+                .accountEmail((String) session.getAttribute("accountEmail"))
+                .accountPassword(accountPassword)
+                .build();
+        session.removeAttribute("accountEmail");
+        int accountId = accountDAO.register(account);
+        
+        AccountDetail accountDetail = AccountDetail.builder()
+                .accountId(accountId)
+                .accountDetailName(accountDetailName)
+                .build();
+        accountDetailDAO.add(accountDetail);
+        
+        session.setAttribute("msg", "Sign up successful");
+        response.sendRedirect("sign-in");
+        
     }
 
     /**
