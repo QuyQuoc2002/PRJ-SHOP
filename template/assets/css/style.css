@@ -21,7 +21,8 @@
   --gray-dark: #343a40;
   --primary: #FFD333;
   --secondary: #F5F5F5;
-  --success: #28a745;
+  /* --success: #28a745; */
+  --success: #00c6ff;
   --info: #17a2b8;
   --warning: #ffc107;
   --danger: #dc3545;
