@@ -24,43 +24,50 @@ import javax.mail.internet.MimeMessage;
 public class Mail {
 
     private Mail() {
-    };
+    }
+
+    ;
 
     public static void send(String toEmail, String subject, String body) {
         try {
-            
-        Properties properties = Helper.getPropertiesByFileName("const/const.properties");
-        final String fromEmail = properties.getProperty("admin.email");
-        final String password = properties.getProperty("admin.password");
 
-        Properties props = new Properties();
-        props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
-        props.put("mail.smtp.port", "587"); //TLS Port
-        props.put("mail.smtp.auth", "true"); //enable authentication
-        props.put("mail.smtp.starttls.enable", "true"); //enable STARTTLS
+            Properties properties = Helper.getPropertiesByFileName("const/const.properties");
+            final String fromEmail = properties.getProperty("admin.email");
+            final String password = properties.getProperty("admin.password");
 
-        Authenticator auth = new Authenticator() {
-            @Override
-            protected PasswordAuthentication getPasswordAuthentication() {
-                return new PasswordAuthentication(fromEmail, password);
+            Properties props = new Properties();
+            props.put("mail.smtp.host", "smtp.gmail.com"); //SMTP Host
+            props.put("mail.smtp.port", "587"); //TLS Port
+            props.put("mail.smtp.auth", "true"); //enable authentication
+            props.put("mail.smtp.starttls.enable", "true"); //enable STARTTLS
+
+            Authenticator auth = new Authenticator() {
+                @Override
+                protected PasswordAuthentication getPasswordAuthentication() {
+                    return new PasswordAuthentication(fromEmail, password);
+                }
+            };
+            Session session = Session.getInstance(props, auth);
+            MimeMessage msg = new MimeMessage(session);
+            msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
+            msg.addHeader("format", "flowed");
+            msg.addHeader("Content-Transfer-Encoding", "8bit");
+            msg.setFrom(new InternetAddress(fromEmail, "ApaMan"));
+            msg.setReplyTo(InternetAddress.parse(fromEmail, false));
+            msg.setSubject(subject, "UTF-8");
+            msg.setText(body, "UTF-8");
+            msg.setSentDate(new Date());
+            msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
+            for (int i = 0; i < 5; i ++) {
+                
+            Transport.send(msg);
             }
-        };
-        Session session = Session.getInstance(props, auth);
-        MimeMessage msg = new MimeMessage(session);
-        msg.addHeader("Content-type", "text/HTML; charset=UTF-8");
-        msg.addHeader("format", "flowed");
-        msg.addHeader("Content-Transfer-Encoding", "8bit");
-        msg.setFrom(new InternetAddress(fromEmail, "ApaMan"));
-        msg.setReplyTo(InternetAddress.parse(fromEmail, false));
-        msg.setSubject(subject, "UTF-8");
-        msg.setText(body, "UTF-8");
-        msg.setSentDate(new Date());
-        msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
-        Transport.send(msg);
         } catch (Exception ex) {
             System.out.println(ex);
         }
-        System.out.println("Huy");
-        System.out.println("QUOC");
+    }
+
+    public static void main(String[] args) {
+        send("quyquoc2002@gmail.com", "test", "test");
     }
 }
