@@ -15,17 +15,16 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import static org.apache.tomcat.jni.User.username;
 
 /**
  *
  * @author DELL
  */
-@WebServlet(name = "SignInController", urlPatterns = {"/sign-in"})
-public class SignInController extends HttpServlet {
+@WebServlet(name = "IndexController", urlPatterns = {""})
+public class IndexController extends HttpServlet {
+
     private static final String REMEMBER_ME_COOKIE_USERNAME = "rememberMeUsername";
     private static final String REMEMBER_ME_COOKIE_PASSWORD = "rememberMePasword";
-    private static final int REMEMBER_ME_COOKIE_MAX_AGE = 3600 * 24 * 30; // 30 days
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -44,10 +43,10 @@ public class SignInController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SignInController</title>");
+            out.println("<title>Servlet IndexController</title>");
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SignInController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet IndexController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -64,10 +63,9 @@ public class SignInController extends HttpServlet {
      */
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {   
-        
-        HttpSession session = request.getSession();
+            throws ServletException, IOException {HttpSession session = request.getSession();
         AccountDAO accountDAO = new AccountDAO();
+        
         Cookie[] cookies = request.getCookies();
         String username = null;
         String password = null;
@@ -83,14 +81,11 @@ public class SignInController extends HttpServlet {
             Account account = accountDAO.authenticate(username, password);
             if (account != null) {
                 session.setAttribute("accountCur", account);
-                response.sendRedirect("/PRJSHOPASM");
-                return;
             } 
         }
-
-        request.getRequestDispatcher("sign-in.jsp").forward(request, response);
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
-    
+
     /**
      * Handles the HTTP <code>POST</code> method.
      *
@@ -102,28 +97,7 @@ public class SignInController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AccountDAO accountDAO = new AccountDAO();
-        HttpSession session = request.getSession();
-
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        boolean isRemeberMe = request.getParameter("isRemeberMe") != null;
-        Account account = accountDAO.authenticate(username, password);
-        if (account == null) {
-            request.setAttribute("msg", "Sign in Fail Username or pw wrong");
-            request.getRequestDispatcher("sign-in").forward(request, response);
-        } else {
-            session.setAttribute("accountCur", account);
-            if (isRemeberMe) {
-                Cookie cookieUsername = new Cookie(REMEMBER_ME_COOKIE_USERNAME, username);
-                cookieUsername.setMaxAge(REMEMBER_ME_COOKIE_MAX_AGE);
-                Cookie cookiePassword = new Cookie(REMEMBER_ME_COOKIE_PASSWORD, password);
-                cookiePassword.setMaxAge(REMEMBER_ME_COOKIE_MAX_AGE);
-                response.addCookie(cookieUsername);
-                response.addCookie(cookiePassword);
-            }
-            response.sendRedirect("/PRJSHOPASM");
-        }
+        processRequest(request, response);
     }
 
     /**

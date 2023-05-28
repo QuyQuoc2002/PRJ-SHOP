@@ -4,6 +4,7 @@
  */
 package core;
 
+import entity.Account;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;
@@ -23,8 +24,8 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author DELL
  */
-@WebFilter(filterName = "PasswordCreationFilter", urlPatterns = {"/password-creation"})
-public class PasswordCreationFilter implements Filter {
+@WebFilter(filterName = "SignInFilter", urlPatterns = {"/sign-in", "/sign-up"})
+public class SignInFilter implements Filter {
     
     private static final boolean debug = true;
 
@@ -33,13 +34,13 @@ public class PasswordCreationFilter implements Filter {
     // configured. 
     private FilterConfig filterConfig = null;
     
-    public PasswordCreationFilter() {
+    public SignInFilter() {
     }    
     
     private void doBeforeProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("PasswordCreationFilter:DoBeforeProcessing");
+            log("SignInFilter:DoBeforeProcessing");
         }
 
         // Write code here to process the request and/or response before
@@ -67,7 +68,7 @@ public class PasswordCreationFilter implements Filter {
     private void doAfterProcessing(ServletRequest request, ServletResponse response)
             throws IOException, ServletException {
         if (debug) {
-            log("PasswordCreationFilter:DoAfterProcessing");
+            log("SignInFilter:DoAfterProcessing");
         }
 
         // Write code here to process the request and/or response after
@@ -101,17 +102,17 @@ public class PasswordCreationFilter implements Filter {
     public void doFilter(ServletRequest request, ServletResponse response,
             FilterChain chain)
             throws IOException, ServletException {
+        
         HttpServletRequest req = (HttpServletRequest) request;
         HttpServletResponse resp = (HttpServletResponse) response;
 
         HttpSession session = req.getSession();
-        String isOtpConfirmSuccess =  (String) session.getAttribute("isOtpConfirmSuccess");
-        if (isOtpConfirmSuccess == null) {
-            resp.sendRedirect("error.jsp");
+        Account isLoginsuccess =  (Account) session.getAttribute("accountCur");
+        if (isLoginsuccess != null) {
+            resp.sendRedirect("/PRJSHOPASM");
         } else {
             chain.doFilter(request, response);
         }
-        
     }
 
     /**
@@ -143,7 +144,7 @@ public class PasswordCreationFilter implements Filter {
         this.filterConfig = filterConfig;
         if (filterConfig != null) {
             if (debug) {                
-                log("PasswordCreationFilter:Initializing filter");
+                log("SignInFilter:Initializing filter");
             }
         }
     }
@@ -154,9 +155,9 @@ public class PasswordCreationFilter implements Filter {
     @Override
     public String toString() {
         if (filterConfig == null) {
-            return ("PasswordCreationFilter()");
+            return ("SignInFilter()");
         }
-        StringBuffer sb = new StringBuffer("PasswordCreationFilter(");
+        StringBuffer sb = new StringBuffer("SignInFilter(");
         sb.append(filterConfig);
         sb.append(")");
         return (sb.toString());
