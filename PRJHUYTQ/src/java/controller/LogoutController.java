@@ -4,8 +4,6 @@
  */
 package controller;
 
-import dao.AccountDAO;
-import enity.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,15 +12,13 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import utils.Helper;
-import utils.Mail;
 
 /**
  *
  * @author DELL
  */
-@WebServlet(name = "SignUpController", urlPatterns = {"/sign-up"})
-public class SignUpController extends HttpServlet {
+@WebServlet(name = "LogoutController", urlPatterns = {"/log-out"})
+public class LogoutController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -41,10 +37,10 @@ public class SignUpController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SignUpController</title>");            
+            out.println("<title>Servlet LogoutController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SignUpController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet LogoutController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -62,7 +58,9 @@ public class SignUpController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("sign-up.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        session.removeAttribute("accountCur");
+        response.sendRedirect("sign-in");
     }
 
     /**
@@ -76,23 +74,7 @@ public class SignUpController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        AccountDAO accountDAO = new AccountDAO();
-        
-        String email = request.getParameter("email");
-        Account account = accountDAO.getOneByEmail(email);
-        if (account != null) {
-            request.setAttribute("msg", "Email is exist");
-            request.getRequestDispatcher("sign-up.jsp").forward(request, response);
-        } else {
-            String otp = Helper.getRandomNumberString();
-            Mail.send(email, "Huy's system send you otp", otp);
-
-            session.setAttribute("systemOtp", otp);
-            session.setAttribute("accountEmail", email);
-            session.setAttribute("otpConfirmationPage", "true");
-            response.sendRedirect("otp-confirmation");
-        }
+        processRequest(request, response);
     }
 
     /**

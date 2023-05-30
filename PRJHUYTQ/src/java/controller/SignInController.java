@@ -4,6 +4,8 @@
  */
 package controller;
 
+import dao.AccountDAO;
+import enity.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,6 +13,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 
 /**
  *
@@ -71,7 +74,21 @@ public class SignInController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        AccountDAO accountDAO = new AccountDAO();
+        HttpSession session = request.getSession();
+        
+        String username = request.getParameter("username");
+        String password = request.getParameter("password");
+        Account account = accountDAO.authenticate(username, password);
+        
+        if (account != null) {
+            session.setAttribute("accountCur", account);
+            response.sendRedirect("/PRJHUYTQ");
+        } else {
+            session.setAttribute("msg", "login Fail.");
+            response.sendRedirect("sign-in");
+        }
+        
     }
 
     /**
