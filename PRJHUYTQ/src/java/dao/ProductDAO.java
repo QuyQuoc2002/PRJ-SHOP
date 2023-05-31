@@ -36,7 +36,7 @@ public class ProductDAO {
 
     public List<Product> getAllPerPage(int pageCur, int numberProductPerPage) {
 
-        String sql = "SELECT * FROM Product ORDER BY productId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY;";//
+        String sql = "SELECT * FROM Product ORDER BY productId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY; ";//
 
         try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
             ps.setObject(1, (pageCur - 1) * numberProductPerPage);
