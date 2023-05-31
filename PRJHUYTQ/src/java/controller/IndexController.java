@@ -4,6 +4,10 @@
  */
 package controller;
 
+import dao.CategoryDAO;
+import dao.ProductDAO;
+import enity.Category;
+import enity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,6 +15,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  *
@@ -36,7 +41,7 @@ public class IndexController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet IndexController</title>");            
+            out.println("<title>Servlet IndexController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet IndexController at " + request.getContextPath() + "</h1>");
@@ -57,7 +62,18 @@ public class IndexController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-       request.getRequestDispatcher("index.jsp").forward(request, response);
+        CategoryDAO categoryDAO = new CategoryDAO();
+        ProductDAO productDAO = new ProductDAO();
+        
+        List<Category> lstCategory = categoryDAO.getAll();
+        List<Product> lstProductRecent = productDAO.getAllByRecent();
+        List<Product> lstProductFeatured = productDAO.getAllByFeatured();
+        
+        request.setAttribute("lstCategory", lstCategory);
+        request.setAttribute("lstProductRecent", lstProductRecent);
+        request.setAttribute("lstProductFeatured", lstProductFeatured);
+        
+        request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 
     /**
@@ -71,7 +87,6 @@ public class IndexController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
     }
 
     /**

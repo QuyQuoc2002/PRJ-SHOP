@@ -5,7 +5,11 @@
 package controller;
 
 import dao.AccountDAO;
+import dao.CategoryDAO;
+import dao.ProductDAO;
 import entity.Account;
+import entity.Category;
+import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -15,6 +19,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  *
@@ -65,6 +70,8 @@ public class IndexController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {HttpSession session = request.getSession();
         AccountDAO accountDAO = new AccountDAO();
+        CategoryDAO categoryDAO = new CategoryDAO();
+        ProductDAO productDAO = new ProductDAO();
         
         Cookie[] cookies = request.getCookies();
         String username = null;
@@ -83,6 +90,14 @@ public class IndexController extends HttpServlet {
                 session.setAttribute("accountCur", account);
             } 
         }
+        
+        List<Category> lstCategory = categoryDAO.getAll();
+        List<Product> lstProductFeatured = productDAO.getAllByFeatured();
+        List<Product> lstProductRecent = productDAO.getAllByRecent();
+        
+        request.setAttribute("lstCategory", lstCategory);
+        request.setAttribute("lstProductFeatured", lstProductFeatured);
+        request.setAttribute("lstProductRecent", lstProductRecent);
         request.getRequestDispatcher("index.jsp").forward(request, response);
     }
 

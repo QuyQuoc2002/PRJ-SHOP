@@ -4,6 +4,10 @@
  */
 package controller;
 
+import dao.CategoryDAO;
+import dao.ProductDAO;
+import enity.Category;
+import enity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -11,6 +15,10 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Properties;
+import utils.Helper;
 
 /**
  *
@@ -36,7 +44,7 @@ public class ShopController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ShopController</title>");            
+            out.println("<title>Servlet ShopController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ShopController at " + request.getContextPath() + "</h1>");
@@ -57,6 +65,26 @@ public class ShopController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        Properties properties = Helper.getPropertiesByFileName("const/const.properties");
+        CategoryDAO categoryDAO = new CategoryDAO();
+        ProductDAO productDAO = new ProductDAO();
+        List<Integer> lstPage = new ArrayList<>();
+        
+        int pageCur = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
+        int numberProductPerPage = Integer.parseInt(properties.getProperty("numberProductPerPage"));
+        int totalPage = productDAO.getSize() % numberProductPerPage == 0 ? productDAO.getSize() / numberProductPerPage : productDAO.getSize() / numberProductPerPage + 1;
+        for (int i = 1; i <= totalPage; i++) {
+            lstPage.add(i);
+        }
+        
+        List<Category> lstCategory = categoryDAO.getAll();
+        List<Product> lstProduct = productDAO.getAllPerPage(pageCur, numberProductPerPage);
+        
+        request.setAttribute("lstCategory", lstCategory);
+        request.setAttribute("lstProduct", lstProduct);
+        request.setAttribute("lstPage", lstPage);
+        request.setAttribute("pageCur", pageCur);
+        request.setAttribute("totalPage", totalPage);
         request.getRequestDispatcher("shop.jsp").forward(request, response);
     }
 
@@ -72,6 +100,7 @@ public class ShopController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         processRequest(request, response);
+
     }
 
     /**
@@ -83,5 +112,4 @@ public class ShopController extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
-
 }
