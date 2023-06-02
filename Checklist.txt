@@ -1,0 +1,15 @@
+Sau khi đã có HTML và SQL:
+
+1. đưa toàn bộ file HTML, assets vào folder web của dự án và thay đuôi .html thành .jsp
+2. Trong source packages tạo những packages sau : 
+	+) connection: Connect database
+	+) const: chứa file Properties và interface IConst.java chứa hằng số
+	+) controller
+	+) core: Dùng để kiểm tra điều kiện trước khi đi vào đường dẫn
+	+) dao: Dùng để lấy data từ database
+	+) entity
+	+) utils: code các method chức năng (trước các method luôn để 'public static')
+3. mỗi file jsp hãy tạo Controller trong package controller có tên và đường dẫn ứng với tên file jsp
+4. trong Controller mục 3. vào phần doGet code 1 dòng: request.getRequestDispatcher("tên file jsp.jsp").forward(request, response);
+5. trong package entity (khuyến khích sử dụng lombok) tạo các class Entity tương ứng với các table trong database
+6. trong các class DAO package dao sau khi code xong 1 method hãy sử dụng psvm để kiểm tra xem method đó có chạy được hay ko, sau này fix bug đơn giản hơn
