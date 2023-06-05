@@ -71,14 +71,22 @@ public class ShopController extends HttpServlet {
         List<Integer> lstPage = new ArrayList<>();
         
         int pageCur = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
+        int categoryId = request.getParameter("categoryId") == null ? 0 : Integer.parseInt(request.getParameter("categoryId"));//////
         int numberProductPerPage = Integer.parseInt(properties.getProperty("numberProductPerPage"));
-        int totalPage = productDAO.getSize() % numberProductPerPage == 0 ? productDAO.getSize() / numberProductPerPage : productDAO.getSize() / numberProductPerPage + 1;
+        int size = categoryId == 0 ? productDAO.getSize() : productDAO.getSizeByCategoryId(categoryId);///
+        System.out.println(size);
+        int totalPage = size % numberProductPerPage == 0 
+                ? size / numberProductPerPage 
+                : size / numberProductPerPage + 1;
         for (int i = 1; i <= totalPage; i++) {
             lstPage.add(i);
         }
         
         List<Category> lstCategory = categoryDAO.getAll();
-        List<Product> lstProduct = productDAO.getAllPerPage(pageCur, numberProductPerPage);
+        //List<Product> lstProduct = productDAO.getAllPerPage(pageCur, numberProductPerPage);
+        List<Product> lstProduct = categoryId == 0 
+                ? productDAO.getAllPerPage(pageCur, numberProductPerPage) 
+                : productDAO.getAllPerPageByCategoryId(pageCur, numberProductPerPage, categoryId);
         
         request.setAttribute("lstCategory", lstCategory);
         request.setAttribute("lstProduct", lstProduct);

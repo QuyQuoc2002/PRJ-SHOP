@@ -33,6 +33,22 @@ public class ProductDAO {
         }
         return 0;
     }
+    
+    public int getSizeByCategoryId(int categoryId) {
+
+        String sql = "SELECT COUNT(productId) FROM Product WHERE categoryId = ? ";//
+
+        try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
+            ps.setObject(1, categoryId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return 0;
+    }
 
     public List<Product> getAllPerPage(int pageCur, int numberProductPerPage) {
 
@@ -41,6 +57,38 @@ public class ProductDAO {
         try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
             ps.setObject(1, (pageCur - 1) * numberProductPerPage);
             ps.setObject(2, numberProductPerPage);
+            ResultSet rs = ps.executeQuery();
+
+            List<Product> list = new ArrayList<>();//
+            while (rs.next()) {
+                Product p = Product.builder()
+                        .productId(rs.getInt("productId"))
+                        .productName(rs.getString("productName"))
+                        .productImg(rs.getString("productImg"))
+                        .productPrice(rs.getInt("productPrice"))
+                        .productDescription(rs.getString("productDescription"))
+                        .categoryId(rs.getInt("categoryId"))
+                        .productIsFeatured(rs.getBoolean("productIsFeatured"))
+                        .productIsRecent(rs.getBoolean("productIsRecent"))
+                        .productDeleted(rs.getBoolean("productDeleted"))
+                        .build();
+                list.add(p);
+            }
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
+    }
+    
+    public List<Product> getAllPerPageByCategoryId(int pageCur, int numberProductPerPage, int categoryId) {
+
+        String sql = "SELECT * FROM Product WHERE categoryId = ? ORDER BY productId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY; ";//
+
+        try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
+            ps.setObject(1, categoryId);
+            ps.setObject(2, (pageCur - 1) * numberProductPerPage);
+            ps.setObject(3, numberProductPerPage);
             ResultSet rs = ps.executeQuery();
 
             List<Product> list = new ArrayList<>();//
@@ -121,5 +169,9 @@ public class ProductDAO {
             e.printStackTrace(System.out);
         }
         return null;
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(new ProductDAO().getSizeByCategoryId(1));
     }
 }

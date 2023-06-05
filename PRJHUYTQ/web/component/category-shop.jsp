@@ -8,7 +8,7 @@
             <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
                 <div class="navbar-nav w-100">
                     <c:forEach items="${requestScope.lstCategory}" var="c">
-                        <a href="" class="nav-item nav-link">${c.categoryName}</a>
+                        <a href="shop?categoryId=${c.categoryId}" class="nav-item nav-link">${c.categoryName}</a>
                     </c:forEach>
                 </div>
             </nav>
@@ -24,7 +24,7 @@
                 </button>
                 <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
                     <div class="navbar-nav mr-auto py-0">
-                        <a href="index" class="nav-item nav-link active">Home</a>
+                        <a href="/PRJHUYTQ" class="nav-item nav-link active">Home</a>
                         <a href="shop" class="nav-item nav-link">Shop</a>
                         <a href="detail" class="nav-item nav-link">Shop Detail</a>
                         <div class="nav-item dropdown">
