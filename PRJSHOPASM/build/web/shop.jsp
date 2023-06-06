@@ -196,11 +196,11 @@
                             <nav>
                                 <ul class="pagination justify-content-center">
                                     <!--<li class="page-item disabled"><a class="page-link" href="#">Previous</span></a></li>-->
-                                    <li class="page-item <c:if test="${pageCur eq 1}"> disabled </c:if>"><a class="page-link" href="shop?page=${requestScope.pageCur - 1}">Previous</span></a></li>
-                                    <c:forEach items="${requestScope.lstPage}" var="p">
-                                        <li class="page-item <c:if test="${p eq requestScope.pageCur}"> active </c:if> "><a class="page-link" href="shop?page=${p}">${p}</a></li>
-                                    </c:forEach>
-                                    <li class="page-item <c:if test="${requestScope.pageCur eq requestScope.totalPage}"> disabled </c:if>"><a class="page-link" href="shop?page=${requestScope.pageCur + 1}">Next</a></li>
+                                    <li class="page-item <c:if test="${pageCur eq 1}"> disabled </c:if>"><a class="page-link" href="${requestScope.href}page=${requestScope.pageCur - 1}">Previous</span></a></li>
+                                        <c:forEach items="${requestScope.lstPage}" var="p">
+                                        <li class="page-item <c:if test="${p eq requestScope.pageCur}"> active </c:if> "><a class="page-link" href="${requestScope.href}page=${p}">${p}</a></li>
+                                        </c:forEach>
+                                    <li class="page-item <c:if test="${requestScope.pageCur eq requestScope.totalPage}"> disabled </c:if>"><a class="page-link" href="${requestScope.href}page=${requestScope.pageCur + 1}">Next</a></li>
                                 </ul>
                             </nav>
                         </div>

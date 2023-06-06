@@ -89,6 +89,44 @@ public class ProductDAO {
         return null;
     }
 
+    public List<Product> getListProductPerPageBySeachValue(int numberProductPerPage, int pageCur, String searchValue) {
+
+        String sql = "  Select * from \n"
+                + "Product p Join Category c ON p.categoryId = c.categoryId \n"
+                + "WHERE p.productName LIKE ? OR c.categoryName LIKE ?"
+                + "	Order BY p.productId\n"
+                + "OFFSET ? ROWS \n"
+                + "FETCH NEXT ? ROWS ONLY";//
+
+        try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
+            ps.setObject(1, "%" + searchValue + "%");
+            ps.setObject(2, "%" + searchValue + "%");
+            ps.setObject(3, pageCur * numberProductPerPage - numberProductPerPage);
+            ps.setObject(4, numberProductPerPage);
+            ResultSet rs = ps.executeQuery();
+
+            List<Product> list = new ArrayList<>();//
+            while (rs.next()) {
+                Product s = Product.builder()
+                        .productId(rs.getInt("productId"))
+                        .productName(rs.getString("productName"))
+                        .productImg(rs.getString("productImg"))
+                        .productPrice(rs.getInt("productPrice"))
+                        .productDescription(rs.getString("productDescription"))
+                        .categoryId(rs.getInt("categoryId"))
+                        .productIsFeatured(rs.getBoolean("productIsFeatured"))
+                        .productIsRecent(rs.getBoolean("productIsRecent"))
+                        .productDeleted(rs.getBoolean("productDeleted"))
+                        .build();
+                list.add(s);
+            }
+            return list;
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
+    }
+
     public int size() {
 
         String sql = "SELECT COUNT(productId) as total\n"
@@ -106,7 +144,7 @@ public class ProductDAO {
         }
         return 0;
     }
-    
+
     public int sizeByCategory(int categoryId) {
 
         String sql = "SELECT COUNT(productId) as total\n"
@@ -114,6 +152,27 @@ public class ProductDAO {
 
         try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
             ps.setObject(1, categoryId);
+            ResultSet rs = ps.executeQuery();
+            int total = 0;
+            while (rs.next()) {
+                total = rs.getInt("total");
+            }
+            return total;
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return 0;
+    }
+
+    public int sizeBySearchValue(String searchValue) {
+
+        String sql = "SELECT COUNT(p.productId) as total from\n"
+                + "Product p Join Category c ON p.categoryId = c.categoryId \n"
+                + "WHERE p.productName LIKE ? OR c.categoryName LIKE ?";
+
+        try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
+            ps.setObject(1, "%" + searchValue + "%");
+            ps.setObject(2, "%" + searchValue + "%");
             ResultSet rs = ps.executeQuery();
             int total = 0;
             while (rs.next()) {
@@ -185,7 +244,7 @@ public class ProductDAO {
     }
 
     public static void main(String[] args) {
-        System.out.println(new ProductDAO().getListProductPerPageByCategoryId(9, 1, 2));
+        System.out.println(new ProductDAO().sizeBySearchValue("wear"));
         System.out.println("");
     }
 }
