@@ -31,6 +31,7 @@ public class CategoryDAO {
                 Category s = Category.builder()
                         .categoryId(rs.getInt("categoryId"))
                         .categoryName(rs.getString("categoryName"))
+                        .categoryIcon(rs.getString("categoryIcon"))
                         .build();
                 list.add(s);
             }
