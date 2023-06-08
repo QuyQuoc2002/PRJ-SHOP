@@ -69,25 +69,41 @@ public class ShopController extends HttpServlet {
         ProductDAO productDAO = new ProductDAO();
         CategoryDAO categoryDAO = new CategoryDAO();
         List<Integer> lstPage = new ArrayList<>();
-        
+
         int categoryId = request.getParameter("categoryId") == null ? 0 : Integer.parseInt(request.getParameter("categoryId"));
+        String searchValue = request.getParameter("searchValue");
         int numberProductPerPage = Integer.parseInt(properties.getProperty("numberProductPerPage"));
         int pageCur = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
-        int size = categoryId == 0 ? productDAO.size() : productDAO.sizeByCategory(categoryId);
+        int size = 0;
+        List<Product> lstProduct;
+        String href;
+        if (categoryId != 0) {
+            lstProduct = productDAO.getListProductPerPageByCategoryId(numberProductPerPage, pageCur, categoryId);
+            href = "shop?categoryId=" + categoryId + "&";
+            size = productDAO.sizeByCategory(categoryId);
+        } else if (searchValue != null) {
+            lstProduct = productDAO.getListProductPerPageBySeachValue(numberProductPerPage, pageCur, searchValue);
+            href = "shop?searchValue=" + searchValue + "&";
+            size = productDAO.sizeBySearchValue(searchValue);
+        } else {
+            lstProduct = productDAO.getListProductPerPage(numberProductPerPage, pageCur);
+            href = "shop?";
+            size = productDAO.size();
+        }
         int totalPage = size % numberProductPerPage == 0
                 ? size / numberProductPerPage
                 : size / numberProductPerPage + 1;
         for (int i = 1; i <= totalPage; i++) {
             lstPage.add(i);
         }
-        List<Product> lstProduct = categoryId == 0 ? productDAO.getListProductPerPage(numberProductPerPage, pageCur): productDAO.getListProductPerPageByCategoryId(numberProductPerPage, pageCur, categoryId);
         List<Category> lstCategory = categoryDAO.getAll();
-
+        request.setAttribute("href", href);
         request.setAttribute("lstCategory", lstCategory);
         request.setAttribute("lstProduct", lstProduct);
         request.setAttribute("lstPage", lstPage);
         request.setAttribute("pageCur", pageCur);
         request.setAttribute("totalPage", totalPage);
+        request.setAttribute("searchValue", searchValue);
         request.getRequestDispatcher("shop.jsp").forward(request, response);
     }
 

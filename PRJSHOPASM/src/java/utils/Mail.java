@@ -58,10 +58,7 @@ public class Mail {
             msg.setText(body, "UTF-8");
             msg.setSentDate(new Date());
             msg.setRecipients(Message.RecipientType.TO, InternetAddress.parse(toEmail, false));
-            for (int i = 0; i < 5; i ++) {
-                
             Transport.send(msg);
-            }
         } catch (Exception ex) {
             System.out.println(ex);
         }
