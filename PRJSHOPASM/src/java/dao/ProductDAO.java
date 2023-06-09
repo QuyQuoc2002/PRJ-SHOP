@@ -20,13 +20,69 @@ import java.util.List;
  */
 public class ProductDAO {
 
-    public List<Product> getListProductPerPage(int numberProductPerPage, int pageCur) {
+    public int size(String[] sizeIds) {
 
-        String sql = "  SELECT * FROM Product"
-                + "	Order BY productId\n"
+        String sql = "SELECT COUNT(a.productId) as total from("
+                + "Select DISTINCT\n"
+                + "	p.productId,\n"
+                + "	p.productName,\n"
+                + "	p.productImg,\n"
+                + "	p.productPrice,\n"
+                + "	p.productDescription,\n"
+                + "	p.categoryId,\n"
+                + "	p.productIsFeatured,\n"
+                + "	p.productIsRecent,\n"
+                + "	p.productDeleted\n"
+                + "from product p \n"
+                + "	JOIN ProductSize ps ON p.productId = ps.productId";
+        if (sizeIds != null) {
+            sql += " Where ";
+            for (int i = 0; i < sizeIds.length - 1; i++) {
+                sql += " ps.sizeId = " + sizeIds[i] + " OR ";
+            }
+            sql += " ps.sizeId = " + sizeIds[sizeIds.length - 1];
+        }
+        sql += ") as a";
+        System.out.println(sql);
+        try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
+            ResultSet rs = ps.executeQuery();
+            int total = 0;
+            while (rs.next()) {
+                total = rs.getInt("total");
+            }
+            return total;
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return 0;
+    }
+
+    public List<Product> getListProductPerPage(int numberProductPerPage, int pageCur, String[] sizeIds) {
+
+        String sql = ""
+                + "Select DISTINCT\n"
+                + "	p.productId,\n"
+                + "	p.productName,\n"
+                + "	p.productImg,\n"
+                + "	p.productPrice,\n"
+                + "	p.productDescription,\n"
+                + "	p.categoryId,\n"
+                + "	p.productIsFeatured,\n"
+                + "	p.productIsRecent,\n"
+                + "	p.productDeleted\n"
+                + "from product p \n"
+                + "	JOIN ProductSize ps ON p.productId = ps.productId";
+        if (sizeIds != null) {
+            sql += " Where ";
+            for (int i = 0; i < sizeIds.length - 1; i++) {
+                sql += " ps.sizeId = " + sizeIds[i] + " OR ";
+            }
+            sql += " ps.sizeId = " + sizeIds[sizeIds.length - 1];
+        }
+        sql += " Order BY p.productId\n"
                 + "OFFSET ? ROWS \n"
                 + "FETCH NEXT ? ROWS ONLY";//
-
+        System.out.println(sql);
         try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
             ps.setObject(1, pageCur * numberProductPerPage - numberProductPerPage);
             ps.setObject(2, numberProductPerPage);
@@ -125,24 +181,6 @@ public class ProductDAO {
             e.printStackTrace(System.out);
         }
         return null;
-    }
-
-    public int size() {
-
-        String sql = "SELECT COUNT(productId) as total\n"
-                + "  FROM Product";//
-
-        try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
-            ResultSet rs = ps.executeQuery();
-            int total = 0;
-            while (rs.next()) {
-                total = rs.getInt("total");
-            }
-            return total;
-        } catch (SQLException e) {
-            e.printStackTrace(System.out);
-        }
-        return 0;
     }
 
     public int sizeByCategory(int categoryId) {
@@ -244,7 +282,8 @@ public class ProductDAO {
     }
 
     public static void main(String[] args) {
-        System.out.println(new ProductDAO().sizeBySearchValue("wear"));
+        String[] i = {"1", "2", "3"};
+        System.out.println(new ProductDAO().size(i));
         System.out.println("");
     }
 }
