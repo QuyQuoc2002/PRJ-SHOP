@@ -33,4 +33,16 @@ public class Helper {
         }
         return properties;
     }
+    
+    public static boolean contains (String[] array, String e) {
+        if (array == null) {
+            array = new String[0];
+        }
+        for (String a : array) {
+            if (a.equals(e)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

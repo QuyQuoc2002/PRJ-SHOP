@@ -26,6 +26,7 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="assets/css/style.css" rel="stylesheet">
+        <link href="assets/css/price.css" rel="stylesheet">
         <style>
             .product-name {
                 overflow: hidden;
@@ -70,32 +71,26 @@
 
                     <form action="shop" method="get">
                         <!-- Price Start -->
-                        <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price</span></h5>
+                        <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price (VND)</span></h5>
                         <div class="bg-light p-4 mb-30">
-                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                <input type="checkbox" class="custom-control-input" id="price-1">
-                                <label class="custom-control-label" for="price-1">$0 - $100</label>
-                                <span class="badge border font-weight-normal">150</span>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div id="slider-range"></div>
+                                </div>
                             </div>
-                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                <input type="checkbox" class="custom-control-input" id="price-2">
-                                <label class="custom-control-label" for="price-2">$100 - $200</label>
-                                <span class="badge border font-weight-normal">295</span>
+                            <div class="row slider-labels d-flex justify-content-between">
+                                <div class="col-xs-6 caption">
+                                    <strong>Min:</strong> <span id="slider-range-value1"></span>
+                                </div>
+                                <div class="col-xs-6 text-right caption">
+                                    <strong>Max:</strong> <span id="slider-range-value2"></span>
+                                </div>
                             </div>
-                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                <input type="checkbox" class="custom-control-input" id="price-3">
-                                <label class="custom-control-label" for="price-3">$200 - $300</label>
-                                <span class="badge border font-weight-normal">246</span>
-                            </div>
-                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                <input type="checkbox" class="custom-control-input" id="price-4">
-                                <label class="custom-control-label" for="price-4">$300 - $400</label>
-                                <span class="badge border font-weight-normal">145</span>
-                            </div>
-                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                                <input type="checkbox" class="custom-control-input" id="price-5">
-                                <label class="custom-control-label" for="price-5">$400 - $500</label>
-                                <span class="badge border font-weight-normal">168</span>
+                            <div class="row">
+                                <div class="col-sm-12"> 
+                                    <input type="hidden" id="priceFrom" name="priceFrom" value="">
+                                    <input type="hidden" id="priceTo" name="priceTo" value="">
+                                </div>
                             </div>
                         </div>
                         <!-- Price End -->
@@ -105,7 +100,7 @@
                         <div class="bg-light p-4 mb-30">
                             <c:forEach items="${requestScope.lstSize}" var="s">
                                 <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                    <input name="sizeId" value="${s.sizeId}" type="checkbox" class="custom-control-input" id="size-${s.sizeId}">
+                                    <input name="sizeId" <c:if test="${Helper.contains(requestScope.sizeIds, s.sizeId)}"> checked=""</c:if> value="${s.sizeId}" type="checkbox" class="custom-control-input" id="size-${s.sizeId}">
                                     <label class="custom-control-label" for="size-${s.sizeId}">${s.sizeValue}</label>
                                 </div>
                             </c:forEach>
@@ -258,6 +253,9 @@
 
         <!-- Template Javascript -->
         <script src="assets/js/main.js"></script>
+
+        <!--QUOCPQ-->
+        <script src="assets/js/price.js"></script>
     </body>
 
 </html>

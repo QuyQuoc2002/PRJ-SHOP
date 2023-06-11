@@ -3,41 +3,13 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/core/PasswordCreationFilter.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/const/const.properties</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/dao/AccountDAO.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/controller/PasswordCreationController.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/entity/Category.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/sign-up.jsp</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/component/header-shop.jsp</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/dao/SizeDAO.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/dao/CategoryDAO.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/controller/IndexController.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/utils/Mail.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/controller/LogoutController.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/component/header-category.jsp</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/otp-confirmation.jsp</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/core/SignInFilter.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/assets/css/material-dashboard.css</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/entity/AccountDetail.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/shop.jsp</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/component/header-authen.jsp</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/connection/SQLServerConnection.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/sign-in.jsp</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/utils/Helper.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/entity/Size.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/controller/SignInController.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/core/OTPConfirmationFilter.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/dao/ProductDAO.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/dao/AccountDetailDAO.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/entity/Product.java</file>
             <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/controller/ShopController.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/password-creation.jsp</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/entity/Account.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/index.jsp</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/error.jsp</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/controller/SignUpController.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/entity/Role.java</file>
+            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/utils/Helper.java</file>
+            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/assets/js/price.js</file>
+            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/controller/SignInController.java</file>
+            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/shop.jsp</file>
+            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/dao/ProductDAO.java</file>
+            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/dao/SizeDAO.java</file>
         </group>
     </open-files>
 </project-private>
