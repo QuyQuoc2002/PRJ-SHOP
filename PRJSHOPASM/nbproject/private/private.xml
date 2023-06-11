@@ -10,6 +10,7 @@
             <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/entity/Category.java</file>
             <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/sign-up.jsp</file>
             <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/component/header-shop.jsp</file>
+            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/dao/SizeDAO.java</file>
             <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/dao/CategoryDAO.java</file>
             <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/controller/IndexController.java</file>
             <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/utils/Mail.java</file>
@@ -24,6 +25,7 @@
             <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/connection/SQLServerConnection.java</file>
             <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/sign-in.jsp</file>
             <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/utils/Helper.java</file>
+            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/entity/Size.java</file>
             <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/controller/SignInController.java</file>
             <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/core/OTPConfirmationFilter.java</file>
             <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/dao/ProductDAO.java</file>
@@ -35,6 +37,7 @@
             <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/index.jsp</file>
             <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/error.jsp</file>
             <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/controller/SignUpController.java</file>
+            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/entity/Role.java</file>
         </group>
     </open-files>
 </project-private>
