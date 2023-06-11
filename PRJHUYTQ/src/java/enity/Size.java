@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package entity;
+package enity;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -17,9 +17,7 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString
-public class Category {
-    private int categoryId;
-    private String categoryName;
-    private String categoryIcon;
-    private int numberOfProduct;
+public class Size {
+    int sizeId;
+    String sizeValue;
 }

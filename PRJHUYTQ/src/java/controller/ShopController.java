@@ -6,8 +6,10 @@ package controller;
 
 import dao.CategoryDAO;
 import dao.ProductDAO;
+import dao.SizeDAO;
 import enity.Category;
 import enity.Product;
+import enity.Size;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -16,6 +18,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
 import utils.Helper;
@@ -68,13 +71,33 @@ public class ShopController extends HttpServlet {
         Properties properties = Helper.getPropertiesByFileName("const/const.properties");
         CategoryDAO categoryDAO = new CategoryDAO();
         ProductDAO productDAO = new ProductDAO();
-        List<Integer> lstPage = new ArrayList<>();
+        SizeDAO sizeDAO = new SizeDAO();
         
+        List<Integer> lstPage = new ArrayList<>();
+        int size;
+        List<Product> lstProduct;
+        String href;
+        
+        String[] sizeIds = request.getParameterValues("sizeId");
         int pageCur = request.getParameter("page") == null ? 1 : Integer.parseInt(request.getParameter("page"));
         int categoryId = request.getParameter("categoryId") == null ? 0 : Integer.parseInt(request.getParameter("categoryId"));//////
         int numberProductPerPage = Integer.parseInt(properties.getProperty("numberProductPerPage"));
-        int size = categoryId == 0 ? productDAO.getSize() : productDAO.getSizeByCategoryId(categoryId);///
-        System.out.println(size);
+        String searchValue = request.getParameter("searchValue");
+        
+        if(categoryId != 0) {
+            size = productDAO.getSizeByCategoryId(categoryId);
+            lstProduct = productDAO.getAllPerPageByCategoryId(pageCur, numberProductPerPage, categoryId);
+            href = "shop?categoryId="+categoryId +"&";
+        } else if (searchValue != null) {
+            size = productDAO.getSizeBySearchValue(searchValue);
+            lstProduct = productDAO.getAllPerPageBySearchValue(pageCur, numberProductPerPage, searchValue);
+            href = "shop?searchValue="+searchValue+"&";
+        } else {
+            size = productDAO.getSize();
+            lstProduct = productDAO.getAllPerPage(pageCur, numberProductPerPage, sizeIds);
+            href = "shop?";
+        }
+        
         int totalPage = size % numberProductPerPage == 0 
                 ? size / numberProductPerPage 
                 : size / numberProductPerPage + 1;
@@ -83,12 +106,12 @@ public class ShopController extends HttpServlet {
         }
         
         List<Category> lstCategory = categoryDAO.getAll();
-        //List<Product> lstProduct = productDAO.getAllPerPage(pageCur, numberProductPerPage);
-        List<Product> lstProduct = categoryId == 0 
-                ? productDAO.getAllPerPage(pageCur, numberProductPerPage) 
-                : productDAO.getAllPerPageByCategoryId(pageCur, numberProductPerPage, categoryId);
+        List<Size> lstSize = sizeDAO.getAll();
         
+        request.setAttribute("href", href);
         request.setAttribute("lstCategory", lstCategory);
+        request.setAttribute("searchValue", searchValue);
+        request.setAttribute("lstSize", lstSize);
         request.setAttribute("lstProduct", lstProduct);
         request.setAttribute("lstPage", lstPage);
         request.setAttribute("pageCur", pageCur);

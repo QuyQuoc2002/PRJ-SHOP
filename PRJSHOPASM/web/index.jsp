@@ -159,7 +159,7 @@
                                 </div>
                                 <div class="flex-fill pl-3">
                                     <h6>${c.categoryName}</h6>
-                                    <small class="text-body">100 Products</small>
+                                    <small class="text-body">${c.numberOfProduct} Products</small>
                                 </div>
                             </div>
                         </a>
@@ -185,7 +185,7 @@
                             <div class="text-center py-4">
                                 <a class="h6 text-decoration-none product-name" href="">${p.productName}</a>
                                 <div class="d-flex align-items-center justify-content-center mt-2">
-                                    <h5>${p.productPrice}</h5>
+                                    <h5>${p.productPrice}VND</h5>
                                     <!--<h6 class="text-muted ml-2"><del>$123.00</del></h6>-->
                                 </div>
                                 <div class="d-flex align-items-center justify-content-center mb-1">
