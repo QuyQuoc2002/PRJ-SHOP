@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class ProductDAO {
 
-    public int size(String[] sizeIds) {
+    public int size(String[] sizeIds, String priceFrom, String priceTo) {
 
         String sql = "SELECT COUNT(a.productId) as total from("
                 + "Select DISTINCT\n"
@@ -34,17 +34,19 @@ public class ProductDAO {
                 + "	p.productIsRecent,\n"
                 + "	p.productDeleted\n"
                 + "from product p \n"
-                + "	JOIN ProductSize ps ON p.productId = ps.productId";
+                + "	JOIN ProductSize ps ON p.productId = ps.productId"
+                + " Where p.productPrice between ? and ? ";
         if (sizeIds != null) {
-            sql += " Where ";
+            sql += " AND ";
             for (int i = 0; i < sizeIds.length - 1; i++) {
                 sql += " ps.sizeId = " + sizeIds[i] + " OR ";
             }
             sql += " ps.sizeId = " + sizeIds[sizeIds.length - 1];
         }
         sql += ") as a";
-        System.out.println(sql);
         try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
+            ps.setObject(1, priceFrom);
+            ps.setObject(2, priceTo);
             ResultSet rs = ps.executeQuery();
             int total = 0;
             while (rs.next()) {
@@ -57,7 +59,7 @@ public class ProductDAO {
         return 0;
     }
 
-    public List<Product> getListProductPerPage(int numberProductPerPage, int pageCur, String[] sizeIds) {
+    public List<Product> getListProductPerPage(int numberProductPerPage, int pageCur, String[] sizeIds, String priceFrom, String priceTo) {
 
         String sql = ""
                 + "Select DISTINCT\n"
@@ -71,9 +73,10 @@ public class ProductDAO {
                 + "	p.productIsRecent,\n"
                 + "	p.productDeleted\n"
                 + "from product p \n"
-                + "	JOIN ProductSize ps ON p.productId = ps.productId";
+                + "	JOIN ProductSize ps ON p.productId = ps.productId"
+                + " Where p.productPrice between ? and ? ";
         if (sizeIds != null) {
-            sql += " Where ";
+            sql += " AND ";
             for (int i = 0; i < sizeIds.length - 1; i++) {
                 sql += " ps.sizeId = " + sizeIds[i] + " OR ";
             }
@@ -84,8 +87,10 @@ public class ProductDAO {
                 + "FETCH NEXT ? ROWS ONLY";//
         System.out.println(sql);
         try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
-            ps.setObject(1, pageCur * numberProductPerPage - numberProductPerPage);
-            ps.setObject(2, numberProductPerPage);
+            ps.setObject(1, priceFrom);
+            ps.setObject(2, priceTo);
+            ps.setObject(3, pageCur * numberProductPerPage - numberProductPerPage);
+            ps.setObject(4, numberProductPerPage);
             ResultSet rs = ps.executeQuery();
 
             List<Product> list = new ArrayList<>();//
@@ -283,7 +288,6 @@ public class ProductDAO {
 
     public static void main(String[] args) {
         String[] i = {"1", "2", "3"};
-        System.out.println(new ProductDAO().size(i));
         System.out.println("");
     }
 }
