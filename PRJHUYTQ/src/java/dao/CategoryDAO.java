@@ -21,7 +21,7 @@ public class CategoryDAO {
 
     public List<Category> getAll() {
 
-        String sql = "SELECT * FROM Category";//
+        String sql = "Select *,(SELECT COUNT(productId) FROM Product WHERE categoryId = c.categoryId) as numberProduct  from Category c";//
 
         try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
             ResultSet rs = ps.executeQuery();
@@ -32,6 +32,7 @@ public class CategoryDAO {
                         .categoryId(rs.getInt("categoryId"))
                         .categoryName(rs.getString("categoryName"))
                         .categoryIcon(rs.getString("categoryIcon"))
+                        .numberProduct(rs.getInt("numberProduct"))
                         .build();
                 list.add(s);
             }
