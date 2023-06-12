@@ -19,9 +19,33 @@ import java.util.List;
  */
 public class ProductDAO {
 
-    public int getSize() {
+    public int getSize(String[] sizeIds, String priceFrom, String priceTo) {
 
-        String sql = "SELECT COUNT(productId) FROM Product";//
+        String sql = ""
+                + "Select Count (productId) as total FROM (\n"
+                + "	Select Distinct\n"
+                + "		p.productId,\n"
+                + "		p.productName,\n"
+                + "		p.productImg,\n"
+                + "		p.productPrice,\n"
+                + "		p.productDescription,\n"
+                + "		p.categoryId,\n"
+                + "		p.productIsFeatured,\n"
+                + "		p.productIsRecent,\n"
+                + "		p.productDeleted \n"
+                + "	from Product p \n"
+                + "		Join ProductSize ps ON p.productId = ps.productId\n";
+        if (priceFrom != null && priceTo != null) {
+            sql += " Where p.productPrice between " + priceFrom + " and " + priceTo;
+        }
+        if (sizeIds != null) {
+            sql += " And (";
+            for (int i = 0; i < sizeIds.length - 1; i++) {
+                sql += " ps.sizeId = " + sizeIds[i] + " OR ";
+            }
+            sql += " ps.sizeId = " + sizeIds[sizeIds.length - 1] + ") ";
+        }
+        sql += ") as a";//
 
         try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
             ResultSet rs = ps.executeQuery();
@@ -34,23 +58,7 @@ public class ProductDAO {
         return 0;
     }
 
-    public int getSizeByCategoryId(int categoryId) {
-
-        String sql = "SELECT COUNT(productId) FROM Product WHERE categoryId = ? ";//
-
-        try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
-            ps.setObject(1, categoryId);
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                return rs.getInt(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace(System.out);
-        }
-        return 0;
-    }
-
-    public List<Product> getAllPerPage(int pageCur, int numberProductPerPage, String[] sizeIds) {
+    public List<Product> getAllPerPage(int pageCur, int numberProductPerPage, String[] sizeIds, String priceFrom, String priceTo) {
 
         String sql = "Select Distinct\n"
                 + "	p.productId,\n"
@@ -64,15 +72,17 @@ public class ProductDAO {
                 + "	p.productDeleted \n"
                 + "from Product p \n"
                 + "	Join ProductSize ps ON p.productId = ps.productId \n";
+        if (priceFrom != null && priceTo != null) {
+            sql += " Where p.productPrice between " + priceFrom + " and " + priceTo;
+        }
         if (sizeIds != null) {
-            sql += "Where";
+            sql += " And (";
             for (int i = 0; i < sizeIds.length - 1; i++) {
-                sql+= " sizeId = " + sizeIds[i] + " OR ";
+                sql += " ps.sizeId = " + sizeIds[i] + " OR ";
             }
-            sql+=" sizeId = " + sizeIds[sizeIds.length - 1];
-        }             
+            sql += " ps.sizeId = " + sizeIds[sizeIds.length - 1] + ") ";
+        }
         sql += " ORDER BY p.productId OFFSET ? ROWS FETCH NEXT ? ROWS ONLY; ";//
-        System.out.println(sql);
 
         try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
             ps.setObject(1, (pageCur - 1) * numberProductPerPage);
@@ -100,6 +110,22 @@ public class ProductDAO {
             e.printStackTrace(System.out);
         }
         return null;
+    }
+
+    public int getSizeByCategoryId(int categoryId) {
+
+        String sql = "SELECT COUNT(productId) FROM Product WHERE categoryId = ? ";//
+
+        try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
+            ps.setObject(1, categoryId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                return rs.getInt(1);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return 0;
     }
 
     public List<Product> getAllPerPageByCategoryId(int pageCur, int numberProductPerPage, int categoryId) {
@@ -243,7 +269,6 @@ public class ProductDAO {
     }
 
     public static void main(String[] args) {
-        String[] i = {"3"};
-        System.out.println(new ProductDAO().getAllPerPage(1, 9, i));
+        String[] i = {"1"};
     }
 }

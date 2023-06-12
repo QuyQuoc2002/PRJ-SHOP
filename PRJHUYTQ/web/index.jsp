@@ -144,14 +144,14 @@
             <div class="row px-xl-5 pb-3">
                 <c:forEach items="${requestScope.lstCategory}" var="c">
                 <div class="col-lg-3 col-md-4 col-sm-6 pb-1">
-                    <a class="text-decoration-none" href="">
+                    <a class="text-decoration-none" href="shop?categoryId=${c.categoryId}">
                         <div class="cat-item d-flex align-items-center mb-4">
                             <div class="overflow-hidden" style="width: 100px; height: 100px;">
                                 <img class="img-fluid" src="${c.categoryIcon}" alt="">
                             </div>
                             <div class="flex-fill pl-3">
                                 <h6>${c.categoryName}</h6>
-                                <small class="text-body">100 Products</small>
+                                <small class="text-body">${c.numberProduct} Products</small>
                             </div>
                         </div>
                     </a>

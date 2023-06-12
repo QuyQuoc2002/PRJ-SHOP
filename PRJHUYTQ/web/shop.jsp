@@ -26,6 +26,9 @@
 
         <!-- Customized Bootstrap Stylesheet -->
         <link href="assets/css/style.css" rel="stylesheet">
+
+
+        <link href="assets/css/price-bar.css" rel="stylesheet">
     </head>
 
     <body>
@@ -61,37 +64,35 @@
                 <div class="col-lg-3 col-md-4">
                     <form method="get" action="shop">
                         <!-- Price Start -->
-                        <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price</span></h5>
+                        <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price (VND)</span></h5>
                         <div class="bg-light p-4 mb-30">
-                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                <input name="price" type="checkbox" class="custom-control-input" id="price-1">
-                                <label class="custom-control-label" for="price-1">0 - 100.000</label>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <div id="slider-range"></div>
+                                </div>
                             </div>
-                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                <input name="price" type="checkbox" class="custom-control-input" id="price-2">
-                                <label class="custom-control-label" for="price-2">100.000 - 200.000</label>
+                            <div class="row slider-labels d-flex justify-content-between">
+                                <div class="col-xs-6 caption">
+                                    <strong>Min:</strong> <span id="slider-range-value1"></span>
+                                </div>
+                                <div class="col-xs-6 text-right caption">
+                                    <strong>Max:</strong> <span id="slider-range-value2"></span>
+                                </div>
                             </div>
-                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                <input name="price" type="checkbox" class="custom-control-input" id="price-3">
-                                <label class="custom-control-label" for="price-3">200.000 - 300.000</label>
-                            </div>
-                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                <input name="price" type="checkbox" class="custom-control-input" id="price-4">
-                                <label class="custom-control-label" for="price-4">300.000 - 400.000</label>
-                            </div>
-                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
-                                <input name="price" type="checkbox" class="custom-control-input" id="price-5">
-                                <label class="custom-control-label" for="price-5">400.000 - 500.000</label>
+                            <div class="row">
+                                <div class="col-sm-12">
+                                    <input id="priceFrom" type="hidden" name="priceFrom" value="">
+                                    <input id="priceTo" type="hidden" name="priceTo" value="">
+                                </div>
                             </div>
                         </div>
                         <!-- Price End -->
-
                         <!-- Size Start -->
                         <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by size</span></h5>
                         <div class="bg-light p-4 mb-30">
                             <c:forEach items="${requestScope.lstSize}" var="s">
                                 <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
-                                    <input name="sizeId" value="${s.sizeId}" type="checkbox" class="custom-control-input" id="size${s.sizeId}">
+                                    <input <c:if test="${requestScope.Common.contains(requestScope.sizeIds, s.sizeId)}">checked=""</c:if> name="sizeId" value="${s.sizeId}" type="checkbox" class="custom-control-input" id="size${s.sizeId}">
                                     <label class="custom-control-label" for="size${s.sizeId}">${s.sizeValue}</label>
                                 </div>
                             </c:forEach>
@@ -187,6 +188,41 @@
 
         <!-- Template Javascript -->
         <script src="assets/js/main.js"></script>
+
+        <script>
+            $(document).ready(function () {
+                $('.noUi-handle').on('click', function () {
+                    $(this).width(50);
+                });
+                var rangeSlider = document.getElementById('slider-range');
+                var moneyFormat = wNumb({
+                    decimals: 0,
+                    thousand: ',',
+                    prefix: ''
+                });
+                noUiSlider.create(rangeSlider, {
+                    start: [${requestScope.priceFrom}, ${requestScope.priceTo}],
+                    step: 50000,
+                    range: {
+                        'min': [100000],
+                        'max': [1000000]
+                    },
+                    format: moneyFormat,
+                    connect: true
+                });
+
+                // Set visual min and max values and also update value hidden form inputs
+                rangeSlider.noUiSlider.on('update', function (values, handle) {
+                    document.getElementById('slider-range-value1').innerHTML = values[0];
+                    document.getElementById('slider-range-value2').innerHTML = values[1];
+                    document.getElementById('priceFrom').value = moneyFormat.from(
+                            values[0]);
+                    document.getElementById('priceTo').value = moneyFormat.from(
+                            values[1]);
+                });
+            });
+        </script>
+        <script src="assets/js/price-bar.js"></script>
     </body>
 
 </html>
