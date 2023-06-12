@@ -37,11 +37,11 @@ public class ProductDAO {
                 + "	JOIN ProductSize ps ON p.productId = ps.productId"
                 + " Where p.productPrice between ? and ? ";
         if (sizeIds != null) {
-            sql += " AND ";
+            sql += " AND (";
             for (int i = 0; i < sizeIds.length - 1; i++) {
                 sql += " ps.sizeId = " + sizeIds[i] + " OR ";
             }
-            sql += " ps.sizeId = " + sizeIds[sizeIds.length - 1];
+            sql += " ps.sizeId = " + sizeIds[sizeIds.length - 1] +" ) ";
         }
         sql += ") as a";
         try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
@@ -76,11 +76,11 @@ public class ProductDAO {
                 + "	JOIN ProductSize ps ON p.productId = ps.productId"
                 + " Where p.productPrice between ? and ? ";
         if (sizeIds != null) {
-            sql += " AND ";
+            sql += " AND (";
             for (int i = 0; i < sizeIds.length - 1; i++) {
                 sql += " ps.sizeId = " + sizeIds[i] + " OR ";
             }
-            sql += " ps.sizeId = " + sizeIds[sizeIds.length - 1];
+            sql += " ps.sizeId = " + sizeIds[sizeIds.length - 1] +" ) ";
         }
         sql += " Order BY p.productId\n"
                 + "OFFSET ? ROWS \n"
