@@ -84,8 +84,7 @@ public class ProductDAO {
         }
         sql += " Order BY p.productId\n"
                 + "OFFSET ? ROWS \n"
-                + "FETCH NEXT ? ROWS ONLY";//
-        System.out.println(sql);
+                + "FETCH NEXT ? ROWS ONLY";
         try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
             ps.setObject(1, priceFrom);
             ps.setObject(2, priceTo);
@@ -115,17 +114,39 @@ public class ProductDAO {
         return null;
     }
 
-    public List<Product> getListProductPerPageByCategoryId(int numberProductPerPage, int pageCur, int categoryId) {
+    public List<Product> getListProductPerPageByCategoryId(int numberProductPerPage, int pageCur, int categoryId, String[] sizeIds, String priceFrom, String priceTo) {
 
-        String sql = "  SELECT * FROM Product WHERE categoryId = ?"
-                + "	Order BY productId\n"
+        String sql = ""
+                + "Select DISTINCT\n"
+                + "	p.productId,\n"
+                + "	p.productName,\n"
+                + "	p.productImg,\n"
+                + "	p.productPrice,\n"
+                + "	p.productDescription,\n"
+                + "	p.categoryId,\n"
+                + "	p.productIsFeatured,\n"
+                + "	p.productIsRecent,\n"
+                + "	p.productDeleted\n"
+                + "from product p \n"
+                + "	JOIN ProductSize ps ON p.productId = ps.productId"
+                + " Where categoryId = ? And p.productPrice between ? and ? ";
+        if (sizeIds != null) {
+            sql += " AND (";
+            for (int i = 0; i < sizeIds.length - 1; i++) {
+                sql += " ps.sizeId = " + sizeIds[i] + " OR ";
+            }
+            sql += " ps.sizeId = " + sizeIds[sizeIds.length - 1] +" ) ";
+        }
+        sql += " Order BY p.productId\n"
                 + "OFFSET ? ROWS \n"
-                + "FETCH NEXT ? ROWS ONLY ";
+                + "FETCH NEXT ? ROWS ONLY";
 
         try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
-            ps.setObject(2, pageCur * numberProductPerPage - numberProductPerPage);
-            ps.setObject(3, numberProductPerPage);
             ps.setObject(1, categoryId);
+            ps.setObject(2, priceFrom);
+            ps.setObject(3, priceTo);
+            ps.setObject(4, pageCur * numberProductPerPage - numberProductPerPage);
+            ps.setObject(5, numberProductPerPage);
             ResultSet rs = ps.executeQuery();
 
             List<Product> list = new ArrayList<>();//
@@ -188,13 +209,35 @@ public class ProductDAO {
         return null;
     }
 
-    public int sizeByCategory(int categoryId) {
+    public int sizeByCategory(int categoryId, String[] sizeIds, String priceFrom, String priceTo) {
 
-        String sql = "SELECT COUNT(productId) as total\n"
-                + "  FROM Product WHERE categoryId = ?";//
+        String sql = "SELECT COUNT(a.productId) as total from("
+                + "Select DISTINCT\n"
+                + "	p.productId,\n"
+                + "	p.productName,\n"
+                + "	p.productImg,\n"
+                + "	p.productPrice,\n"
+                + "	p.productDescription,\n"
+                + "	p.categoryId,\n"
+                + "	p.productIsFeatured,\n"
+                + "	p.productIsRecent,\n"
+                + "	p.productDeleted\n"
+                + "from product p \n"
+                + "	JOIN ProductSize ps ON p.productId = ps.productId"
+                + " Where categoryId = ? and p.productPrice between ? and ? ";
+        if (sizeIds != null) {
+            sql += " AND (";
+            for (int i = 0; i < sizeIds.length - 1; i++) {
+                sql += " ps.sizeId = " + sizeIds[i] + " OR ";
+            }
+            sql += " ps.sizeId = " + sizeIds[sizeIds.length - 1] +" ) ";
+        }
+        sql += ") as a";
 
         try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
             ps.setObject(1, categoryId);
+            ps.setObject(2, priceFrom);
+            ps.setObject(3, priceTo);
             ResultSet rs = ps.executeQuery();
             int total = 0;
             while (rs.next()) {

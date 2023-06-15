@@ -71,6 +71,9 @@
 
                     <form action="shop" method="get">
                         <!-- Price Start -->
+                        <c:if test="${requestScope.categoryId != 0}">
+                            <input type="hidden" name="categoryId" value="${requestScope.categoryId}">
+                        </c:if>
                         <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price (VND)</span></h5>
                         <div class="bg-light p-4 mb-30">
                             <div class="row">
