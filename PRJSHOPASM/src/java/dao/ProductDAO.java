@@ -41,7 +41,7 @@ public class ProductDAO {
             for (int i = 0; i < sizeIds.length - 1; i++) {
                 sql += " ps.sizeId = " + sizeIds[i] + " OR ";
             }
-            sql += " ps.sizeId = " + sizeIds[sizeIds.length - 1] +" ) ";
+            sql += " ps.sizeId = " + sizeIds[sizeIds.length - 1] + " ) ";
         }
         sql += ") as a";
         try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
@@ -80,7 +80,7 @@ public class ProductDAO {
             for (int i = 0; i < sizeIds.length - 1; i++) {
                 sql += " ps.sizeId = " + sizeIds[i] + " OR ";
             }
-            sql += " ps.sizeId = " + sizeIds[sizeIds.length - 1] +" ) ";
+            sql += " ps.sizeId = " + sizeIds[sizeIds.length - 1] + " ) ";
         }
         sql += " Order BY p.productId\n"
                 + "OFFSET ? ROWS \n"
@@ -135,7 +135,7 @@ public class ProductDAO {
             for (int i = 0; i < sizeIds.length - 1; i++) {
                 sql += " ps.sizeId = " + sizeIds[i] + " OR ";
             }
-            sql += " ps.sizeId = " + sizeIds[sizeIds.length - 1] +" ) ";
+            sql += " ps.sizeId = " + sizeIds[sizeIds.length - 1] + " ) ";
         }
         sql += " Order BY p.productId\n"
                 + "OFFSET ? ROWS \n"
@@ -230,7 +230,7 @@ public class ProductDAO {
             for (int i = 0; i < sizeIds.length - 1; i++) {
                 sql += " ps.sizeId = " + sizeIds[i] + " OR ";
             }
-            sql += " ps.sizeId = " + sizeIds[sizeIds.length - 1] +" ) ";
+            sql += " ps.sizeId = " + sizeIds[sizeIds.length - 1] + " ) ";
         }
         sql += ") as a";
 
@@ -329,8 +329,36 @@ public class ProductDAO {
         return null;
     }
 
+    public Product getOne(int productId) {
+
+        String sql = "Select * From Product Where productId = ?";//
+
+        try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
+            ps.setObject(1, productId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Product s = Product.builder()
+                        .productId(rs.getInt("productId"))
+                        .productName(rs.getString("productName"))
+                        .productImg(rs.getString("productImg"))
+                        .productPrice(rs.getInt("productPrice"))
+                        .productDescription(rs.getString("productDescription"))
+                        .categoryId(rs.getInt("categoryId"))
+                        .productIsFeatured(rs.getBoolean("productIsFeatured"))
+                        .productIsRecent(rs.getBoolean("productIsRecent"))
+                        .productDeleted(rs.getBoolean("productDeleted"))
+                        .build();
+                return s;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
+    }
+
     public static void main(String[] args) {
         String[] i = {"1", "2", "3"};
-        System.out.println("");
+        System.out.println(new ProductDAO().getOne(12));
     }
 }

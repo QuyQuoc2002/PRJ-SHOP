@@ -81,8 +81,8 @@ public class ShopController extends HttpServlet {
         int size = 0;
         List<Product> lstProduct;
         String href;
-        String priceFrom = request.getParameter("priceFrom") == null? "0" : request.getParameter("priceFrom");
-        String priceTo = request.getParameter("priceTo")  == null? "1000000000" : request.getParameter("priceTo");
+        String priceFrom = request.getParameter("priceFrom") == null? "100000" : request.getParameter("priceFrom");
+        String priceTo = request.getParameter("priceTo")  == null? "1000000" : request.getParameter("priceTo");
         String[] sizeIds = request.getParameterValues("sizeId");
 
         if (categoryId != 0) {
@@ -119,6 +119,8 @@ public class ShopController extends HttpServlet {
         List<Size> lstSize = sizeDAO.getAll();
 
         request.setAttribute("sizeIds", sizeIds);
+        request.setAttribute("priceFrom", priceFrom);
+        request.setAttribute("priceTo", priceTo);
         request.setAttribute("categoryId", categoryId);
         request.setAttribute("Helper", new Helper());
         request.setAttribute("href", href);
