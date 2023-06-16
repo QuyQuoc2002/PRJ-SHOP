@@ -126,13 +126,13 @@
                                 <div class="product-item bg-light mb-4">
                                     <div class="product-img position-relative overflow-hidden">
                                         <img class="img-fluid w-100" src="${p.productImg}" alt="">
-                                        <a href="product-detail.html">
+                                        <a href="product-detail?productId=${p.productId}">
                                             <div class="product-action">
                                             </div>
                                         </a>
                                     </div>
                                     <div class="text-center py-4">
-                                        <a class="h6 text-decoration-none" href="">${p.productName}</a>
+                                        <a class="h6 text-decoration-none" href="product-detail?productId=${p.productId}">${p.productName}</a>
                                         <div class="d-flex align-items-center justify-content-center mt-2">
                                             <h5>${p.productPrice}</h5>
                                         </div>

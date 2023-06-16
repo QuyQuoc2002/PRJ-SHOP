@@ -35,73 +35,7 @@
 
 
         <!-- Navbar Start -->
-        <div class="container-fluid bg-dark mb-30">
-            <div class="row px-xl-5">
-                <div class="col-lg-3 d-none d-lg-block">
-                    <a class="btn d-flex align-items-center justify-content-between bg-primary w-100" data-toggle="collapse" href="#navbar-vertical" style="height: 65px; padding: 0 30px;">
-                        <h6 class="text-dark m-0"><i class="fa fa-bars mr-2"></i>Categories</h6>
-                        <i class="fa fa-angle-down text-dark"></i>
-                    </a>
-                    <nav class="collapse position-absolute navbar navbar-vertical navbar-light align-items-start p-0 bg-light" id="navbar-vertical" style="width: calc(100% - 30px); z-index: 999;">
-                        <div class="navbar-nav w-100">
-                            <div class="nav-item dropdown dropright">
-                                <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Dresses <i class="fa fa-angle-right float-right mt-1"></i></a>
-                                <div class="dropdown-menu position-absolute rounded-0 border-0 m-0">
-                                    <a href="" class="dropdown-item">Men's Dresses</a>
-                                    <a href="" class="dropdown-item">Women's Dresses</a>
-                                    <a href="" class="dropdown-item">Baby's Dresses</a>
-                                </div>
-                            </div>
-                            <a href="" class="nav-item nav-link">Shirts</a>
-                            <a href="" class="nav-item nav-link">Jeans</a>
-                            <a href="" class="nav-item nav-link">Swimwear</a>
-                            <a href="" class="nav-item nav-link">Sleepwear</a>
-                            <a href="" class="nav-item nav-link">Sportswear</a>
-                            <a href="" class="nav-item nav-link">Jumpsuits</a>
-                            <a href="" class="nav-item nav-link">Blazers</a>
-                            <a href="" class="nav-item nav-link">Jackets</a>
-                            <a href="" class="nav-item nav-link">Shoes</a>
-                        </div>
-                    </nav>
-                </div>
-                <div class="col-lg-9">
-                    <nav class="navbar navbar-expand-lg bg-dark navbar-dark py-3 py-lg-0 px-0">
-                        <a href="" class="text-decoration-none d-block d-lg-none">
-                            <span class="h1 text-uppercase text-dark bg-light px-2">Multi</span>
-                            <span class="h1 text-uppercase text-light bg-primary px-2 ml-n1">Shop</span>
-                        </a>
-                        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbarCollapse">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse justify-content-between" id="navbarCollapse">
-                            <div class="navbar-nav mr-auto py-0">
-                                <a href="index.html" class="nav-item nav-link">Home</a>
-                                <a href="shop.html" class="nav-item nav-link">Shop</a>
-                                <a href="detail.html" class="nav-item nav-link active">Shop Detail</a>
-                                <div class="nav-item dropdown">
-                                    <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">Pages <i class="fa fa-angle-down mt-1"></i></a>
-                                    <div class="dropdown-menu bg-primary rounded-0 border-0 m-0">
-                                        <a href="cart.html" class="dropdown-item">Shopping Cart</a>
-                                        <a href="checkout.html" class="dropdown-item">Checkout</a>
-                                    </div>
-                                </div>
-                                <a href="contact.html" class="nav-item nav-link">Contact</a>
-                            </div>
-                            <div class="navbar-nav ml-auto py-0 d-none d-lg-block">
-                                <a href="" class="btn px-0">
-                                    <i class="fas fa-heart text-primary"></i>
-                                    <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
-                                </a>
-                                <a href="" class="btn px-0 ml-3">
-                                    <i class="fas fa-shopping-cart text-primary"></i>
-                                    <span class="badge text-secondary border border-secondary rounded-circle" style="padding-bottom: 2px;">0</span>
-                                </a>
-                            </div>
-                        </div>
-                    </nav>
-                </div>
-            </div>
-        </div>
+        <%@include file="component/category-shop.jsp" %>
         <!-- Navbar End -->
 
 
@@ -126,18 +60,11 @@
                 <div class="col-lg-5 mb-30">
                     <div id="product-carousel" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner bg-light">
-                            <div class="carousel-item active">
-                                <img class="w-100 h-100" src="assets/img/product-1.jpg" alt="Image">
-                            </div>
-                            <div class="carousel-item">
-                                <img class="w-100 h-100" src="assets/img/product-2.jpg" alt="Image">
-                            </div>
-                            <div class="carousel-item">
-                                <img class="w-100 h-100" src="assets/img/product-3.jpg" alt="Image">
-                            </div>
-                            <div class="carousel-item">
-                                <img class="w-100 h-100" src="assets/img/product-4.jpg" alt="Image">
-                            </div>
+                            <c:forEach items="${requestScope.lstProductImgDetail}" var="img" varStatus="i">
+                                <div class="carousel-item <c:if test="${i.count eq 1}">active</c:if> ">
+                                    <img class="w-100 h-100" src="${img.productImgDetailPath}" alt="Image">
+                                </div>
+                            </c:forEach>
                         </div>
                         <a class="carousel-control-prev" href="#product-carousel" data-slide="prev">
                             <i class="fa fa-2x fa-angle-left text-dark"></i>
@@ -150,7 +77,7 @@
 
                 <div class="col-lg-7 h-auto mb-30">
                     <div class="h-100 bg-light p-30">
-                        <h3>Product Name Goes Here</h3>
+                        <h3>${requestScope.product.productName}</h3>
                         <div class="d-flex mb-3">
                             <div class="text-primary mr-2">
                                 <small class="fas fa-star"></small>
@@ -161,8 +88,8 @@
                             </div>
                             <small class="pt-1">(99 Reviews)</small>
                         </div>
-                        <h3 class="font-weight-semi-bold mb-4">$150.00</h3>
-                        <div class="description">
+                        <h3 class="font-weight-semi-bold mb-4">${requestScope.product.productPrice} VND</h3>
+<!--                        <div class="description">
                             <p class="mb-4">Volup erat ipsum diam elitr rebum et dolor. Est nonumy elitr erat diam stet sit
                                 clita ea. Sanc ipsum et, labore clita lorem magna duo dolor no sea
                                 Nonumy</p>
@@ -171,30 +98,16 @@
                                 <li>Lorem Des</li>
                                 <li>Lorem Des</li>
                             </ul>
-                        </div>
+                        </div>-->
                         <div class="d-flex mb-3">
                             <strong class="text-dark mr-3">Sizes:</strong>
                             <form>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="size-1" name="size">
-                                    <label class="custom-control-label" for="size-1">XS</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="size-2" name="size">
-                                    <label class="custom-control-label" for="size-2">S</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="size-3" name="size">
-                                    <label class="custom-control-label" for="size-3">M</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="size-4" name="size">
-                                    <label class="custom-control-label" for="size-4">L</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="size-5" name="size">
-                                    <label class="custom-control-label" for="size-5">XL</label>
-                                </div>
+                                <c:forEach items="${requestScope.lstProductSize}" var="s" varStatus="i">
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input" <c:if test="${i.count eq 1}">checked=""</c:if> id="s${i.count}" name="size">
+                                        <label class="custom-control-label" for="s${i.count}">${s.size.sizeValue}</label>
+                                    </div>
+                                </c:forEach>
                             </form>
                         </div>
                         <!-- <div class="d-flex mb-4">
@@ -275,8 +188,7 @@
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="tab-pane-1">
                                 <h4 class="mb-3">Product Description</h4>
-                                <p>Eos no lorem eirmod diam diam, eos elitr et gubergren diam sea. Consetetur vero aliquyam invidunt duo dolores et duo sit. Vero diam ea vero et dolore rebum, dolor rebum eirmod consetetur invidunt sed sed et, lorem duo et eos elitr, sadipscing kasd ipsum rebum diam. Dolore diam stet rebum sed tempor kasd eirmod. Takimata kasd ipsum accusam sadipscing, eos dolores sit no ut diam consetetur duo justo est, sit sanctus diam tempor aliquyam eirmod nonumy rebum dolor accusam, ipsum kasd eos consetetur at sit rebum, diam kasd invidunt tempor lorem, ipsum lorem elitr sanctus eirmod takimata dolor ea invidunt.</p>
-                                <p>Dolore magna est eirmod sanctus dolor, amet diam et eirmod et ipsum. Amet dolore tempor consetetur sed lorem dolor sit lorem tempor. Gubergren amet amet labore sadipscing clita clita diam clita. Sea amet et sed ipsum lorem elitr et, amet et labore voluptua sit rebum. Ea erat sed et diam takimata sed justo. Magna takimata justo et amet magna et.</p>
+                                <p>${requestScope.product.productDescription} VND</p>
                             </div>
                             <div class="tab-pane fade" id="tab-pane-2">
                                 <h4 class="mb-3">Additional Information</h4>

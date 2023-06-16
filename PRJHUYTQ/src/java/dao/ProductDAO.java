@@ -5,7 +5,7 @@
 package dao;
 
 import connection.SQLServerConnection;
-import enity.Product;
+import entity.Product;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -262,6 +262,34 @@ public class ProductDAO {
                 list.add(p);
             }
             return list;
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
+    }
+
+    public Product getOne(int productId) {
+
+        String sql = "Select * From Product Where productId = ?";//
+
+        try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
+            ps.setObject(1, productId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Product s = Product.builder()
+                        .productId(rs.getInt("productId"))
+                        .productName(rs.getString("productName"))
+                        .productImg(rs.getString("productImg"))
+                        .productPrice(rs.getInt("productPrice"))
+                        .productDescription(rs.getString("productDescription"))
+                        .categoryId(rs.getInt("categoryId"))
+                        .productIsFeatured(rs.getBoolean("productIsFeatured"))
+                        .productIsRecent(rs.getBoolean("productIsRecent"))
+                        .productDeleted(rs.getBoolean("productDeleted"))
+                        .build();
+                return s;
+            }
         } catch (SQLException e) {
             e.printStackTrace(System.out);
         }
