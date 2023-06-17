@@ -6,8 +6,8 @@ package controller;
 
 import dao.AccountDAO;
 import dao.AccountDetailDAO;
-import enity.Account;
-import enity.AccountDetail;
+import entity.Account;
+import entity.AccountDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;

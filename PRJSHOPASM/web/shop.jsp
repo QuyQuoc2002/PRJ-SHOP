@@ -53,7 +53,7 @@
             <div class="row px-xl-5">
                 <div class="col-12">
                     <nav class="breadcrumb bg-light mb-30">
-                        <a class="breadcrumb-item text-dark" href="#">Home</a>
+                        <a class="breadcrumb-item text-dark" href="/PRJSHOPASM">Home</a>
                         <a class="breadcrumb-item text-dark" href="#">Shop</a>
                         <span class="breadcrumb-item active">Shop List</span>
                     </nav>
@@ -71,6 +71,9 @@
 
                     <form action="shop" method="get">
                         <!-- Price Start -->
+                        <c:if test="${requestScope.categoryId != 0}">
+                            <input type="hidden" name="categoryId" value="${requestScope.categoryId}">
+                        </c:if>
                         <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">Filter by price (VND)</span></h5>
                         <div class="bg-light p-4 mb-30">
                             <div class="row">
@@ -88,8 +91,8 @@
                             </div>
                             <div class="row">
                                 <div class="col-sm-12"> 
-                                    <input type="hidden" id="priceFrom" name="priceFrom" value="">
-                                    <input type="hidden" id="priceTo" name="priceTo" value="">
+                                    <input type="hidden" id="priceFrom" name="priceFrom" value="123213213">
+                                    <input type="hidden" id="priceTo" name="priceTo" value="12312">
                                 </div>
                             </div>
                         </div>
@@ -134,7 +137,7 @@
                                 <div class="product-item bg-light mb-4">
                                     <div class="product-img position-relative overflow-hidden">
                                         <img class="img-fluid w-100" src="${p.productImg}" alt="">
-                                        <a href="product-detail.html">
+                                        <a href="product-detail?productId=${p.productId}">
                                             <div class="product-action">
                                             </div>
                                         </a>
@@ -166,74 +169,19 @@
                                         <li class="page-item <c:if test="${p eq requestScope.pageCur}"> active </c:if> "><a class="page-link" href="${requestScope.href}page=${p}">${p}</a></li>
                                         </c:forEach>
                                     <li class="page-item <c:if test="${requestScope.pageCur eq requestScope.totalPage}"> disabled </c:if>"><a class="page-link" href="${requestScope.href}page=${requestScope.pageCur + 1}">Next</a></li>
-                                </ul>
-                            </nav>
-                        </div>
-                    </div>
-                </div>
-                <!-- Shop Product End -->
-            </div>
-        </div>
-        <!-- Shop End -->
-
-
-        <!-- Footer Start -->
-        <div class="container-fluid bg-dark text-secondary mt-5 pt-5">
-            <div class="row px-xl-5 pt-5">
-                <div class="col-lg-4 col-md-12 mb-5 pr-3 pr-xl-5">
-                    <h5 class="text-secondary text-uppercase mb-4">Get In Touch</h5>
-                    <p class="mb-4">No dolore ipsum accusam no lorem. Invidunt sed clita kasd clita et et dolor sed dolor. Rebum tempor no vero est magna amet no</p>
-                    <p class="mb-2"><i class="fa fa-map-marker-alt text-primary mr-3"></i>123 Street, New York, USA</p>
-                    <p class="mb-2"><i class="fa fa-envelope text-primary mr-3"></i>info@example.com</p>
-                    <p class="mb-0"><i class="fa fa-phone-alt text-primary mr-3"></i>+012 345 67890</p>
-                </div>
-                <div class="col-lg-8 col-md-12">
-                    <div class="row">
-                        <div class="col-md-4 mb-5">
-                            <h5 class="text-secondary text-uppercase mb-4">Quick Shop</h5>
-                            <div class="d-flex flex-column justify-content-start">
-                                <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                                <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
-                                <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
-                                <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
-                                <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
-                                <a class="text-secondary" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-5">
-                            <h5 class="text-secondary text-uppercase mb-4">My Account</h5>
-                            <div class="d-flex flex-column justify-content-start">
-                                <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Home</a>
-                                <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Our Shop</a>
-                                <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shop Detail</a>
-                                <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Shopping Cart</a>
-                                <a class="text-secondary mb-2" href="#"><i class="fa fa-angle-right mr-2"></i>Checkout</a>
-                                <a class="text-secondary" href="#"><i class="fa fa-angle-right mr-2"></i>Contact Us</a>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-5">
-                            <h5 class="text-secondary text-uppercase mb-4">Newsletter</h5>
-                            <p>Duo stet tempor ipsum sit amet magna ipsum tempor est</p>
-                            <form action="">
-                                <div class="input-group">
-                                    <input type="text" class="form-control" placeholder="Your Email Address">
-                                    <div class="input-group-append">
-                                        <button class="btn btn-primary">Sign Up</button>
-                                    </div>
-                                </div>
-                            </form>
-                            <h6 class="text-secondary text-uppercase mt-4 mb-3">Follow Us</h6>
-                            <div class="d-flex">
-                                <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-twitter"></i></a>
-                                <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-facebook-f"></i></a>
-                                <a class="btn btn-primary btn-square mr-2" href="#"><i class="fab fa-linkedin-in"></i></a>
-                                <a class="btn btn-primary btn-square" href="#"><i class="fab fa-instagram"></i></a>
+                                    </ul>
+                                </nav>
                             </div>
                         </div>
                     </div>
+                    <!-- Shop Product End -->
                 </div>
             </div>
-        </div>
+            <!-- Shop End -->
+
+
+            <!-- Footer Start -->   
+        <%@include file="component/footer.jsp" %>
         <!-- Footer End -->
 
 
@@ -255,6 +203,37 @@
         <script src="assets/js/main.js"></script>
 
         <!--QUOCPQ-->
+        <script>
+            $(document).ready(function () {
+                $('.noUi-handle').on('click', function () {
+                    $(this).width(50);
+                });
+                var rangeSlider = document.getElementById('slider-range');
+                var moneyFormat = wNumb({
+                    decimals: 0,
+                    thousand: ','
+//    prefix: '$'
+                });
+                noUiSlider.create(rangeSlider, {
+                    start: [${requestScope.priceFrom}, ${requestScope.priceTo}],
+                    step: 10000,
+                    range: {
+                        'min': [100000],
+                        'max': [1000000]
+                    },
+                    format: moneyFormat,
+                    connect: true
+                });
+
+                // Set visual min and max values and also update value hidden form inputs
+                rangeSlider.noUiSlider.on('update', function (values, handle) {
+                    document.getElementById('slider-range-value1').innerHTML = values[0];
+                    document.getElementById('slider-range-value2').innerHTML = values[1];
+                    document.getElementById('priceFrom').value = moneyFormat.from(values[0]);
+                    document.getElementById('priceTo').value = moneyFormat.from(values[1]);
+                });
+            });
+        </script>
         <script src="assets/js/price.js"></script>
     </body>
 

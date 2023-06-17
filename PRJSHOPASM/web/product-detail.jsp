@@ -35,7 +35,7 @@
 
 
         <!-- Navbar Start -->
-        <%@include file="component/category-shop.jsp" %>
+        <%@include file="component/header-category.jsp" %>
         <!-- Navbar End -->
 
 
@@ -60,9 +60,9 @@
                 <div class="col-lg-5 mb-30">
                     <div id="product-carousel" class="carousel slide" data-ride="carousel">
                         <div class="carousel-inner bg-light">
-                            <c:forEach items="${requestScope.lstProductImgDetail}" var="img" varStatus="i">
-                                <div class="carousel-item <c:if test="${i.count eq 1}">active</c:if> ">
-                                    <img class="w-100 h-100" src="${img.productImgDetailPath}" alt="Image">
+                            <c:forEach items="${requestScope.lstProductImgDetail}" var="i" varStatus="theCount">
+                                <div class="carousel-item <c:if test="${theCount.count eq 1}">active</c:if>">
+                                    <img class="w-100 h-100" src="${i.productImgDetailPath}" alt="Image">
                                 </div>
                             </c:forEach>
                         </div>
@@ -89,23 +89,23 @@
                             <small class="pt-1">(99 Reviews)</small>
                         </div>
                         <h3 class="font-weight-semi-bold mb-4">${requestScope.product.productPrice} VND</h3>
-<!--                        <div class="description">
-                            <p class="mb-4">Volup erat ipsum diam elitr rebum et dolor. Est nonumy elitr erat diam stet sit
-                                clita ea. Sanc ipsum et, labore clita lorem magna duo dolor no sea
-                                Nonumy</p>
-                            <ul>
-                                <li>Lorem Des</li>
-                                <li>Lorem Des</li>
-                                <li>Lorem Des</li>
-                            </ul>
-                        </div>-->
+                        <!--                        <div class="description">
+                                                    <p class="mb-4">Volup erat ipsum diam elitr rebum et dolor. Est nonumy elitr erat diam stet sit
+                                                        clita ea. Sanc ipsum et, labore clita lorem magna duo dolor no sea
+                                                        Nonumy</p>
+                                                    <ul>
+                                                        <li>Lorem Des</li>
+                                                        <li>Lorem Des</li>
+                                                        <li>Lorem Des</li>
+                                                    </ul>
+                                                </div>-->
                         <div class="d-flex mb-3">
                             <strong class="text-dark mr-3">Sizes:</strong>
                             <form>
-                                <c:forEach items="${requestScope.lstProductSize}" var="s" varStatus="i">
+                                <c:forEach items="${requestScope.lstProductSize}" var="s">
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" class="custom-control-input" <c:if test="${i.count eq 1}">checked=""</c:if> id="s${i.count}" name="size">
-                                        <label class="custom-control-label" for="s${i.count}">${s.size.sizeValue}</label>
+                                        <input type="radio" class="custom-control-input" id="size-${s.productSizeId}" name="size">
+                                        <label class="custom-control-label" for="size-${s.productSizeId}">${s.size.sizeValue}</label>
                                     </div>
                                 </c:forEach>
                             </form>
@@ -188,7 +188,7 @@
                         <div class="tab-content">
                             <div class="tab-pane fade show active" id="tab-pane-1">
                                 <h4 class="mb-3">Product Description</h4>
-                                <p>${requestScope.product.productDescription} VND</p>
+                                <p>${requestScope.product.productDescription}</p>
                             </div>
                             <div class="tab-pane fade" id="tab-pane-2">
                                 <h4 class="mb-3">Additional Information</h4>
@@ -447,7 +447,7 @@
 
 
         <!-- Footer Start -->
-            <%@include file="component/footer-shop.jsp" %>
+        <%@include file="component/footer.jsp" %>
         <!-- Footer End -->
 
 

@@ -5,7 +5,7 @@
 package dao;
 
 import connection.SQLServerConnection;
-import enity.AccountDetail;
+import entity.AccountDetail;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;

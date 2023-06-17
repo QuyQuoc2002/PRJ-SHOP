@@ -81,14 +81,20 @@ public class ShopController extends HttpServlet {
         int size = 0;
         List<Product> lstProduct;
         String href;
-        String priceFrom = request.getParameter("priceFrom") == null? "0" : request.getParameter("priceFrom");
-        String priceTo = request.getParameter("priceTo")  == null? "1000000000" : request.getParameter("priceTo");
+        String priceFrom = request.getParameter("priceFrom") == null? "100000" : request.getParameter("priceFrom");
+        String priceTo = request.getParameter("priceTo")  == null? "1000000" : request.getParameter("priceTo");
         String[] sizeIds = request.getParameterValues("sizeId");
 
         if (categoryId != 0) {
-            lstProduct = productDAO.getListProductPerPageByCategoryId(numberProductPerPage, pageCur, categoryId);
-            href = "shop?categoryId=" + categoryId + "&";
-            size = productDAO.sizeByCategory(categoryId);
+            lstProduct = productDAO.getListProductPerPageByCategoryId(numberProductPerPage, pageCur, categoryId, sizeIds, priceFrom, priceTo);
+            //href = "shop?categoryId=" + categoryId + "&";
+            href = priceFrom.equals("0") ? "shop?categoryId=" + categoryId + "&" : "shop?categoryId=" + categoryId +"&priceFrom=" + priceFrom + "&priceTo=" + priceTo + "&";
+            size = productDAO.sizeByCategory(categoryId, sizeIds, priceFrom, priceTo);
+            if (sizeIds != null) {
+                for (String sizeId : sizeIds) {
+                    href += "&sizeId=" + sizeId + "&";
+                }
+            }
         } else if (searchValue != null) {
             lstProduct = productDAO.getListProductPerPageBySeachValue(numberProductPerPage, pageCur, searchValue);
             href = "shop?searchValue=" + searchValue + "&";
@@ -98,8 +104,8 @@ public class ShopController extends HttpServlet {
             href = priceFrom.equals("0") ? "shop?" : "shop?priceFrom=" + priceFrom + "&priceTo=" + priceTo + "&";
             size = productDAO.size(sizeIds, priceFrom, priceTo);
             if (sizeIds != null) {
-                for (int i = 0; i < sizeIds.length; i++) {
-                    href += "&sizeId=" + sizeIds[i] + "&";
+                for (String sizeId : sizeIds) {
+                    href += "&sizeId=" + sizeId + "&";
                 }
             }
         }
@@ -113,6 +119,9 @@ public class ShopController extends HttpServlet {
         List<Size> lstSize = sizeDAO.getAll();
 
         request.setAttribute("sizeIds", sizeIds);
+        request.setAttribute("priceFrom", priceFrom);
+        request.setAttribute("priceTo", priceTo);
+        request.setAttribute("categoryId", categoryId);
         request.setAttribute("Helper", new Helper());
         request.setAttribute("href", href);
         request.setAttribute("lstCategory", lstCategory);

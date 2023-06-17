@@ -6,8 +6,8 @@ package dao;
 
 
 import connection.SQLServerConnection;
-import enity.Account;
-import enity.Role;
+import entity.Account;
+import entity.Role;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

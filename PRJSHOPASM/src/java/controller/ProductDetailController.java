@@ -4,11 +4,9 @@
  */
 package controller;
 
-import dao.CategoryDAO;
 import dao.ProductDAO;
 import dao.ProductImgDetailDAO;
 import dao.ProductSizeDAO;
-import entity.Category;
 import entity.Product;
 import entity.ProductImgDetail;
 import entity.ProductSize;
@@ -45,7 +43,7 @@ public class ProductDetailController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ProductDetailController</title>");
+            out.println("<title>Servlet ProductDetailController</title>");            
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ProductDetailController at " + request.getContextPath() + "</h1>");
@@ -66,18 +64,15 @@ public class ProductDetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CategoryDAO categoryDAO = new CategoryDAO();
         ProductDAO productDAO = new ProductDAO();
         ProductImgDetailDAO productImgDetailDAO = new ProductImgDetailDAO();
         ProductSizeDAO productSizeDAO = new ProductSizeDAO();
-
+        
         int productId = Integer.parseInt(request.getParameter("productId"));
-        List<Category> lstCategory = categoryDAO.getAll();
         Product product = productDAO.getOne(productId);
         List<ProductImgDetail> lstProductImgDetail = productImgDetailDAO.getAll(productId);
         List<ProductSize> lstProductSize = productSizeDAO.getAll(productId);
-
-        request.setAttribute("lstCategory", lstCategory);
+        
         request.setAttribute("product", product);
         request.setAttribute("lstProductImgDetail", lstProductImgDetail);
         request.setAttribute("lstProductSize", lstProductSize);

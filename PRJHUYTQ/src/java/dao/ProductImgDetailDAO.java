@@ -5,7 +5,7 @@
 package dao;
 
 import connection.SQLServerConnection;
-import entity.Size;
+import entity.ProductImgDetail;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -17,19 +17,22 @@ import java.util.List;
  *
  * @author DELL
  */
-public class SizeDAO {
-    public List<Size> getAll() {
+public class ProductImgDetailDAO {
 
-        String sql = "SELECT * FROM Size";//
+    public List<ProductImgDetail> getAll(int productId) {
+
+        String sql = "select * from ProductImgDetail Where productId = ?";//
 
         try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
+            ps.setObject(1, productId);
             ResultSet rs = ps.executeQuery();
 
-            List<Size> list = new ArrayList<>();//
+            List<ProductImgDetail> list = new ArrayList<>();//
             while (rs.next()) {
-                Size s = Size.builder()
-                        .sizeId(rs.getInt("SizeId"))
-                        .sizeValue(rs.getString("SizeValue"))
+                ProductImgDetail s = ProductImgDetail.builder()
+                        .productImgDetailId(rs.getInt("productImgDetailId"))
+                        .productId(rs.getInt("productId"))
+                        .productImgDetailPath(rs.getString("productImgDetailPath"))
                         .build();
                 list.add(s);
             }
@@ -39,8 +42,8 @@ public class SizeDAO {
         }
         return null;
     }
-    
+
     public static void main(String[] args) {
-        System.out.println(new SizeDAO().getAll());
+        System.out.println(new ProductImgDetailDAO().getAll(12));
     }
 }

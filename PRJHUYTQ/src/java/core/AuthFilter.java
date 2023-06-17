@@ -4,7 +4,7 @@
  */
 package core;
 
-import enity.Account;
+import entity.Account;
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.PrintWriter;

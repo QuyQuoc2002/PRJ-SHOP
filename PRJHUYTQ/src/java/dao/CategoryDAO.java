@@ -5,7 +5,7 @@
 package dao;
 
 import connection.SQLServerConnection;
-import enity.Category;
+import entity.Category;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
