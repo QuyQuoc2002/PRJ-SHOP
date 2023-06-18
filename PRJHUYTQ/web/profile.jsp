@@ -1,3 +1,5 @@
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
     <head>
@@ -51,8 +53,8 @@
                     <div class="col-md-3">
                         <a
                             class="profile-edit-btn"
-                            data-bs-toggle="modal"
-                            data-bs-target="#changeInformModal"
+                            data-toggle="modal"
+                            data-target="#changeInformModal"
                             href="javascript:void(0)"
                             >edit profile</a
                         >
@@ -68,7 +70,7 @@
                                 <a
                                     class="nav-link"
                                     id="home-tab"
-                                    data-bs-toggle="tab"
+                                    data-toggle="tab"
                                     href="#home"
                                     role="tab"
                                     aria-controls="home"
@@ -80,7 +82,7 @@
                                 <a
                                     class="nav-link"
                                     id="address-tab"
-                                    data-bs-toggle="tab"
+                                    data-toggle="tab"
                                     href="#address"
                                     role="tab"
                                     aria-controls="address"
@@ -92,7 +94,7 @@
                                 <a
                                     class="nav-link"
                                     id="delivering-tab"
-                                    data-bs-toggle="tab"
+                                    data-toggle="tab"
                                     href="#delivering"
                                     role="tab"
                                     aria-controls="delivering"
@@ -104,7 +106,7 @@
                                 <a
                                     class="nav-link"
                                     id="done-order-tab"
-                                    data-bs-toggle="tab"
+                                    data-toggle="tab"
                                     href="#done-order"
                                     role="tab"
                                     aria-controls="done-order"
@@ -191,8 +193,8 @@
                                 <div class="col-md-6">
                                     <p>
                                         <a
-                                            data-bs-toggle="modal"
-                                            data-bs-target="#changePasswordModal"
+                                            data-toggle="modal"
+                                            data-target="#changePasswordModal"
                                             href="javascript:void(0)"
                                             >Change</a
                                         >
@@ -382,14 +384,14 @@
                                         <td>Quoc Phung</tda>
                                         <td>0911092002</td>
                                         <td>2023-05-24</td>
-                                        <td><a data-bs-toggle="modal" data-bs-target="#modal-order-detail" href="javascript:void(0)"><i class="fa-solid fa-eye"></i></a></td>
+                                        <td><a data-toggle="modal" data-target="#modal-order-detail" href="javascript:void(0)"><i class="fa-solid fa-eye"></i></a></td>
                                     </tr>
                                     <tr>
-                                        <td scope="row">ádasd</td>
-                                        <td>ádasd</tda>
-                                        <td>ádasd</td>
-                                        <td>ádasd</td>
-                                        <td>ádasd</td>
+                                        <td scope="row">Ã¡dasd</td>
+                                        <td>Ã¡dasd</tda>
+                                        <td>Ã¡dasd</td>
+                                        <td>Ã¡dasd</td>
+                                        <td>Ã¡dasd</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -422,11 +424,11 @@
                                         <td><i class="fa-solid fa-eye"></i></td>
                                     </tr>
                                     <tr>
-                                        <td scope="row">ádasd</td>
-                                        <td>ádasd</tda>
-                                        <td>ádasd</td>
-                                        <td>ádasd</td>
-                                        <td>ádasd</td>
+                                        <td scope="row">Ã¡dasd</td>
+                                        <td>Ã¡dasd</tda>
+                                        <td>Ã¡dasd</td>
+                                        <td>Ã¡dasd</td>
+                                        <td>Ã¡dasd</td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -444,17 +446,8 @@
         <%@include file="modal/modal-order-detail.jsp" %>
 
     </body>
-    <script
-        src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-        crossorigin="anonymous"
-    ></script>
-    <script
-        src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.0/jquery.min.js"
-        integrity="sha512-3gJwYpMe3QewGELv8k/BX9vcqhryRdzRMxVfq6ngyWXwo03GFEzjsUm8Q7RZcHPHksttq7/GFoxjCVUjkjvPdw=="
-        crossorigin="anonymous"
-        referrerpolicy="no-referrer"
-    ></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.bundle.min.js"></script>
     <script>
         $("#home-tab").addClass("active");
         $("#home").addClass("show active");

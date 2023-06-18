@@ -4,11 +4,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Order Detail</h4>
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    ></button>
+                <a  style="cursor: pointer"
+                    data-dismiss="modal"
+                    ><i class="fa-solid fa-xmark"></i></a>
             </div>
             <div class="modal-body">
                 <div class="d-flex flex-row mb-4 pb-2">

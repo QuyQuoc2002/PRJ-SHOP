@@ -4,11 +4,9 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h4 class="modal-title">Change PassWord</h4>
-                <button
-                    type="button"
-                    class="btn-close"
-                    data-bs-dismiss="modal"
-                    ></button>
+                <a  style="cursor: pointer"
+                    data-dismiss="modal"
+                    ><i class="fa-solid fa-xmark"></i></a>
             </div>
             <div class="modal-body">
                 <form action="changePW" method="post" id="reused_form">
