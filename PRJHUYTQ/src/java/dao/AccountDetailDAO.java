@@ -8,6 +8,7 @@ import connection.SQLServerConnection;
 import entity.AccountDetail;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
@@ -16,6 +17,29 @@ import java.sql.SQLException;
  */
 public class AccountDetailDAO {
 
+    public AccountDetail getOne(int accountId) {
+        String sql = "select * from AccountDetail where accountId = ?";//
+
+        try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
+            ps.setObject(1, accountId);
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                AccountDetail s = AccountDetail.builder()
+                        .accountId(rs.getInt("accountId"))
+                        .accountDetailName(rs.getString("accountDetailName"))
+                        .accountDetailAvatar(rs.getString("accountDetailAvatar"))
+                        .accountDetailDob(rs.getDate("accountDetailDob"))
+                        .accountDetailDoc(rs.getDate("accountDetailDoc"))
+                        .build();
+                return s;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
+    }
+    
     public boolean add(AccountDetail obj) {
         int check = 0;
         String sql = "INSERT INTO AccountDetail(accountId, accountDetailName, accountDetailDoc)"
@@ -28,5 +52,9 @@ public class AccountDetailDAO {
             e.printStackTrace(System.out);
         }
         return check > 0;
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(new AccountDetailDAO().getOne(3));
     }
 }

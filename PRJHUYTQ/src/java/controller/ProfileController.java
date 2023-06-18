@@ -4,9 +4,8 @@
  */
 package controller;
 
-import dao.AccountDAO;
-import dao.AccountDetailDAO;
 import entity.Account;
+import entity.AccountDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -20,8 +19,8 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author DELL
  */
-@WebServlet(name = "SignInController", urlPatterns = {"/sign-in"})
-public class SignInController extends HttpServlet {
+@WebServlet(name = "ProfileController", urlPatterns = {"/profile"})
+public class ProfileController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -40,10 +39,10 @@ public class SignInController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet SignInController</title>");            
+            out.println("<title>Servlet ProfileController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet SignInController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet ProfileController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -61,7 +60,10 @@ public class SignInController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        request.getRequestDispatcher("sign-in.jsp").forward(request, response);
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("account");
+        AccountDetail accountDetail = (AccountDetail) session.getAttribute("account");
+        request.getRequestDispatcher("profile.jsp").forward(request, response);
     }
 
     /**
@@ -75,23 +77,7 @@ public class SignInController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        AccountDAO accountDAO = new AccountDAO();
-        AccountDetailDAO accountDetailDAO = new AccountDetailDAO();
-        HttpSession session = request.getSession();
-        
-        String username = request.getParameter("username");
-        String password = request.getParameter("password");
-        Account account = accountDAO.authenticate(username, password);
-        
-        if (account != null) {
-            session.setAttribute("accountCur", account);
-            session.setAttribute("accountDetail", accountDetailDAO.getOne(account.getAccountId()));
-            response.sendRedirect("/PRJHUYTQ");
-        } else {
-            session.setAttribute("msg", "login Fail.");
-            response.sendRedirect("sign-in");
-        }
-        
+        processRequest(request, response);
     }
 
     /**
