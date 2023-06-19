@@ -9,27 +9,27 @@
                     ><i class="fa-solid fa-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <form action="changeInf" method="post" id="reused_form">
+                <p style="color: red">${sessionScope.msgchangeInformation}</p>
+                <form action="profile" method="post" id="reused_form">
+                    <input type="hidden" name="type" value="changeInformation">
                     <div class="form-group mt-4">
                         <label for="name"> Name:</label>
                         <input
                             type="text"
                             class="form-control"
                             id="name"
-                            name="nickName"
-                            placeholder="Quoc Phung"
+                            name="accountDetailName"
+                            value="${sessionScope.accountDetail.accountDetailName}"
                             />
                     </div>
                     <div class="form-group mt-4">
                         <label for="dob"> Date of Birth:</label>
                         <input
-                            type="text"
+                            type="date"
                             class="form-control"
                             id="dob"
-                            name="dob"
-                            placeholder="11/09/2002"
-                            pattern="^\d{4}[\-\/\s]?((((0[13578])|(1[02]))[\-\/\s]?(([0-2][0-9])|(3[01])))|(((0[469])|(11))[\-\/\s]?(([0-2][0-9])|(30)))|(02[\-\/\s]?[0-2][0-9]))$"
-                            title="Enter a date in this format YYYY-MM-DD"
+                            name="accountDetailDob"
+                            value="${sessionScope.accountDetail.accountDetailDob}"
                             />
                     </div>
 

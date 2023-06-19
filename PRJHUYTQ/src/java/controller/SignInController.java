@@ -86,7 +86,8 @@ public class SignInController extends HttpServlet {
         if (account != null) {
             session.setAttribute("accountCur", account);
             session.setAttribute("accountDetail", accountDetailDAO.getOne(account.getAccountId()));
-            response.sendRedirect("/PRJHUYTQ");
+//            response.sendRedirect("/PRJHUYTQ");
+            response.sendRedirect("profile");
         } else {
             session.setAttribute("msg", "login Fail.");
             response.sendRedirect("sign-in");

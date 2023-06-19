@@ -1,4 +1,5 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -169,7 +170,7 @@
                                     >
                                 </div>
                                 <div class="col-md-4">
-                                    <p>${sessionScope.accountDetail.accountDetailDob}</p>
+                                    <p><fmt:formatDate value="${sessionScope.accountDetail.accountDetailDob}" pattern="dd/MM/yyyy" /><p>
                                 </div>
                                 <div class="col-md-2">
                                     <p><i class="fa-regular fa-pen-to-square"></i></p>
@@ -183,7 +184,7 @@
                                     >
                                 </div>
                                 <div class="col-md-6">
-                                    <p>${sessionScope.accountDetail.accountDetailDoc}</p>
+                                    <p><fmt:formatDate value="${sessionScope.accountDetail.accountDetailDoc}" pattern="dd/MM/yyyy" /><p>
                                 </div>
                             </div>
                             <div class="row">
@@ -223,84 +224,69 @@
                                 </div>
                             </div>
 
-                            <form
-                                class="address-group shadow p-3 mb-4 bg-white rounded"
-                                method="post"
-                                action="addressEdit"
-                                >
-                                <!-- input -->
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <input
-                                            type="text"
-                                            name="nameContact"
-                                            class="form-control"
-                                            value="${addressContact.nameContact}"
-                                            />
+                            <c:forEach items="${requestScope.lstAccountContact}" var="ac">
+                                <form class="address-group shadow p-3 mb-4 bg-white rounded" method="post" action="addressEdit" >
+                                    <!-- input -->
+                                    <div class="row">
+                                        <div class="col-md-3">
+                                            <input type="text" name="nameContact"  class="form-control"  value="${ac.accountContactName}"  />
+                                        </div>
+                                        <div class="col-md-3">
+                                            <input type="text" name="phoneContact"  class="form-control"  value="${ac.accountContactMobile}" pattern="^[\w@_-]{8,30}$" title="Please enter real phone number" />
+                                        </div>
+                                        <div class="col-md-6">
+                                            <input type="text" name="address" class="form-control" value="${ac.accountContactAddress}" />
+                                        </div>
+                                        <input type="hidden" name="id" value="${addressContact.id}" />
                                     </div>
-                                    <div class="col-md-3">
-                                        <input
-                                            type="text"
-                                            name="phoneContact"
-                                            class="form-control"
-                                            value="${addressContact.phoneContact}"
-                                            pattern="^[\w@_-]{8,30}$"
-                                            title="Please enter real phone number"
-                                            />
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input
-                                            type="text"
-                                            name="address"
-                                            class="form-control"
-                                            value="${addressContact.address}"
-                                            />
-                                    </div>
-                                    <input type="hidden" name="id" value="${addressContact.id}" />
-                                </div>
-                                <!-- btn -->
-                                <div class="row mt-2">
-                                    <div class="col-md-3">
-                                        <a
-                                            class="btn-grad btn-cus"
-                                            style="padding: 6px 12px; text-transform: none"
-                                            >
-                                            <i class="fa-solid fa-address-book"></i> Address
-                                            default</a
-                                        >
-                                    </div>
-                                    <div class="col-md-3"></div>
-                                    <div class="col-md-6">
-                                        <div class="row">
-                                            <div class="col-md-4">
-                                                <input
-                                                    type="submit"
-                                                    name="type"
-                                                    value="Delete"
-                                                    class="btn btn-secondary btn-cus"
-                                                    />
-                                            </div>
-                                            <div class="col-md-5">
-                                                <input
-                                                    type="submit"
-                                                    name="type"
-                                                    value="Set Default"
-                                                    class="btn btn-secondary btn-cus"
-                                                    />
-                                            </div>
-                                            <div class="col-md-3">
-                                                <input
-                                                    type="submit"
-                                                    name="type"
-                                                    value="Edit"
-                                                    class="btn btn-secondary btn-cus"
-                                                    />
+                                    <!-- btn -->
+                                    <div class="row mt-2">
+                                        <div class="col-md-3">
+                                            <c:if test="${ac.accountContactDefault}">
+                                                <a class="btn-grad btn-cus" style="padding: 6px 12px; text-transform: none" >
+                                                    <i class="fa-solid fa-address-book"></i> Address default
+                                                </a>
+                                            </c:if>
+                                        </div>
+                                        <div class="col-md-3"></div>
+                                        <div class="col-md-6">
+                                            <div class="row">
+                                                <c:if test="${!ac.accountContactDefault}">
+                                                    <div class="col-md-4">
+                                                        <input
+                                                            type="submit"
+                                                            name="type"
+                                                            value="Delete"
+                                                            class="btn btn-secondary btn-cus"
+                                                            />
+                                                    </div>
+                                                    <div class="col-md-5">
+                                                        <input
+                                                            type="submit"
+                                                            name="type"
+                                                            value="Set Default"
+                                                            class="btn btn-secondary btn-cus"
+                                                            />
+                                                    </div>
+                                                </c:if>
+                                                <c:if test="${ac.accountContactDefault}">
+                                                    <div class="col-md-4"></div>
+                                                    <div class="col-md-5"></div>
+                                                </c:if>
+                                                <div class="col-md-3">
+                                                    <input
+                                                        type="submit"
+                                                        name="type"
+                                                        value="Edit"
+                                                        class="btn btn-secondary btn-cus"
+                                                        />
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                                <!-- end form -->
-                            </form>
+                                    <!-- end form -->
+                                </form>
+                            </c:forEach>
                             <!-- Add more -->
                             <form
                                 class="address-group shadow p-3 mb-4 mt-5 bg-white rounded"
@@ -452,4 +438,27 @@
         $("#home-tab").addClass("active");
         $("#home").addClass("show active");
     </script>
+
+    <script>
+        const msgchangePassword = '<%= session.getAttribute("msgchangePassword") %>';
+        if (msgchangePassword !== 'null') {
+            var myModal = new bootstrap.Modal(document.getElementById("changePasswordModal"), {});
+            document.onreadystatechange = function () {
+                myModal.show();
+            };
+        }
+    </script>
+    <script>
+        const msgchangeInformation = '<%= session.getAttribute("msgchangeInformation") %>';
+        if (msgchangeInformation !== 'null') {
+            var myModal = new bootstrap.Modal(document.getElementById("changeInformModal"), {});
+            document.onreadystatechange = function () {
+                myModal.show();
+            };
+        }
+    </script>
+    <%
+        request.getSession().removeAttribute("msgchangePassword");
+        request.getSession().removeAttribute("msgchangeInformation");
+    %>
 </html>

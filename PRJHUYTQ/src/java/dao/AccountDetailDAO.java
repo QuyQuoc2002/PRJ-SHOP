@@ -54,6 +54,22 @@ public class AccountDetailDAO {
         return check > 0;
     }
     
+    public boolean update(AccountDetail account, int accountId) {
+        int check = 0;
+        String sql = "UPDATE AccountDetail SET accountDetailName = ?, accountDetailAvatar = ?, accountDetailDob = ? WHERE accountId = ?";
+
+        try ( Connection con = SQLServerConnection.getConnection();  PreparedStatement ps = con.prepareStatement(sql);) {
+            ps.setObject(1, account.getAccountDetailName());
+            ps.setObject(2, account.getAccountDetailAvatar());
+            ps.setObject(3, account.getAccountDetailDob());
+            ps.setObject(4, accountId);
+            check = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return check > 0;
+    }
+    
     public static void main(String[] args) {
         System.out.println(new AccountDetailDAO().getOne(3));
     }

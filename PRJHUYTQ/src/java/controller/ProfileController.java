@@ -4,7 +4,11 @@
  */
 package controller;
 
+import dao.AccountContactDAO;
+import dao.AccountDAO;
+import dao.AccountDetailDAO;
 import entity.Account;
+import entity.AccountContact;
 import entity.AccountDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -14,6 +18,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.Date;
+import java.util.List;
 
 /**
  *
@@ -39,7 +45,7 @@ public class ProfileController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ProfileController</title>");            
+            out.println("<title>Servlet ProfileController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ProfileController at " + request.getContextPath() + "</h1>");
@@ -61,8 +67,11 @@ public class ProfileController extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         HttpSession session = request.getSession();
-        Account account = (Account) session.getAttribute("account");
-        AccountDetail accountDetail = (AccountDetail) session.getAttribute("account");
+        Account account = (Account) session.getAttribute("accountCur");
+        AccountContactDAO accountContactDAO = new AccountContactDAO();
+        List<AccountContact> lstAccountContact = accountContactDAO.getAll(account.getAccountId());
+        
+        request.setAttribute("lstAccountContact", lstAccountContact);
         request.getRequestDispatcher("profile.jsp").forward(request, response);
     }
 
@@ -77,7 +86,51 @@ public class ProfileController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        AccountDAO accountDAO = new AccountDAO();
+        AccountDetailDAO accountDetailDAO = new AccountDetailDAO();
+        String type = request.getParameter("type");
+        Account account = (Account) session.getAttribute("accountCur");
+        AccountDetail accountDetail = (AccountDetail) session.getAttribute("accountDetail");
+
+        switch (type) {
+            case "changePassword":
+                String oldPass = request.getParameter("oldPass");
+                String newPass = request.getParameter("newPass");
+                String reNewPass = request.getParameter("reNewPass");
+                if (!oldPass.equals(account.getAccountPassword())) {
+                    session.setAttribute("msgchangePassword", "Password is wrong, please again");
+                } else {
+                    if (!newPass.equals(reNewPass)) {
+                        session.setAttribute("msgchangePassword", "Renew Password is not match");
+                    } else {
+                        boolean isChangePasswordSuccess = accountDAO.changePassword(account.getAccountId(), newPass);
+                        if (isChangePasswordSuccess) {
+                            account.setAccountPassword(newPass);
+                            session.setAttribute("accountCur", account);
+                            session.setAttribute("msgchangePassword", "Change password Success");
+                        } else {
+                            session.setAttribute("msgchangePassword", "Change password Fail");
+                        }
+                    }
+                }
+                break;
+            case "changeInformation":
+                String accountDetailName = request.getParameter("accountDetailName");
+                Date accountDetailDob = request.getParameter("accountDetailDob").equals("") ? null : Date.valueOf(request.getParameter("accountDetailDob"));
+                accountDetail.setAccountDetailName(accountDetailName);
+                accountDetail.setAccountDetailDob(accountDetailDob);
+                boolean isChangeInformationSuccess = accountDetailDAO.update(accountDetail, account.getAccountId());
+                session.setAttribute("accountDetail", accountDetail);
+                if (isChangeInformationSuccess) {
+                    session.setAttribute("msgchangeInformation", "Change Information Success");
+                } else {
+                    session.setAttribute("msgchangeInformation", "Change Information Fail");
+                }
+        }
+
+        response.sendRedirect("profile");
+
     }
 
     /**

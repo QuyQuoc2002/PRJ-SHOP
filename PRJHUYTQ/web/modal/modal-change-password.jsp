@@ -9,7 +9,9 @@
                     ><i class="fa-solid fa-xmark"></i></a>
             </div>
             <div class="modal-body">
-                <form action="changePW" method="post" id="reused_form">
+                <p style="color: red">${sessionScope.msgchangePassword}</p>
+                <form action="profile" method="post" id="reused_form">
+                    <input type="hidden" name="type" value="changePassword">
                     <div class="form-group mt-4">
                         <label for="oldPass"> Old Password:</label>
                         <input
@@ -30,12 +32,7 @@
                             name="newPass"
                             required
                             maxlength="50"
-                            pattern="^[\w@_-]{8,30}$"
                             />
-                        <sub
-                            >Password must alphanumeric (@, _ and - are also allowed) and
-                            be 8 - 20 characters
-                        </sub>
                     </div>
                     <div class="form-group mt-4">
                         <label for="reNewPass"> Repeat new password:</label>
