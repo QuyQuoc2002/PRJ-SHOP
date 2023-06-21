@@ -21,7 +21,7 @@ import java.util.List;
 public class AccountContactDAO {
 
     public List<AccountContact> getAll(int accountId) {
-        String sql = "select * from AccountContact where accountId = ?";//
+        String sql = "select * from AccountContact where accountId = ? ORder by accountContactDefault DESC";//
 
         try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
             ps.setObject(1, accountId);
@@ -43,6 +43,20 @@ public class AccountContactDAO {
             e.printStackTrace(System.out);
         }
         return null;
+    }
+    
+    public boolean setAccountContactDefaut(int accountContactId) {
+                int check = 0;
+        String sql = "UPDATE AccountContact SET accountContactDefault = '0' WHERE accountContactDefault = '1'\n" +
+                        "UPDATE AccountContact SET accountContactDefault = '1' WHERE accountContactId= ?";
+
+        try ( Connection con = SQLServerConnection.getConnection();  PreparedStatement ps = con.prepareStatement(sql);) {
+            ps.setObject(1, accountContactId);
+            check = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return check > 0;
     }
     
     public static void main(String[] args) {

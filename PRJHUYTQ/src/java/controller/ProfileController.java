@@ -70,7 +70,7 @@ public class ProfileController extends HttpServlet {
         Account account = (Account) session.getAttribute("accountCur");
         AccountContactDAO accountContactDAO = new AccountContactDAO();
         List<AccountContact> lstAccountContact = accountContactDAO.getAll(account.getAccountId());
-        
+
         request.setAttribute("lstAccountContact", lstAccountContact);
         request.getRequestDispatcher("profile.jsp").forward(request, response);
     }
@@ -89,12 +89,14 @@ public class ProfileController extends HttpServlet {
         HttpSession session = request.getSession();
         AccountDAO accountDAO = new AccountDAO();
         AccountDetailDAO accountDetailDAO = new AccountDetailDAO();
+        AccountContactDAO accountContactDAO = new AccountContactDAO();
+        
         String type = request.getParameter("type");
         Account account = (Account) session.getAttribute("accountCur");
         AccountDetail accountDetail = (AccountDetail) session.getAttribute("accountDetail");
 
         switch (type) {
-            case "changePassword":
+            case "changePassword": {
                 String oldPass = request.getParameter("oldPass");
                 String newPass = request.getParameter("newPass");
                 String reNewPass = request.getParameter("reNewPass");
@@ -114,8 +116,9 @@ public class ProfileController extends HttpServlet {
                         }
                     }
                 }
-                break;
-            case "changeInformation":
+            }
+            break;
+            case "changeInformation": {
                 String accountDetailName = request.getParameter("accountDetailName");
                 Date accountDetailDob = request.getParameter("accountDetailDob").equals("") ? null : Date.valueOf(request.getParameter("accountDetailDob"));
                 accountDetail.setAccountDetailName(accountDetailName);
@@ -127,6 +130,14 @@ public class ProfileController extends HttpServlet {
                 } else {
                     session.setAttribute("msgchangeInformation", "Change Information Fail");
                 }
+            }
+            case "updateAddress": {
+                String choice = request.getParameter("choice");
+                int accountContactId = Integer.parseInt(request.getParameter("accountContactId"));
+                accountContactDAO.setAccountContactDefaut(accountContactId);
+                session.setAttribute("msgUpdate", "addressContact");     
+            }
+
         }
 
         response.sendRedirect("profile");

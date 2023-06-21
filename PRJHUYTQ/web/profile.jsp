@@ -120,305 +120,17 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-3">
-                    <!-- <div class="profile-work">
-                                                              <p>WORK LINK</p>
-                                                              <a href="">Website Link</a><br/>
-                                                              <a href="">Bootsnipp Profile</a><br/>
-                                                              <a href="">Bootply Profile</a>
-                                                              <p>SKILLS</p>
-                                                              <a href="">Web Designer</a><br/>
-                                                              <a href="">Web Developer</a><br/>
-                                                              <a href="">WordPress</a><br/>
-                                                              <a href="">WooCommerce</a><br/>
-                                                              <a href="">PHP, .Net</a><br/>
-                                                          </div> -->
-                </div>
+                <div class="col-md-3"></div>
                 <div class="col-md-9">
                     <div class="tab-content profile-tab" id="myTabContent">
-                        <!----------------USER ACCOUNT------------->
-                        <div
-                            class="tab-pane fade"
-                            id="home"
-                            role="tabpanel"
-                            aria-labelledby="home-tab"
-                            >
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label><i class="fa-solid fa-envelope icon"></i>Email</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>${sessionScope.accountCur.accountEmail}</p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label><i class="fa-solid fa-signature icon"></i> Name</label>
-                                </div>
-                                <div class="col-md-4">
-                                    <p>${sessionScope.accountDetail.accountDetailName}</p>
-                                </div>
-                                <div class="col-md-2">
-                                    <p><i class="fa-regular fa-pen-to-square"></i></p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label
-                                        ><i class="fa-solid fa-calendar-days icon"></i> Date Of
-                                        Birth</label
-                                    >
-                                </div>
-                                <div class="col-md-4">
-                                    <p><fmt:formatDate value="${sessionScope.accountDetail.accountDetailDob}" pattern="dd/MM/yyyy" /><p>
-                                </div>
-                                <div class="col-md-2">
-                                    <p><i class="fa-regular fa-pen-to-square"></i></p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label
-                                        ><i class="fa-solid fa-calendar-days icon"></i> Date Of
-                                        Creation</label
-                                    >
-                                </div>
-                                <div class="col-md-6">
-                                    <p><fmt:formatDate value="${sessionScope.accountDetail.accountDetailDoc}" pattern="dd/MM/yyyy" /><p>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label><i class="fa-solid fa-lock icon"></i> Pass Word</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <p>
-                                        <a
-                                            data-toggle="modal"
-                                            data-target="#changePasswordModal"
-                                            href="javascript:void(0)"
-                                            >Change</a
-                                        >
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <!----------------END ACCOUNT------------->
+                        <!----------------About------------->
+                        <%@include file="tab/profile/tab-about.jsp" %>
                         <!----------------START ADDRESS------------->
-
-                        <div
-                            class="tab-pane fade"
-                            id="address"
-                            role="tabpanel"
-                            aria-labelledby="address-tab"
-                            >
-                            <div class="row mb-5">
-                                <div class="col-md-3 fw-bold d-flex justify-content-center">
-                                    Name Contact
-                                </div>
-                                <div class="col-md-3 fw-bold d-flex justify-content-center">
-                                    Phone Contact
-                                </div>
-                                <div class="col-md-3 fw-bold d-flex justify-content-center">
-                                    Address Contact
-                                </div>
-                            </div>
-
-                            <c:forEach items="${requestScope.lstAccountContact}" var="ac">
-                                <form class="address-group shadow p-3 mb-4 bg-white rounded" method="post" action="addressEdit" >
-                                    <!-- input -->
-                                    <div class="row">
-                                        <div class="col-md-3">
-                                            <input type="text" name="nameContact"  class="form-control"  value="${ac.accountContactName}"  />
-                                        </div>
-                                        <div class="col-md-3">
-                                            <input type="text" name="phoneContact"  class="form-control"  value="${ac.accountContactMobile}" pattern="^[\w@_-]{8,30}$" title="Please enter real phone number" />
-                                        </div>
-                                        <div class="col-md-6">
-                                            <input type="text" name="address" class="form-control" value="${ac.accountContactAddress}" />
-                                        </div>
-                                        <input type="hidden" name="id" value="${addressContact.id}" />
-                                    </div>
-                                    <!-- btn -->
-                                    <div class="row mt-2">
-                                        <div class="col-md-3">
-                                            <c:if test="${ac.accountContactDefault}">
-                                                <a class="btn-grad btn-cus" style="padding: 6px 12px; text-transform: none" >
-                                                    <i class="fa-solid fa-address-book"></i> Address default
-                                                </a>
-                                            </c:if>
-                                        </div>
-                                        <div class="col-md-3"></div>
-                                        <div class="col-md-6">
-                                            <div class="row">
-                                                <c:if test="${!ac.accountContactDefault}">
-                                                    <div class="col-md-4">
-                                                        <input
-                                                            type="submit"
-                                                            name="type"
-                                                            value="Delete"
-                                                            class="btn btn-secondary btn-cus"
-                                                            />
-                                                    </div>
-                                                    <div class="col-md-5">
-                                                        <input
-                                                            type="submit"
-                                                            name="type"
-                                                            value="Set Default"
-                                                            class="btn btn-secondary btn-cus"
-                                                            />
-                                                    </div>
-                                                </c:if>
-                                                <c:if test="${ac.accountContactDefault}">
-                                                    <div class="col-md-4"></div>
-                                                    <div class="col-md-5"></div>
-                                                </c:if>
-                                                <div class="col-md-3">
-                                                    <input
-                                                        type="submit"
-                                                        name="type"
-                                                        value="Edit"
-                                                        class="btn btn-secondary btn-cus"
-                                                        />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- end form -->
-                                </form>
-                            </c:forEach>
-                            <!-- Add more -->
-                            <form
-                                class="address-group shadow p-3 mb-4 mt-5 bg-white rounded"
-                                method="post"
-                                action="addressEdit"
-                                >
-                                <!-- input -->
-                                <div class="row">
-                                    <div class="col-md-3">
-                                        <input
-                                            type="text"
-                                            name="nameContact"
-                                            class="form-control"
-                                            placeholder="New name contact"
-                                            required=""
-                                            />
-                                    </div>
-                                    <div class="col-md-3">
-                                        <input
-                                            type="text"
-                                            name="phoneContact"
-                                            class="form-control"
-                                            placeholder="New phone contact"
-                                            required=""
-                                            pattern="^[\w@_-]{8,30}$"
-                                            title="Please enter real phone number"
-                                            />
-                                    </div>
-                                    <div class="col-md-6">
-                                        <input
-                                            type="text"
-                                            name="address"
-                                            class="form-control"
-                                            placeholder="New address contact"
-                                            required=""
-                                            />
-                                    </div>
-                                    <input type="hidden" name="id" value="${addressContact.id}" />
-                                </div>
-                                <!-- btn -->
-                                <div class="row mt-2">
-                                    <div class="col-md-3"></div>
-                                    <div class="col-md-6"></div>
-                                    <div class="col-md-3">
-                                        <input
-                                            type="submit"
-                                            name="type"
-                                            value="ADD MORE"
-                                            class="btn-grad btn-cus"
-                                            style="
-                                            padding: 6px 12px;
-                                            text-transform: none;
-                                            border: none;
-                                            "
-                                            />
-                                    </div>
-                                </div>
-                                <!-- end form -->
-                            </form>
-                        </div>
+                        <%@include file="tab/profile/tab-address.jsp" %>
                         <!------------------delivering----------------------->
-                        <div
-                            class="tab-pane fade"
-                            id="delivering"
-                            role="tabpanel"
-                            aria-labelledby="delivering-tab"
-                            >
-                            <table class="table shadow table-hover table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">No</th>
-                                        <th scope="col">Name Contact</th>
-                                        <th scope="col">Phone Contact</th>
-                                        <th scope="col">Order Date</th>
-                                        <th scope="col">View</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Quoc Phung</tda>
-                                        <td>0911092002</td>
-                                        <td>2023-05-24</td>
-                                        <td><a data-toggle="modal" data-target="#modal-order-detail" href="javascript:void(0)"><i class="fa-solid fa-eye"></i></a></td>
-                                    </tr>
-                                    <tr>
-                                        <td scope="row">Ã¡dasd</td>
-                                        <td>Ã¡dasd</tda>
-                                        <td>Ã¡dasd</td>
-                                        <td>Ã¡dasd</td>
-                                        <td>Ã¡dasd</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <%@include file="tab/profile/tab-delivering.jsp" %>
                         <!------------------Order Done----------------------->
-                        <div
-                            class="tab-pane fade"
-                            id="done-order"
-                            role="tabpanel"
-                            aria-labelledby="done-order-tab"
-                            >
-                            <table class="table shadow table-hover table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">No</th>
-                                        <th scope="col">Name Contact</th>
-                                        <th scope="col">Phone Contact</th>
-                                        <th scope="col">Order Date</th>
-                                        <th scope="col">Done Date</th>
-                                        <th scope="col">View</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td>1</td>
-                                        <td>Quoc Phung</tda>
-                                        <td>0911092003</td>
-                                        <td>2023-05-24</td>
-                                        <td>2023-05-26</td>
-                                        <td><i class="fa-solid fa-eye"></i></td>
-                                    </tr>
-                                    <tr>
-                                        <td scope="row">Ã¡dasd</td>
-                                        <td>Ã¡dasd</tda>
-                                        <td>Ã¡dasd</td>
-                                        <td>Ã¡dasd</td>
-                                        <td>Ã¡dasd</td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
+                        <%@include file="tab/profile/tab-done-order.jsp" %>
                     </div>
                 </div>
             </div>
@@ -437,6 +149,13 @@
     <script>
         $("#home-tab").addClass("active");
         $("#home").addClass("show active");
+        const msgUpdate = '<%= session.getAttribute("msgUpdate") %>';
+        if (msgUpdate === 'addressContact') {
+            $("#home-tab").removeClass("active");
+            $("#home").removeClass("show active");
+            $("#address-tab").addClass("active");
+            $("#address").addClass("show active");
+        }
     </script>
 
     <script>
@@ -460,5 +179,6 @@
     <%
         request.getSession().removeAttribute("msgchangePassword");
         request.getSession().removeAttribute("msgchangeInformation");
+        request.getSession().removeAttribute("msgUpdate");
     %>
 </html>

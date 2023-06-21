@@ -14,7 +14,7 @@
                     <input type="hidden" name="type" value="changePassword">
                     <div class="form-group mt-4">
                         <label for="oldPass"> Old Password:</label>
-                        <input
+                           <input
                             type="password"
                             class="form-control"
                             id="oldPass"
@@ -31,6 +31,7 @@
                             id="newPass"
                             name="newPass"
                             required
+                            pattern="^(?=.*[A-Z]).{10,}$"
                             maxlength="50"
                             />
                     </div>
