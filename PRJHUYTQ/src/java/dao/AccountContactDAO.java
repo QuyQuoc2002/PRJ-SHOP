@@ -6,7 +6,6 @@ package dao;
 
 import connection.SQLServerConnection;
 import entity.AccountContact;
-import entity.Category;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
