@@ -104,6 +104,6 @@ public class AccountContactDAO {
     }
 
     public static void main(String[] args) {
-        System.out.println(new AccountContactDAO().update("dá", "dsada", "d?ds", 2));
+        System.out.println(new AccountContactDAO().update("dá", "dsada", "d?sds", 2));
     }
 }

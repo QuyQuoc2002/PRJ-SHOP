@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package entity;
+
+import java.sql.Date;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -15,15 +17,17 @@ import lombok.ToString;
 @Builder
 @Getter
 @Setter
-@ToString   
-public class OrderDetail {
-    private int orderDetailId;
+@ToString
+public class Order {
     private int orderId;
-    private int productId;
-    private String orderDetailProductImg;
-    private String orderDetailProductName;
-    private int orderDetailPriceProduct;
-    private String orderDetailSizeValue;
-    private int orderDetailQuantity;
-    private int orderDetailTotalMoney;
+    private int accountId;
+    private Date orderCreateDate;
+    private Date orderExpectedDate;
+    private Date orderDoneDate;
+    private String orderNameContact;
+    private String orderPhoneContact; 
+    private String orderAddressContact;
+    private int orderTotalMoney;
+    private int orderStatusId;
+    
 }
