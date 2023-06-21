@@ -44,11 +44,27 @@ public class AccountContactDAO {
         }
         return null;
     }
-    
+
+    public boolean add(AccountContact obj) {
+        int check = 0;
+        String sql = "Insert Into AccountContact (accountId, accountContactAddress, accountContactName, accountContactMobile, accountContactDefault) \n"
+                + "Values (?, ?, ?, ?, '0')";
+        try ( Connection con = SQLServerConnection.getConnection();  PreparedStatement ps = con.prepareStatement(sql);) {
+            ps.setObject(1, obj.getAccountId());
+            ps.setObject(2, obj.getAccountContactAddress());
+            ps.setObject(3, obj.getAccountContactName());
+            ps.setObject(4, obj.getAccountContactMobile());
+            check = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return check > 0;
+    }
+
     public boolean setAccountContactDefaut(int accountContactId) {
-                int check = 0;
-        String sql = "UPDATE AccountContact SET accountContactDefault = '0' WHERE accountContactDefault = '1'\n" +
-                        "UPDATE AccountContact SET accountContactDefault = '1' WHERE accountContactId= ?";
+        int check = 0;
+        String sql = "UPDATE AccountContact SET accountContactDefault = '0' WHERE accountContactDefault = '1'\n"
+                + "UPDATE AccountContact SET accountContactDefault = '1' WHERE accountContactId= ?";
 
         try ( Connection con = SQLServerConnection.getConnection();  PreparedStatement ps = con.prepareStatement(sql);) {
             ps.setObject(1, accountContactId);
@@ -58,8 +74,37 @@ public class AccountContactDAO {
         }
         return check > 0;
     }
-    
+
+    public boolean update(String accountContactAddress, String accountContactName, String accountContactMobile, int accountContactId) {
+        int check = 0;
+        String sql = "UPDATE AccountContact SET accountContactAddress = ?, accountContactName = ?, accountContactMobile = ? WHERE accountContactId = ?";
+
+        try ( Connection con = SQLServerConnection.getConnection();  PreparedStatement ps = con.prepareStatement(sql);) {
+            ps.setObject(1, accountContactAddress);
+            ps.setObject(2, accountContactName);
+            ps.setObject(3, accountContactMobile);
+            ps.setObject(4, accountContactId);
+            check = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return check > 0;
+    }
+
+    public boolean delete(int accountContactId) {
+        int check = 0;
+        String sql = "DELETE FROM AccountContact Where accountContactId = ?";
+
+        try ( Connection con = SQLServerConnection.getConnection();  PreparedStatement ps = con.prepareStatement(sql);) {
+            ps.setObject(1, accountContactId);
+            check = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return check > 0;
+    }
+
     public static void main(String[] args) {
-        System.out.println(new AccountContactDAO().getAll(3));
+        System.out.println(new AccountContactDAO().update("dá", "dsada", "d?ds", 2));
     }
 }

@@ -24,13 +24,13 @@
             <input type="hidden" name="accountContactId" value="${ac.accountContactId}" />
             <div class="row">
                 <div class="col-md-3">
-                    <input type="text" name="nameContact"  class="form-control"  value="${ac.accountContactName}"  />
+                    <input type="text" name="accountContactName" required="" class="form-control"  value="${ac.accountContactName}"  />
                 </div>
                 <div class="col-md-3">
-                    <input type="text" name="phoneContact"  class="form-control"  value="${ac.accountContactMobile}" pattern="^[\w@_-]{8,30}$" title="Please enter real phone number" />
+                    <input type="text" name="accountContactMobile" required="" class="form-control"  value="${ac.accountContactMobile}" pattern="^[0-9]{10}$" title="Please enter real phone number" />
                 </div>
                 <div class="col-md-6">
-                    <input type="text" name="address" class="form-control" value="${ac.accountContactAddress}" />
+                    <input type="text" name="accountContactAddress" required="" class="form-control" value="${ac.accountContactAddress}" />
                 </div>
             </div>
             <!-- btn -->
@@ -47,8 +47,7 @@
                     <div class="row">
                         <c:if test="${!ac.accountContactDefault}">
                             <div class="col-md-4">
-                                <input type="submit"name="choice" value="Delete"  class="btn btn-secondary btn-cus"
-                                    />
+                                <input type="submit"name="choice" value="Delete"  class="btn btn-secondary btn-cus"/>
                             </div>
                             <div class="col-md-5">
                                 <input type="submit" name="choice" value="Set Default" class="btn btn-secondary btn-cus" />
@@ -59,7 +58,7 @@
                             <div class="col-md-5"></div>
                         </c:if>
                         <div class="col-md-3">
-                            <input type="submit" name="type" value="Edit" class="btn btn-secondary btn-cus"/>
+                            <input type="submit" name="choice" value="Edit" class="btn btn-secondary btn-cus"/>
                         </div>
                     </div>
                 </div>
@@ -68,37 +67,20 @@
         </form>
     </c:forEach>
     <!-- Add more -->
-    <form
-        class="address-group shadow p-3 mb-4 mt-5 bg-white rounded"
-        method="post"
-        action="profile"
-        >
+    <form class="address-group shadow p-3 mb-4 mt-5 bg-white rounded" method="post" action="profile" >
         <!-- input -->
         <div class="row">
+            <input type="hidden" value="addAccountContact" name="type">
             <div class="col-md-3">
-                <input
-                    type="text"
-                    name="nameContact"
-                    class="form-control"
-                    placeholder="New name contact"
-                    required=""
-                    />
+                <input type="text" name="accountContactName" class="form-control"  placeholder="New name contact" required="" />
             </div>
             <div class="col-md-3">
-                <input
-                    type="text"
-                    name="phoneContact"
-                    class="form-control"
-                    placeholder="New phone contact"
-                    required=""
-                    pattern="^[\w@_-]{8,30}$"
-                    title="Please enter real phone number"
-                    />
+                <input type="text" name="accountContactMobile" class="form-control" placeholder="New phone contact" required="" pattern="^[0-9]{10}$" title="Please enter real phone number"/>
             </div>
             <div class="col-md-6">
                 <input
                     type="text"
-                    name="address"
+                    name="accountContactAddress"
                     class="form-control"
                     placeholder="New address contact"
                     required=""
@@ -113,7 +95,6 @@
             <div class="col-md-3">
                 <input
                     type="submit"
-                    name="type"
                     value="ADD MORE"
                     class="btn-grad btn-cus"
                     style="

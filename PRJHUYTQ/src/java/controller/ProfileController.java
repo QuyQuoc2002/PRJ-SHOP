@@ -90,7 +90,7 @@ public class ProfileController extends HttpServlet {
         AccountDAO accountDAO = new AccountDAO();
         AccountDetailDAO accountDetailDAO = new AccountDetailDAO();
         AccountContactDAO accountContactDAO = new AccountContactDAO();
-        
+
         String type = request.getParameter("type");
         Account account = (Account) session.getAttribute("accountCur");
         AccountDetail accountDetail = (AccountDetail) session.getAttribute("accountDetail");
@@ -116,8 +116,8 @@ public class ProfileController extends HttpServlet {
                         }
                     }
                 }
+                break;
             }
-            break;
             case "changeInformation": {
                 String accountDetailName = request.getParameter("accountDetailName");
                 Date accountDetailDob = request.getParameter("accountDetailDob").equals("") ? null : Date.valueOf(request.getParameter("accountDetailDob"));
@@ -130,14 +130,46 @@ public class ProfileController extends HttpServlet {
                 } else {
                     session.setAttribute("msgchangeInformation", "Change Information Fail");
                 }
+                break;
             }
             case "updateAddress": {
                 String choice = request.getParameter("choice");
+                System.out.println("choice");
                 int accountContactId = Integer.parseInt(request.getParameter("accountContactId"));
-                accountContactDAO.setAccountContactDefaut(accountContactId);
-                session.setAttribute("msgUpdate", "addressContact");     
+                switch (choice) {
+                    case "Set Default": {
+                        accountContactDAO.setAccountContactDefaut(accountContactId);
+                        break;
+                    }
+                    case "Delete": {
+                        accountContactDAO.delete(accountContactId);
+                        break;
+                    }
+                    case "Edit": {
+                        String accountContactAddress = request.getParameter("accountContactAddress");
+                        String accountContactName = request.getParameter("accountContactName");
+                        String accountContactMobile = request.getParameter("accountContactMobile");
+                        accountContactDAO.update(accountContactAddress, accountContactName, accountContactMobile, accountContactId);
+                        break;
+                    }
+                }
+                session.setAttribute("msgUpdate", "addressContact");
+                break;
             }
-
+            case "addAccountContact": {
+                String accountContactAddress = request.getParameter("accountContactAddress");
+                String accountContactName = request.getParameter("accountContactName");
+                String accountContactMobile = request.getParameter("accountContactMobile");
+                AccountContact accountContact = AccountContact.builder()
+                        .accountContactName(accountContactName)
+                        .accountContactAddress(accountContactAddress)
+                        .accountContactMobile(accountContactMobile)
+                        .accountId(account.getAccountId())
+                        .build();
+                accountContactDAO.add(accountContact);
+                session.setAttribute("msgUpdate", "addressContact");
+                break;
+            }
         }
 
         response.sendRedirect("profile");
