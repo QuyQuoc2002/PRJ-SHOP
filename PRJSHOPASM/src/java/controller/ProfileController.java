@@ -4,8 +4,12 @@
  */
 package controller;
 
+import dao.AccountContactDAO;
 import dao.AccountDAO;
+import dao.AccountDetailDAO;
 import entity.Account;
+import entity.AccountContact;
+import entity.AccountDetail;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -14,6 +18,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.sql.Date;
+import java.util.List;
 
 /**
  *
@@ -39,7 +45,7 @@ public class ProfileController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ProfileController</title>");            
+            out.println("<title>Servlet ProfileController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ProfileController at " + request.getContextPath() + "</h1>");
@@ -60,6 +66,11 @@ public class ProfileController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        Account account = (Account) session.getAttribute("accountCur");
+        AccountContactDAO accountContactDAO = new AccountContactDAO();
+        List<AccountContact> lstAccountContact = accountContactDAO.getAll(account.getAccountId());
+        request.setAttribute("lstAccountContact", lstAccountContact);
         request.getRequestDispatcher("profile.jsp").forward(request, response);
     }
 
@@ -76,32 +87,66 @@ public class ProfileController extends HttpServlet {
             throws ServletException, IOException {
         HttpSession session = request.getSession();
         AccountDAO accountDAO = new AccountDAO();
-        
-        String oldPass = request.getParameter("oldPass");
-        String newPass = request.getParameter("newPass");
-        String reNewPass = request.getParameter("reNewPass");
+        AccountDetailDAO accountDetailDAO = new AccountDetailDAO();
         Account account = (Account) session.getAttribute("accountCur");
-        
-        if (!oldPass.equals(account.getAccountPassword())) {
-            session.setAttribute("msg", "old Password is wrong");
-        } else {
-            if (newPass.equals(oldPass)) {
-                session.setAttribute("msg", "new and old is equal enter again");
-            } else {
-                if (!newPass.equals(reNewPass)) {
-                    session.setAttribute("msg", "new and renew is not equal enter again");
+        AccountContactDAO accountContactDAO = new AccountContactDAO();
+        AccountDetail accountDetail = (AccountDetail) session.getAttribute("accountDetail");
+
+        String type = request.getParameter("type");
+        switch (type) {
+            case "changeInformation": {
+                String accountDetailName = request.getParameter("accountDetailName");
+                Date accountDetailDob = request.getParameter("accountDetailDob").equals("") ? null : Date.valueOf(request.getParameter("accountDetailDob"));
+                accountDetailDAO.update(accountDetailName, accountDetailDob, account.getAccountId());
+                accountDetail.setAccountDetailName(accountDetailName);
+                accountDetail.setAccountDetailDob(accountDetailDob);
+                break;
+            }
+            
+            case "changePassword": {
+                String oldPass = request.getParameter("oldPass");
+                String newPass = request.getParameter("newPass");
+                String reNewPass = request.getParameter("reNewPass");
+
+                if (!oldPass.equals(account.getAccountPassword())) {
+                    session.setAttribute("msg", "old Password is wrong");
                 } else {
-                    boolean isChangePasswordSucces = accountDAO.changePassword(account.getAccountId(), newPass);
-                    account.setAccountPassword(newPass);
-                    session.setAttribute("accountCur", account);
-                    if (isChangePasswordSucces) {
-                        session.setAttribute("msg", "Change password Success");
-                    }  else {
-                        session.setAttribute("msg", "Change password Fail");
+                    if (newPass.equals(oldPass)) {
+                        session.setAttribute("msg", "new and old is equal enter again");
+                    } else {
+                        if (!newPass.equals(reNewPass)) {
+                            session.setAttribute("msg", "new and renew is not equal enter again");
+                        } else {
+                            boolean isChangePasswordSucces = accountDAO.changePassword(account.getAccountId(), newPass);
+                            account.setAccountPassword(newPass);
+                            session.setAttribute("accountCur", account);
+                            if (isChangePasswordSucces) {
+                                session.setAttribute("msg", "Change password Success");
+                            } else {
+                                session.setAttribute("msg", "Change password Fail");
+                            }
+                        }
                     }
                 }
+                break;
+            }
+            
+            case "addAccountContact": {
+                String accountContactName = request.getParameter("accountContactName");
+                String accountContactMobile = request.getParameter("accountContactMobile");
+                String accountContactAddress = request.getParameter("accountContactAddress");
+                AccountContact accountContact = AccountContact.builder()
+                        .accountId(account.getAccountId())
+                        .accountContactAddress(accountContactAddress)
+                        .accountContactName(accountContactName)
+                        .accountContactMobile(accountContactMobile)
+                        .build();
+                accountContactDAO.add(accountContact);
+                session.setAttribute("addressTab", "true");
+                break;
             }
         }
+
         response.sendRedirect("profile");
     }
 

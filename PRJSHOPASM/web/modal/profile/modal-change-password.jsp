@@ -14,6 +14,7 @@
                 
                         <sub style="color: red">${sessionScope.msg}</sub>
                 <form action="profile" method="post" id="reused_form">
+                    <input name="type" type="hidden" value="changePassword">
                     <div class="form-group mt-4">
                         <label for="oldPass"> Old Password:</label>
                         <input
@@ -32,13 +33,11 @@
                             class="form-control"
                             id="newPass"
                             name="newPass"
+                            pattern="(?=^.{8,}$)((?=.*\d)|(?=.*\W+))(?![.\n])(?=.*[A-Z])(?=.*[a-z]).*$"
+                            title="password must contain at least eight characters, at least one number and both lower and uppercase letters and special characters"
                             required
                             maxlength="50"
                             />
-<!--                        <sub
-                            >Password must alphanumeric (@, _ and - are also allowed) and
-                            be 8 - 20 characters
-                        </sub>-->
                     </div>
                     <div class="form-group mt-4">
                         <label for="reNewPass"> Repeat new password:</label>

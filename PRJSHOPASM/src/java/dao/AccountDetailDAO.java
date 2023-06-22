@@ -7,6 +7,7 @@ package dao;
 import connection.SQLServerConnection;
 import entity.AccountDetail;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -53,5 +54,20 @@ public class AccountDetailDAO {
             e.printStackTrace(System.out);
         }
         return null;
+    }
+    
+     public boolean update(String accountDetailName, Date accountDetailDob, int accountId) {
+        int check = 0;
+        String sql = "UPDATE AccountDetail SET accountDetailName = ?, accountDetailDob = ? WHERE accountId = ?";
+
+        try ( Connection con = SQLServerConnection.getConnection();  PreparedStatement ps = con.prepareStatement(sql);) {
+            ps.setObject(1, accountDetailName);
+            ps.setObject(2, accountDetailDob);
+            ps.setObject(3, accountId);
+            check = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return check > 0;
     }
 }
