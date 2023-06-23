@@ -167,10 +167,49 @@
             };
         }
     </script>
+    
     <script>
         const msgchangeInformation = '<%= session.getAttribute("msgchangeInformation") %>';
         if (msgchangeInformation !== 'null') {
-            var myModal = new bootstrap.Modal(document.getElementById("changeInformModal"), {});
+            const myModal = new bootstrap.Modal(document.getElementById("changeInformModal"), {});
+            document.onreadystatechange = function () {
+                myModal.show();
+            };
+        }
+    </script>
+    <script>
+        function getAllOrderDetail(orderId) {
+            const request = new XMLHttpRequest();
+            request.open("GET", "api/orderDetail?orderId=" + orderId, true);
+            request.onload = function () {
+                if (this.readyState === 4 && this.status === 200) {
+                    let lstOrderDetailHtml = '';
+                    const lstOrderDetail = JSON.parse(this.responseText);
+                    for (let orderDetail of lstOrderDetail) {
+                        lstOrderDetailHtml += `
+                            <div class="d-flex flex-row mb-4 pb-2">
+                                <div class="flex-fill">
+                                    <h5 class="bold"><a class="text-danger" href="product-detail?productId=` + orderDetail.productId + `">` + orderDetail.orderDetailProductName + `</a></h5>
+                                    <p class="text-muted"> Qt: ` + orderDetail.orderDetailQuantity + ` item</p> 
+                                    <p class="text-muted"> Size: ` + orderDetail.orderDetailSizeValue + `</p> 
+
+                                    <h4 class="mb-3"><span class="small text-muted"> Unit Price: </span> ` + orderDetail.orderDetailPriceProduct + ` VND</h4>
+                                </div>
+                                <div>
+                                    <img class="align-self-center img-fluid"
+                                         src="https://mdbcdn.b-cdn.net/img/Photos/Horizontal/E-commerce/Products/6.webp" width="250">
+                                </div>
+                            </div>
+                            <hr>
+                        `;
+                    }   
+                    document.getElementById('modal-order-detail-body').innerHTML = lstOrderDetailHtml;
+                } else {
+                    console.log(2);
+                }
+            };
+            request.send(null);
+            let myModal = new bootstrap.Modal(document.getElementById("modal-order-detail"), {});
             document.onreadystatechange = function () {
                 myModal.show();
             };

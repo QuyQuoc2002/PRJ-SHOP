@@ -27,7 +27,6 @@ public class Order {
     private String orderNameContact;
     private String orderPhoneContact; 
     private String orderAddressContact;
-    private int orderTotalMoney;
     private int orderStatusId;
     
 }

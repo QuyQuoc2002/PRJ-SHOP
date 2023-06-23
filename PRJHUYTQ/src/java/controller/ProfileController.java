@@ -7,9 +7,11 @@ package controller;
 import dao.AccountContactDAO;
 import dao.AccountDAO;
 import dao.AccountDetailDAO;
+import dao.OrderDAO;
 import entity.Account;
 import entity.AccountContact;
 import entity.AccountDetail;
+import entity.Order;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -69,9 +71,20 @@ public class ProfileController extends HttpServlet {
         HttpSession session = request.getSession();
         Account account = (Account) session.getAttribute("accountCur");
         AccountContactDAO accountContactDAO = new AccountContactDAO();
+        OrderDAO orderDAO = new OrderDAO();
+
+        // Tab address
         List<AccountContact> lstAccountContact = accountContactDAO.getAll(account.getAccountId());
 
+        // Tab Order Delivering
+        List<Order> lstDeliveringOrder = orderDAO.getAllByOrderStatusIdForUser(account.getAccountId(), 2);
+
+        // Tab Order Done
+        List<Order> lstDoneOrder = orderDAO.getAllByOrderStatusIdForUser(account.getAccountId(), 3);
+
         request.setAttribute("lstAccountContact", lstAccountContact);
+        request.setAttribute("lstDeliveringOrder", lstDeliveringOrder);
+        request.setAttribute("lstDoneOrder", lstDoneOrder);
         request.getRequestDispatcher("profile.jsp").forward(request, response);
     }
 

@@ -17,21 +17,16 @@
             </tr>
         </thead>
         <tbody>
-            <tr>
-                <td>1</td>
-                <td>Quoc Phung</tda>
-                <td>0911092003</td>
-                <td>2023-05-24</td>
-                <td>2023-05-26</td>
-                <td><i class="fa-solid fa-eye"></i></td>
-            </tr>
-            <tr>
-                <td scope="row">ádasd</td>
-                <td>ádasd</tda>
-                <td>ádasd</td>
-                <td>ádasd</td>
-                <td>ádasd</td>
-            </tr>
+            <c:forEach items="${requestScope.lstDoneOrder}" var="o" varStatus="i">
+                <tr>
+                    <td>${i.count}</td>
+                    <td>${o.orderNameContact}</td>
+                    <td>${o.orderPhoneContact}</td>
+                    <td>${o.orderCreateDate}</td>
+                    <td>${o.orderDoneDate}</td>
+                    <td><a data-toggle="modal" data-target="#modal-order-detail" href="javascript:void(0)" onclick="getAllOrderDetail(${o.orderId});"><i class="fa-solid fa-eye"></i></a></td>
+                </tr>
+            </c:forEach>
         </tbody>
     </table>
 </div>

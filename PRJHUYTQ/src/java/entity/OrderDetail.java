@@ -25,5 +25,4 @@ public class OrderDetail {
     private int orderDetailPriceProduct;
     private String orderDetailSizeValue;
     private int orderDetailQuantity;
-    private int orderDetailTotalMoney;
 }
