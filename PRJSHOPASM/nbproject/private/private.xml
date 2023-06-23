@@ -3,28 +3,17 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/core/UserFilter.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/modal/profile/modal-order-detail.jsp</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/product-detail.jsp</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/dao/ProductImgDetailDAO.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/dao/AccountDAO.java</file>
+            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/controller/ProfileController.java</file>
+            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/tab/profile/tab-delivering.jsp</file>
+            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/tab/profile/tab-address.jsp</file>
             <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/modal/profile/modal-change-password.jsp</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/controller/SignInController.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/controller/PasswordCreationController.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/dao/ProductDAO.java</file>
+            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/tab/profile/tab-about.jsp</file>
+            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/dao/AccountContactDAO.java</file>
+            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/tab/profile/tab-done-order.jsp</file>
             <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/profile.jsp</file>
             <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/dao/AccountDetailDAO.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/entity/Product.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/component/header-shop.jsp</file>
             <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/modal/profile/modal-change-infomation.jsp</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/controller/ProfileController.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/controller/IndexController.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/controller/LogoutController.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/controller/ShopController.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/controller/ProductDetailController.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/core/SignInFilter.java</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/web/shop.jsp</file>
-            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/entity/AccountDetail.java</file>
+            <file>file:/D:/Github/PRJ-SHOP/PRJSHOPASM/src/java/entity/AccountContact.java</file>
         </group>
     </open-files>
 </project-private>
