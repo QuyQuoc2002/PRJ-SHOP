@@ -12,7 +12,7 @@
         <div class="col-lg-6 text-center text-lg-right">
             <div class="d-inline-flex align-items-center">
                 <div class="btn-group">
-                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user p-2"></i>My Account</button>
+                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown"><i class="fas fa-user p-2"></i>${sessionScope.accountDetail.accountDetailName}</button>
                     <div class="dropdown-menu dropdown-menu-right">
                         <c:if test="${sessionScope.accountCur == null}">
                             <a class="dropdown-item" type="button" href="sign-in">Sign in</a>

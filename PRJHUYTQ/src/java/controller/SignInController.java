@@ -5,6 +5,7 @@
 package controller;
 
 import dao.AccountDAO;
+import dao.AccountDetailDAO;
 import entity.Account;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -75,6 +76,7 @@ public class SignInController extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         AccountDAO accountDAO = new AccountDAO();
+        AccountDetailDAO accountDetailDAO = new AccountDetailDAO();
         HttpSession session = request.getSession();
         
         String username = request.getParameter("username");
@@ -83,7 +85,9 @@ public class SignInController extends HttpServlet {
         
         if (account != null) {
             session.setAttribute("accountCur", account);
-            response.sendRedirect("/PRJHUYTQ");
+            session.setAttribute("accountDetail", accountDetailDAO.getOne(account.getAccountId()));
+//            response.sendRedirect("/PRJHUYTQ");
+            response.sendRedirect("profile");
         } else {
             session.setAttribute("msg", "login Fail.");
             response.sendRedirect("sign-in");

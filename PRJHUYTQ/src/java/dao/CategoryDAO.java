@@ -45,5 +45,6 @@ public class CategoryDAO {
 
     public static void main(String[] args) {
         System.out.println(new CategoryDAO().getAll());
+        System.out.println("");
     }
 }

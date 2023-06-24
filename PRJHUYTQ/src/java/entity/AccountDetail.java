@@ -21,6 +21,7 @@ import lombok.ToString;
 public class AccountDetail {
     private int accountId;
     private String accountDetailName;
+    private String accountDetailAvatar;
     private Date accountDetailDob;
     private Date accountDetailDoc;
 }

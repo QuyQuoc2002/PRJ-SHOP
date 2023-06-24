@@ -72,8 +72,10 @@ public class ProductDetailController extends HttpServlet {
         Product product = productDAO.getOne(productId);
         List<ProductImgDetail> lstProductImgDetail = productImgDetailDAO.getAll(productId);
         List<ProductSize> lstProductSize = productSizeDAO.getAll(productId);
+        List<Product>lstRandProduct = productDAO.getRandByCategoryId(6, product.getCategoryId(), productId);
         
         request.setAttribute("product", product);
+        request.setAttribute("lstRandProduct", lstRandProduct);
         request.setAttribute("lstProductImgDetail", lstProductImgDetail);
         request.setAttribute("lstProductSize", lstProductSize);
         request.getRequestDispatcher("product-detail.jsp").forward(request, response);

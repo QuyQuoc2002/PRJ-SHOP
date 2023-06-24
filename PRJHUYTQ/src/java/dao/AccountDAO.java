@@ -4,7 +4,6 @@
  */
 package dao;
 
-
 import connection.SQLServerConnection;
 import entity.Account;
 import entity.Role;
@@ -47,7 +46,7 @@ public class AccountDAO {
                                 .roleName(rs.getString("roleName"))
                                 .build())
                         .accountDeleted(rs.getBoolean("accountDeleted"))
-                        .build();            
+                        .build();
                 return a;
             }
         } catch (SQLException e) {
@@ -55,7 +54,7 @@ public class AccountDAO {
         }
         return null;
     }
-    
+
     public int register(Account obj) {
         int check = 0;
         String sql = "INSERT INTO Account(accountEmail, accountPassword, roleId, accountDeleted)"
@@ -66,8 +65,8 @@ public class AccountDAO {
             ps.setObject(3, 2);
             ps.setObject(4, false);
             check = ps.executeUpdate();
-            if (check > 0 ) {
-                try (ResultSet rs = ps.getGeneratedKeys()) {
+            if (check > 0) {
+                try ( ResultSet rs = ps.getGeneratedKeys()) {
                     if (rs.next()) {
                         int accountId = rs.getInt(1);
                         return accountId;
@@ -79,8 +78,8 @@ public class AccountDAO {
         }
         return 0;
     }
-    
-    public Account getOneByEmail (String email) {
+
+    public Account getOneByEmail(String email) {
 
         String sql = "Select * FROM Account WHERE accountEmail = ?";
 
@@ -97,8 +96,23 @@ public class AccountDAO {
         }
         return null;
     }
-    
+
     public static void main(String[] args) {
         System.out.println(new AccountDAO().register(Account.builder().accountEmail("asd").accountPassword("asd").build()));
     }
+
+    public boolean changePassword(int accountId, String password) {
+        int check = 0;
+        String sql = "UPDATE Account SET accountPassword = ? WHERE accountId = ?";
+
+        try ( Connection con = SQLServerConnection.getConnection();  PreparedStatement ps = con.prepareStatement(sql);) {
+            ps.setObject(1, password);
+            ps.setObject(2, accountId);
+            check = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return check > 0;
+    }
+    
 }

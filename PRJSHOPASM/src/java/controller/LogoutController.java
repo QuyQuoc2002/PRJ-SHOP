@@ -71,6 +71,7 @@ public class LogoutController extends HttpServlet {
         response.addCookie(cookiePassword);
 
         session.removeAttribute("accountCur");
+        session.removeAttribute("accountDetail");
         response.sendRedirect("sign-in");
     }
 

@@ -344,7 +344,7 @@ a {
   }
 }
 
-.dropdown-toggle::after {
+/*.dropdown-toggle::after {
   content: none;
 }
 
@@ -365,7 +365,7 @@ a {
 
 .dropdown-item i {
   width: 25%;
-}
+}*/
 
 nav img {
   width: 90px;
