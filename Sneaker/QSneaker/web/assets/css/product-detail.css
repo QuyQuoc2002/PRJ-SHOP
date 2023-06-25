@@ -1,0 +1,151 @@
+.lens-red-1{
+    margin-left: -200px;
+    margin-top: -200px;
+}
+
+.lens-blue-1{
+    margin-left: 500px;
+    margin-top: 300px;
+}
+
+.full{
+    font-family: UTM Alexander;
+    display: inline-block;
+    font-size: 100px;
+    color: white;
+    line-height: 1.1;
+    transform: rotate(-90deg) scaleY(1.4);
+    top: 150px;
+    left: 163px;
+}
+
+.stroke {
+    display: inline-block;
+    padding: 0;
+    font-family: UTM Alexander;
+    font-size: 400px;
+    transform: rotate(-90deg);
+    color: transparent;
+    -webkit-text-stroke: 0.2px rgba(225, 223, 223, 0.944);
+    top: -590px;
+    left: -754px;
+    z-index: -2;
+}
+
+.back-page-btn {
+    color: white;
+    font-size: 30px;
+    top: 95px;
+    left: 95px;
+    z-index: 1;
+}
+
+.back-page-btn:hover{
+    opacity: 0.7;
+    cursor: pointer;
+}
+
+
+
+nav img {
+    width: 90px;
+    height: 50px;
+    object-fit: cover;
+}
+
+.navbar {
+    height: 80px;
+    padding-left: 80px;
+}
+
+.navbar .nav-item:hover {
+    opacity: 50%;
+}
+
+#mynavbar {
+    margin-left: 250px;
+}
+
+#mynavbar .nav-item {
+    padding-left: 30px;
+}
+
+.search-icon {
+    margin-left: 150px;
+}
+         
+.decor-banner {
+    background-image: linear-gradient(to bottom, #ff4b1f 0%, #1fddff  51%, #ff4b1f  100%);
+    height: 100%;
+    transition: 0.5s;
+    background-size: 200% 200%;
+    display: block;
+  }
+
+  .decor-banner:hover {
+    background-position: center bottom ; /* change the direction of the change here */
+    color: #fff;
+    text-decoration: none;
+  }
+
+  .product {
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    transform: scale(1.6) rotate(-10deg) scaleX(-1);
+    top: 90px;
+    left: 600px;
+    z-index: 2;
+  }
+
+  .product-decor {
+    width: 400px;
+    height: 400px;
+    object-fit: cover;
+    transform: scale(0.7) rotate(30deg) scaleX(1);
+    opacity: 0.3;
+    top: 400px;
+    left: 680px;
+  }
+
+  
+
+#size{
+    padding: 10px 20px;
+    margin-right: 15px;
+    color: white;
+    background: black;
+    border: 0.5px solid grey;
+}
+
+#quantity {
+    padding: 10px 3px 10px 20px;
+    margin-right: 15px;
+    color: white;
+    background-color: black;
+    border-radius: 0px;
+    border: 0.5px solid grey;
+}
+
+select#size, #quantity, .btn-grad{
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+#size {
+    margin-left: -3.5px;
+}
+
+.product-script {
+    padding-top: 450px;
+    padding-bottom: 100px;
+}
+
+.product-script p{
+    line-height: 0.6;
+    font-size: 20px;
+}
+
+.product-script .input{
+    margin-top: 23px;
+}
