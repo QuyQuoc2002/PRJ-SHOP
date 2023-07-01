@@ -1,0 +1,117 @@
+
+nav img {
+    width: 90px;
+    height: 50px;
+    object-fit: cover;
+}
+
+.navbar {
+    height: 80px;
+    padding-left: 80px;
+}
+
+.navbar .nav-item:hover {
+    opacity: 50%;
+}
+
+#mynavbar {
+    margin-left: 250px;
+}
+
+#mynavbar .nav-item {
+    padding-left: 30px;
+}
+
+.search-icon {
+    margin-left: 150px;
+}
+
+.card .rate {
+    display: flex;
+}
+
+.card .price .btn-grad {
+    position: absolute;
+    right: 0;
+    margin: 0;
+    font-size: 12px;
+    padding: 10px;
+
+}
+
+.card {
+    position: relative;
+    background-color: rgba(0, 0, 0, 0);
+    color: white;
+    border: none;
+}
+
+.card-body {
+    background-color: #18191A;
+}
+
+#all-product .card {
+    box-shadow: 8px 8px 5px 2px black;
+}
+
+.card .fa-heart {
+    position: absolute;
+    font-size: 32px;
+    color: #ff6e7f;
+    right: 15px;
+    top: 10px;
+}
+
+.card .fa-heart:hover {
+    color: red;
+    cursor: pointer;
+}
+
+.card .card-img-top {
+    /* background-image: linear-gradient(to right, #ff6e7f 0%, #bfe9ff  51%, #ff6e7f  100%); */
+    background-size: 200% auto;
+    background-image: url("../img/bg.jpg");
+
+}
+
+#new-product h1 {
+    margin-bottom: 50px;
+    margin-top: 40px;
+    font-family: Broadway;
+}
+
+.fa-star {
+    color: orange;
+}
+
+
+.sidebar{
+    padding-right: 30px;
+    padding-top:60px; 
+}
+
+#sortBy, #size {
+    margin-top: 12px;
+    width: 100%;
+    height: 38px;
+    border-radius: 0.25rem;
+}
+
+.select-brand .form-check {
+    margin-left: 20px
+}
+
+.filter-btn {
+    width: 100%
+}
+/*
+#all-product */
+
+.card-title {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    padding: 0; 
+}
