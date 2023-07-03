@@ -21,14 +21,16 @@
         <form
             class="address-group shadow p-3 mb-4 bg-white rounded"
             method="post"
-            action="addressEdit"
+            action="profile"
             >
+            <input name="type" type="hidden" value="updateAccountContact">
+            <input name="accountContactId" type="hidden" value="${ac.accountContactId}">
             <!-- input -->
             <div class="row">
                 <div class="col-md-3">
                     <input
                         type="text"
-                        name="nameContact"
+                        name="accountContactName"
                         class="form-control"
                         value="${ac.accountContactName}"
                         />
@@ -36,17 +38,17 @@
                 <div class="col-md-3">
                     <input
                         type="text"
-                        name="phoneContact"
+                        name="accountContactMobile"
                         class="form-control"
                         value="${ac.accountContactMobile}"
-                        pattern="^[\w@_-]{8,30}$"
+                        pattern="^[0-9]{10}$"
                         title="Please enter real phone number"
                         />
                 </div>
                 <div class="col-md-6">
                     <input
                         type="text"
-                        name="address"
+                        name="accountContactAddress"
                         class="form-control"
                         value="${ac.accountContactAddress}"
                         />
@@ -72,7 +74,7 @@
                             <c:if test="${!ac.accountContactDefault}">
                             <input
                                 type="submit"
-                                name="type"
+                                name="typeUpdate"
                                 value="Delete"
                                 class="btn btn-secondary btn-cus"
                                 />
@@ -82,7 +84,7 @@
                             <c:if test="${!ac.accountContactDefault}">
                             <input
                                 type="submit"
-                                name="type"
+                                name="typeUpdate"
                                 value="Set Default"
                                 class="btn btn-secondary btn-cus"
                                 />
@@ -91,7 +93,7 @@
                         <div class="col-md-3">
                             <input
                                 type="submit"
-                                name="type"
+                                name="typeUpdate"
                                 value="Edit"
                                 class="btn btn-secondary btn-cus"
                                 />

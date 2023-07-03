@@ -145,6 +145,30 @@ public class ProfileController extends HttpServlet {
                 session.setAttribute("addressTab", "true");
                 break;
             }
+            
+            case "updateAccountContact": {
+                String typeUpdate = request.getParameter("typeUpdate");
+                int accountContactId = Integer.parseInt(request.getParameter("accountContactId"));
+                switch (typeUpdate) {
+                    case "Set Default": {
+                        accountContactDAO.setAccountContactDefaut(accountContactId);
+                        break;
+                    }
+                    case "Delete": {
+                        accountContactDAO.delete(accountContactId);
+                        break;
+                    }
+                    case "Edit": {
+                        String accountContactName = request.getParameter("accountContactName");
+                        String accountContactMobile = request.getParameter("accountContactMobile");
+                        String accountContactAddress = request.getParameter("accountContactAddress");
+                        accountContactDAO.update(accountContactAddress, accountContactName, accountContactMobile, accountContactId);
+                        break;
+                    }
+                }     
+                session.setAttribute("addressTab", "true");
+                break;
+            }
         }
 
         response.sendRedirect("profile");

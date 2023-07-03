@@ -20,7 +20,7 @@ import java.util.List;
 public class AccountContactDAO {
 
     public List<AccountContact> getAll(int accountId) {
-        String sql = "select * from AccountContact where accountId = ?";
+        String sql = "select * from AccountContact where accountId = ? ORDER BY accountContactDefault DESC";
 
         try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
             ps.setObject(1, accountId);
@@ -44,6 +44,20 @@ public class AccountContactDAO {
         return null;
     }
 
+    public boolean setAccountContactDefaut(int accountContactId) {
+        int check = 0;
+        String sql = "UPDATE AccountContact SET accountContactDefault = '0' WHERE accountContactDefault = '1'\n"
+                + "UPDATE AccountContact SET accountContactDefault = '1' WHERE accountContactId= ?";
+
+        try ( Connection con = SQLServerConnection.getConnection();  PreparedStatement ps = con.prepareStatement(sql);) {
+            ps.setObject(1, accountContactId);
+            check = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return check > 0;
+    }
+
     public boolean add(AccountContact obj) {
         int check = 0;
         String sql = "INSERT INTO AccountContact(accountId, accountContactAddress, accountContactName, accountContactMobile, accountContactDefault)"
@@ -53,6 +67,35 @@ public class AccountContactDAO {
             ps.setObject(2, obj.getAccountContactAddress());
             ps.setObject(3, obj.getAccountContactName());
             ps.setObject(4, obj.getAccountContactMobile());
+            check = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return check > 0;
+    }
+
+    public boolean update(String accountContactAddress, String accountContactName, String accountContactMobile, int accountContactId) {
+        int check = 0;
+        String sql = "UPDATE AccountContact SET accountContactAddress = ?, accountContactName = ?, accountContactMobile = ? WHERE accountContactId = ?";
+
+        try ( Connection con = SQLServerConnection.getConnection();  PreparedStatement ps = con.prepareStatement(sql);) {
+            ps.setObject(1, accountContactAddress);
+            ps.setObject(2, accountContactName);
+            ps.setObject(3, accountContactMobile);
+            ps.setObject(4, accountContactId);
+            check = ps.executeUpdate();
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return check > 0;
+    }
+
+    public boolean delete(int accountContactId) {
+        int check = 0;
+        String sql = "DELETE FROM AccountContact Where accountContactId = ?";
+
+        try ( Connection con = SQLServerConnection.getConnection();  PreparedStatement ps = con.prepareStatement(sql);) {
+            ps.setObject(1, accountContactId);
             check = ps.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace(System.out);

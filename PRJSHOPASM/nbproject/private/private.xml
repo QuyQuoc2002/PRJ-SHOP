@@ -2,6 +2,44 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group/>
+        <group>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/web/assets/img/bg-smart-home-1.jpg</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/src/java/dao/AccountDetailDAO.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/web/otp-confirmation.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/web/assets/css/style.css</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/src/java/controller/SignInController.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/web/assets/lib/owlcarousel/owl.carousel.min.js</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/src/java/dao/CategoryDAO.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/src/java/dao/SizeDAO.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/src/java/controller/OTPConfirmationController.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/src/java/utils/Demo.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/web/assets/img/bg-smart-home-2.jpg</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/src/java/controller/SignUpController.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/web/profile.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/src/java/entity/AccountDetail.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/src/java/utils/Mail.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/src/java/const/const.properties</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/web/index.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/src/java/dao/AccountDAO.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/src/java/controller/ProfileController.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/src/java/entity/Category.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/src/java/entity/AccountContact.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/src/java/controller/IndexController.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/src/java/entity/Account.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/web/assets/img/bruce-mars.jpg</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/web/assets/img/product-5.jpg</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/web/assets/js/price.js</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/web/assets/js/setting-icon.js</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/web/assets/img/carousel-1.jpg</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/src/java/dao/AccountContactDAO.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/src/java/controller/PasswordCreationController.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/src/java/dao/ProductDAO.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/web/password-creation.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/web/shop.jsp</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/src/java/entity/Product.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/src/java/controller/LogoutController.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/src/java/controller/ShopController.java</file>
+            <file>file:/C:/Users/Admin/Documents/GitHub/PRJ-SHOP/PRJSHOPASM/web/product-detail.jsp</file>
+        </group>
     </open-files>
 </project-private>
