@@ -1,0 +1,136 @@
+input[type=file]::file-selector-button {
+  margin-right: 20px;
+  border: none;
+  background-image: linear-gradient(195deg, #EC407A 0%, #D81B60 100%);
+
+  padding: 10px 20px;
+  border-radius: 10px;
+  color: #fff;
+  cursor: pointer;
+  transition: background .2s ease-in-out;
+}
+
+input[type=file]::file-selector-button:hover {
+  background-image: linear-gradient(195deg, #EC407A 0%, #D81B60 100%);
+
+}
+
+.topright {
+  position: absolute;
+  top: 4px;
+  right: 20px;
+  font-size: 18px;
+}
+
+.panel-form {
+  border-radius: 12px;
+  background-color: #191C24;
+  /* border: 1px solid #2b303e; */
+  padding: 12px 10px 8px 10px;
+}
+
+.form-group fieldset {
+  border: 2px solid rgb(255, 0, 43);
+  border-radius: 10px;
+  padding: 0 12px 12px;
+  position: relative;
+}
+
+.form-group fieldset legend {
+  border-radius: 8px;
+  font-weight: 400;
+  color: rgb(255, 0, 43);
+  width: auto;
+  max-width: 100%;
+  font-size: 12px;
+  padding: 0 8px;
+  margin-bottom: 0;
+  float: none;
+}
+
+.form-group fieldset input {
+  background-color: transparent;
+  border: 0px solid transparent;
+}
+
+.form-group .form-control {
+  padding: 0;
+}
+
+.form-group .form-control:focus {
+  box-shadow: none;
+  background: transparent;
+  opacity: 1;
+}
+
+.form-group fieldset select {
+  width: 100%;
+  background-color: transparent;
+  border: none;
+}
+
+.form-group fieldset select option {
+  background-color: white;
+}
+
+.switch {
+  position: relative;
+  display: inline-block;
+  width: 60px;
+  height: 34px;
+}
+
+/* Hide default HTML checkbox */
+.switch input {
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+/* The slider */
+.slider {
+  position: absolute;
+  cursor: pointer;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ccc;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+.slider:before {
+  position: absolute;
+  content: "";
+  height: 26px;
+  width: 26px;
+  left: 4px;
+  bottom: 4px;
+  background-color: white;
+  -webkit-transition: .4s;
+  transition: .4s;
+}
+
+input:checked + .slider {
+  background-color: #2196F3;
+}
+
+input:focus + .slider {
+  box-shadow: 0 0 1px #2196F3;
+}
+
+input:checked + .slider:before {
+  -webkit-transform: translateX(26px);
+  -ms-transform: translateX(26px);
+  transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+  border-radius: 34px;
+}
+
+.slider.round:before {
+  border-radius: 50%;
+}
