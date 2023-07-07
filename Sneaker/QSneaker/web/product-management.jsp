@@ -155,56 +155,6 @@
                 </div>
             </div>
             <!-- Recent Sales End -->
-
-            <!-- Recent Sales Start -->
-            <div class="container-fluid pt-4 px-4">
-                <div class="bg-secondary text-center rounded p-4">
-                    <div class="d-flex align-items-center justify-content-between mb-4">
-                        <h6 class="mb-0">Recent Salse</h6>
-                        <a href="">Show All</a>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="table text-start align-middle table-bordered table-hover mb-0">
-                            <thead>
-                                <tr class="text-white">
-                                    <th scope="col">Image</th>
-                                    <th scope="col">Name</th>
-                                    <th scope="col">Price</th>
-                                    <th scope="col">Size</th>
-                                    <th scope="col">quantity</th>
-                                    <th scope="col">status</th>
-                                    <th scope="col">status</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <c:forEach items="${requestScope.lstProduct}" var="product" varStatus="i">
-                                    <tr>
-                                        <td style="padding: 0"><img style="width: 50px; height: 50px" src="assets/img/ImgProduct/${product.img}png" alt="alt"/></td>
-                                        <td>${product.name}</td>
-                                        <td>${product.unitPrice}</td>
-                                        <td>
-                                            <c:forEach items="${requestScope.lstSize}" var="size" varStatus="i">
-                                                <c:if test="${product.idSize eq size.id}">${size.sizeValue}</c:if>
-                                            </c:forEach>
-                                        </td>
-                                        <td>${product.quantity}</td>
-                                        <td>
-                                            <c:forEach items="${requestScope.lstStatus}" var="status" varStatus="i">
-                                                <c:if test="${product.idStatus eq status.id}">${status.name}</c:if>
-                                            </c:forEach>
-                                        </td>
-                                        <td><a class="btn btn-sm btn-primary" href="">Detail</a></td>
-                                    </tr>
-                                </c:forEach>
-
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <!-- Recent Sales End -->
-
-
             <!-- Widgets Start -->
             <!-- Footer Start -->
 <div class="container-fluid pt-4 px-4">
