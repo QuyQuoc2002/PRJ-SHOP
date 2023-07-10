@@ -24,7 +24,7 @@ import jakarta.servlet.http.HttpSession;
  *
  * @author DELL
  */
-@WebFilter(filterName = "UserFilter", urlPatterns = {"/profile"})
+@WebFilter(filterName = "UserFilter", urlPatterns = {"/profile", "/cart"})
 public class UserFilter implements Filter {
     
     private static final boolean debug = true;
@@ -108,10 +108,10 @@ public class UserFilter implements Filter {
 
         HttpSession session = req.getSession();
         Account account = (Account) session.getAttribute("accountCur");
-        if (account == null) {
-            resp.sendRedirect("error");
-        } else {
+        if (account != null && account.getRole().getRoleName().equals("USER")) {
             chain.doFilter(request, response);
+        } else {
+            resp.sendRedirect("error");
         }
     }
 

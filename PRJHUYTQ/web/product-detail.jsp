@@ -89,74 +89,77 @@
                             <small class="pt-1">(99 Reviews)</small>
                         </div>
                         <h3 class="font-weight-semi-bold mb-4">${requestScope.product.productPrice} VND</h3>
-<!--                        <div class="description">
-                            <p class="mb-4">Volup erat ipsum diam elitr rebum et dolor. Est nonumy elitr erat diam stet sit
-                                clita ea. Sanc ipsum et, labore clita lorem magna duo dolor no sea
-                                Nonumy</p>
-                            <ul>
-                                <li>Lorem Des</li>
-                                <li>Lorem Des</li>
-                                <li>Lorem Des</li>
-                            </ul>
-                        </div>-->
-                        <div class="d-flex mb-3">
-                            <strong class="text-dark mr-3">Sizes:</strong>
-                            <form>
+                        <!--                        <div class="description">
+                                                    <p class="mb-4">Volup erat ipsum diam elitr rebum et dolor. Est nonumy elitr erat diam stet sit
+                                                        clita ea. Sanc ipsum et, labore clita lorem magna duo dolor no sea
+                                                        Nonumy</p>
+                                                    <ul>
+                                                        <li>Lorem Des</li>
+                                                        <li>Lorem Des</li>
+                                                        <li>Lorem Des</li>
+                                                    </ul>
+                                                </div>-->
+                        <form action="product-detail" method="post">
+                            <input type="hidden" name="productId" value="${requestScope.product.productId}">
+                            <div class="d-flex mb-3">
+                                <strong class="text-dark mr-3">Sizes:</strong>
                                 <c:forEach items="${requestScope.lstProductSize}" var="s" varStatus="i">
                                     <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" class="custom-control-input" <c:if test="${i.count eq 1}">checked=""</c:if> id="s${i.count}" name="size">
+                                        <input name="orderDetailSizeValue" value="${s.size.sizeValue}" type="radio" class="custom-control-input" <c:if test="${i.count eq 1}">checked=""</c:if> id="s${i.count}">
                                         <label class="custom-control-label" for="s${i.count}">${s.size.sizeValue}</label>
                                     </div>
                                 </c:forEach>
-                            </form>
-                        </div>
-                        <!-- <div class="d-flex mb-4">
-                            <strong class="text-dark mr-3">Colors:</strong>
-                            <form>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="color-1" name="color">
-                                    <label class="custom-control-label" for="color-1">Black</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="color-2" name="color">
-                                    <label class="custom-control-label" for="color-2">White</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="color-3" name="color">
-                                    <label class="custom-control-label" for="color-3">Red</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="color-4" name="color">
-                                    <label class="custom-control-label" for="color-4">Blue</label>
-                                </div>
-                                <div class="custom-control custom-radio custom-control-inline">
-                                    <input type="radio" class="custom-control-input" id="color-5" name="color">
-                                    <label class="custom-control-label" for="color-5">Green</label>
-                                </div>
-                            </form>
-                        </div> -->
-                        <div class=" align-items-center mb-4 pt-2">
-                            <div class="d-flex">
-                                <div class="input-group quantity mr-3 mb-3" style="width: 130px;">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-primary btn-minus">
-                                            <i class="fa fa-minus"></i>
-                                        </button>
-                                    </div>
-                                    <input type="text" class="form-control bg-secondary border-0 text-center" value="1">
-                                    <div class="input-group-btn">
-                                        <button class="btn btn-primary btn-plus">
-                                            <i class="fa fa-plus"></i>
-                                        </button>
-                                    </div>
-                                </div>
-                                <div class="d-flex align-items-center justify-content-center mb-3">
-                                    800 available product
-                                </div>
                             </div>
-                            <button class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To
-                                Cart</button>
-                        </div>
+                            <!-- <div class="d-flex mb-4">
+                                <strong class="text-dark mr-3">Colors:</strong>
+                                <form>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input" id="color-1" name="color">
+                                        <label class="custom-control-label" for="color-1">Black</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input" id="color-2" name="color">
+                                        <label class="custom-control-label" for="color-2">White</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input" id="color-3" name="color">
+                                        <label class="custom-control-label" for="color-3">Red</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input" id="color-4" name="color">
+                                        <label class="custom-control-label" for="color-4">Blue</label>
+                                    </div>
+                                    <div class="custom-control custom-radio custom-control-inline">
+                                        <input type="radio" class="custom-control-input" id="color-5" name="color">
+                                        <label class="custom-control-label" for="color-5">Green</label>
+                                    </div>
+                                </form>
+                            </div> -->
+                            <c:if test="${sessionScope.accountCur != null}">
+                                <div class=" align-items-center mb-4 pt-2">
+                                    <div class="d-flex">
+                                        <div class="input-group quantity mr-3 mb-3" style="width: 130px;">
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-primary btn-minus">
+                                                    <i class="fa fa-minus"></i>
+                                                </button>
+                                            </div>
+                                            <input name="orderDetailQuantity" type="text" class="form-control bg-secondary border-0 text-center" value="1">
+                                            <div class="input-group-btn">
+                                                <button type="button" class="btn btn-primary btn-plus">
+                                                    <i class="fa fa-plus"></i>
+                                                </button>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex align-items-center justify-content-center mb-3">
+                                            800 available product
+                                        </div>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary px-3"><i class="fa fa-shopping-cart mr-1"></i> Add To
+                                        Cart</button>
+                                </div>
+                            </c:if>
+                        </form>
                         <!-- <div class="d-flex pt-2">
                             <strong class="text-dark mr-2">Share on:</strong>
                             <div class="d-inline-flex">
@@ -343,7 +346,7 @@
 
 
         <!-- Footer Start -->
-            <%@include file="component/footer-shop.jsp" %>
+        <%@include file="component/footer-shop.jsp" %>
         <!-- Footer End -->
 
 

@@ -32,7 +32,6 @@ public class ProductSizeDAO {
                 + "	s.sizeValue \n"
                 + "from ProductSize ps \n"
                 + "	join Size s On ps.sizeId = s.sizeId where ps.productId = ?";//
-        System.out.println(sql);
         try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
             ps.setObject(1, productId);
             ResultSet rs = ps.executeQuery();
