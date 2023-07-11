@@ -5,6 +5,7 @@
 package controller;
 
 import dao.CategoryDAO;
+import entity.Cart;
 import entity.Category;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -13,6 +14,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -39,7 +41,7 @@ public class CartController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet CartController</title>");            
+            out.println("<title>Servlet CartController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet CartController at " + request.getContextPath() + "</h1>");
@@ -60,9 +62,16 @@ public class CartController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        List<Cart> lstCart = (List<Cart>) session.getAttribute("lstCart");
         CategoryDAO categoryDAO = new CategoryDAO();
         List<Category> lstCategory = categoryDAO.getAll();
         request.setAttribute("lstCategory", lstCategory);
+        int totalPrice = 0;
+        for (Cart c : lstCart) {
+            totalPrice += c.getOrderDetailPriceProduct() * c.getOrderDetailQuantity();
+        }
+        request.setAttribute("totalPrice", totalPrice);
         request.getRequestDispatcher("cart.jsp").forward(request, response);
     }
 

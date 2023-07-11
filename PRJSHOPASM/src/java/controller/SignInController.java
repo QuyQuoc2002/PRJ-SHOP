@@ -8,6 +8,7 @@ import dao.AccountDAO;
 import dao.AccountDetailDAO;
 import entity.Account;
 import entity.AccountDetail;
+import entity.Cart;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -17,6 +18,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 
 /**
  *
@@ -88,6 +90,7 @@ public class SignInController extends HttpServlet {
                 session.setAttribute("accountCur", account);
                 AccountDetail accountDetail = accountDetailDAO.getOne(account.getAccountId());
                 session.setAttribute("accountDetail", accountDetail);
+                session.setAttribute("lstCart", new ArrayList<Cart>());
                 response.sendRedirect("/PRJSHOPASM");
                 return;
             }
@@ -122,6 +125,8 @@ public class SignInController extends HttpServlet {
             session.setAttribute("accountCur", account);
             AccountDetail accountDetail = accountDetailDAO.getOne(account.getAccountId());
             session.setAttribute("accountDetail", accountDetail);
+
+            session.setAttribute("lstCart", new ArrayList<Cart>());
             if (isRemeberMe) {
                 Cookie cookieUsername = new Cookie(REMEMBER_ME_COOKIE_USERNAME, username);
                 cookieUsername.setMaxAge(REMEMBER_ME_COOKIE_MAX_AGE);

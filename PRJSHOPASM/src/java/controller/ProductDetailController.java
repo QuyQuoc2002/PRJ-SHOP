@@ -7,6 +7,7 @@ package controller;
 import dao.ProductDAO;
 import dao.ProductImgDetailDAO;
 import dao.ProductSizeDAO;
+import entity.Cart;
 import entity.Product;
 import entity.ProductImgDetail;
 import entity.ProductSize;
@@ -17,6 +18,7 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -43,7 +45,7 @@ public class ProductDetailController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet ProductDetailController</title>");            
+            out.println("<title>Servlet ProductDetailController</title>");
             out.println("</head>");
             out.println("<body>");
             out.println("<h1>Servlet ProductDetailController at " + request.getContextPath() + "</h1>");
@@ -64,16 +66,22 @@ public class ProductDetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        List<Cart> lstCart = (List<Cart>) session.getAttribute("lstCart");
         ProductDAO productDAO = new ProductDAO();
         ProductImgDetailDAO productImgDetailDAO = new ProductImgDetailDAO();
         ProductSizeDAO productSizeDAO = new ProductSizeDAO();
-        
+
         int productId = Integer.parseInt(request.getParameter("productId"));
         Product product = productDAO.getOne(productId);
         List<ProductImgDetail> lstProductImgDetail = productImgDetailDAO.getAll(productId);
         List<ProductSize> lstProductSize = productSizeDAO.getAll(productId);
-        List<Product>lstRandProduct = productDAO.getRandByCategoryId(6, product.getCategoryId(), productId);
-        
+        List<Product> lstRandProduct = productDAO.getRandByCategoryId(6, product.getCategoryId(), productId);
+        int totalPrice = 0;
+        for (Cart c : lstCart) {
+            totalPrice += c.getOrderDetailPriceProduct() * c.getOrderDetailQuantity();
+        }
+request.setAttribute("totalPrice", totalPrice);
         request.setAttribute("product", product);
         request.setAttribute("lstRandProduct", lstRandProduct);
         request.setAttribute("lstProductImgDetail", lstProductImgDetail);
@@ -92,7 +100,39 @@ public class ProductDetailController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        List<Cart> lstCart = (List<Cart>) session.getAttribute("lstCart");
+        int productId = Integer.parseInt(request.getParameter("productId"));
+        int orderDetailQuantity = Integer.parseInt(request.getParameter("orderDetailQuantity"));
+        String orderDetailSizeValue = request.getParameter("orderDetailSizeValue");
+        String orderDetailProductName = request.getParameter("orderDetailProductName");
+        String orderDetailProductImg = request.getParameter("orderDetailProductImg");
+        int orderDetailPriceProduct = Integer.parseInt(request.getParameter("orderDetailPriceProduct"));
+        int index = getOneCart(lstCart, productId, orderDetailSizeValue);
+        if (index == -1) {
+            Cart cart = Cart.builder()
+                    .orderDetailPriceProduct(orderDetailPriceProduct)
+                    .orderDetailProductImg(orderDetailProductImg)
+                    .orderDetailProductName(orderDetailProductName)
+                    .orderDetailQuantity(orderDetailQuantity)
+                    .orderDetailSizeValue(orderDetailSizeValue)
+                    .productId(productId)
+                    .build();
+            lstCart.add(cart);
+        } else {
+            lstCart.get(index).setOrderDetailQuantity(orderDetailQuantity + lstCart.get(index).getOrderDetailQuantity());
+        }
+        response.sendRedirect("product-detail?productId=" + productId);
+
+    }
+
+    private int getOneCart(List<Cart> lstCart, int productId, String orderDetailSizeValue) {
+        for (int i = 0; i < lstCart.size(); i++) {
+            if (lstCart.get(i).getProductId() == productId && lstCart.get(i).getOrderDetailSizeValue().equals(orderDetailSizeValue)) {
+                return i;
+            }
+        }
+        return -1;
     }
 
     /**
