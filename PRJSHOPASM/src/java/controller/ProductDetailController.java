@@ -66,8 +66,7 @@ public class ProductDetailController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        List<Cart> lstCart = (List<Cart>) session.getAttribute("lstCart");
+
         ProductDAO productDAO = new ProductDAO();
         ProductImgDetailDAO productImgDetailDAO = new ProductImgDetailDAO();
         ProductSizeDAO productSizeDAO = new ProductSizeDAO();
@@ -77,11 +76,7 @@ public class ProductDetailController extends HttpServlet {
         List<ProductImgDetail> lstProductImgDetail = productImgDetailDAO.getAll(productId);
         List<ProductSize> lstProductSize = productSizeDAO.getAll(productId);
         List<Product> lstRandProduct = productDAO.getRandByCategoryId(6, product.getCategoryId(), productId);
-        int totalPrice = 0;
-        for (Cart c : lstCart) {
-            totalPrice += c.getOrderDetailPriceProduct() * c.getOrderDetailQuantity();
-        }
-request.setAttribute("totalPrice", totalPrice);
+
         request.setAttribute("product", product);
         request.setAttribute("lstRandProduct", lstRandProduct);
         request.setAttribute("lstProductImgDetail", lstProductImgDetail);
