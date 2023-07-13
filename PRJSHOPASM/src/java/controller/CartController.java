@@ -86,7 +86,13 @@ public class CartController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        List<Cart> lstCart = (List<Cart>) session.getAttribute("lstCart");
+        String orderDetailQuantities[] = request.getParameterValues("orderDetailQuantity");
+        for (int i = 0; i < orderDetailQuantities.length; i++) {
+            lstCart.get(i).setOrderDetailQuantity(Integer.parseInt(orderDetailQuantities[i]));
+        }
+        response.sendRedirect("cart");
     }
 
     /**

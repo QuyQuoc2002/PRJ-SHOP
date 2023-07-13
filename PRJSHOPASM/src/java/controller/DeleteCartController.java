@@ -4,36 +4,23 @@
  */
 package controller;
 
-import dao.AccountDAO;
-import dao.AccountDetailDAO;
-import dao.CategoryDAO;
-import dao.ProductDAO;
-import entity.Account;
-import entity.AccountDetail;
 import entity.Cart;
-import entity.Category;
-import entity.Product;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
-import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
-import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
- * @author DELL
+ * @author Admin
  */
-@WebServlet(name = "IndexController", urlPatterns = {""})
-public class IndexController extends HttpServlet {
-
-    private static final String REMEMBER_ME_COOKIE_USERNAME = "rememberMeUsername";
-    private static final String REMEMBER_ME_COOKIE_PASSWORD = "rememberMePasword";
+@WebServlet(name = "DeleteCartController", urlPatterns = {"/delete-cart"})
+public class DeleteCartController extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -52,10 +39,10 @@ public class IndexController extends HttpServlet {
             out.println("<!DOCTYPE html>");
             out.println("<html>");
             out.println("<head>");
-            out.println("<title>Servlet IndexController</title>");
+            out.println("<title>Servlet DeleteCartController</title>");            
             out.println("</head>");
             out.println("<body>");
-            out.println("<h1>Servlet IndexController at " + request.getContextPath() + "</h1>");
+            out.println("<h1>Servlet DeleteCartController at " + request.getContextPath() + "</h1>");
             out.println("</body>");
             out.println("</html>");
         }
@@ -73,43 +60,12 @@ public class IndexController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        AccountDAO accountDAO = new AccountDAO();
-        CategoryDAO categoryDAO = new CategoryDAO();
-        ProductDAO productDAO = new ProductDAO();
-        AccountDetailDAO accountDetailDAO = new AccountDetailDAO();
-
-        Cookie[] cookies = request.getCookies();
-        String username = null;
-        String password = null;
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals(REMEMBER_ME_COOKIE_USERNAME)) {
-                    username = cookie.getValue();
-                }
-                if (cookie.getName().equals(REMEMBER_ME_COOKIE_PASSWORD)) {
-                    password = cookie.getValue();
-                }
-            }
-            Account account = accountDAO.authenticate(username, password);
-            if (account != null) {
-                session.setAttribute("accountCur", account);
-                if (session.getAttribute("lstCart") == null) {
-                    session.setAttribute("lstCart", new ArrayList<Cart>());
-                }
-                AccountDetail accountDetail = accountDetailDAO.getOne(account.getAccountId());
-                session.setAttribute("accountDetail", accountDetail);
-            }
-        }
-
-        List<Category> lstCategory = categoryDAO.getAll();
-        List<Product> lstProductFeatured = productDAO.getAllByFeatured();
-        List<Product> lstProductRecent = productDAO.getAllByRecent();
-
-        request.setAttribute("lstCategory", lstCategory);
-        request.setAttribute("lstProductFeatured", lstProductFeatured);
-        request.setAttribute("lstProductRecent", lstProductRecent);
-        request.getRequestDispatcher("index.jsp").forward(request, response);
+                HttpSession session = request.getSession();
+        List<Cart> lstCart = (List<Cart>) session.getAttribute("lstCart");
+        int index = Integer.parseInt(request.getParameter("index"));
+        System.out.println(index);
+        lstCart.remove(index);
+        response.sendRedirect("cart");
     }
 
     /**

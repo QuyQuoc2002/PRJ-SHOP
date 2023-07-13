@@ -43,6 +43,29 @@ public class AccountContactDAO {
         }
         return null;
     }
+    
+        public AccountContact getOne(int accountContactId) {
+        String sql = "select * from AccountContact where accountContactId = ? ";
+
+        try ( Connection connection = SQLServerConnection.getConnection();  PreparedStatement ps = connection.prepareStatement(sql);) {
+            ps.setObject(1, accountContactId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                AccountContact obj = AccountContact.builder()
+                        .accountContactId(rs.getInt("accountContactId"))
+                        .accountId(rs.getInt("accountId"))
+                        .accountContactAddress(rs.getString("accountContactAddress"))
+                        .accountContactName(rs.getString("accountContactName"))
+                        .accountContactMobile(rs.getString("accountContactMobile"))
+                        .accountContactDefault(rs.getBoolean("accountContactDefault"))
+                        .build();
+                return obj;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace(System.out);
+        }
+        return null;
+    }
 
     public boolean setAccountContactDefaut(int accountContactId) {
         int check = 0;

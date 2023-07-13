@@ -6,10 +6,13 @@ package controller;
 
 import dao.AccountContactDAO;
 import dao.CategoryDAO;
+import dao.OrderDAO;
+import dao.OrderDetailDAO;
 import entity.Account;
 import entity.AccountContact;
 import entity.Cart;
 import entity.Category;
+import entity.Order;
 import java.io.IOException;
 import java.io.PrintWriter;
 import jakarta.servlet.ServletException;
@@ -18,6 +21,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -93,7 +97,28 @@ public class CheckoutController extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        processRequest(request, response);
+        HttpSession session = request.getSession();
+        AccountContactDAO accountContactDAO = new AccountContactDAO();
+        OrderDAO orderDAO = new OrderDAO();
+        OrderDetailDAO orderDetailDAO = new OrderDetailDAO();
+        Account account = (Account) session.getAttribute("accountCur");
+        List<Cart> lstCart = (List<Cart>) session.getAttribute("lstCart");
+        
+        int accountContactId = Integer.parseInt(request.getParameter("accountContactId"));
+        AccountContact accountContact = accountContactDAO.getOne(accountContactId);
+        Order order = Order.builder()
+                .account(account)
+                .orderNameContact(accountContact.getAccountContactName())
+                .orderPhoneContact(accountContact.getAccountContactMobile())
+                .orderAddressContact(accountContact.getAccountContactAddress())
+                .build();
+        int orderId = orderDAO.add(order);
+        for (Cart c : lstCart) {
+            orderDetailDAO.add(c, orderId);
+        }
+        lstCart = new ArrayList<>();
+        session.setAttribute("lstCart", lstCart);
+        response.sendRedirect("thank.jsp");
     }
 
     /**
