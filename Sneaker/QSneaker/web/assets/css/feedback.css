@@ -70,13 +70,13 @@ article a .icon {
 }
 
 /* using the has() relational pseudo selector to update our custom properties */
-article:has(:hover, :focus) {
+/*article:has(:hover, :focus) {
   --img-scale: 1.1;
   --title-color: #28666e;
   --link-icon-translate: 0;
   --link-icon-opacity: 1;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
-}
+}*/
 
 
 /************************ 
@@ -108,7 +108,7 @@ Generic layout (demo looks)
   }
 }
 
-@container card (min-width: 380px) {
+/*@container card (min-width: 380px) {
   .article-wrapper {
     display: grid;
     grid-template-columns: 100px 1fr;
@@ -130,7 +130,7 @@ Generic layout (demo looks)
     aspect-ratio: 1;
     object-fit: cover;
   }
-}
+}*/
 
 .sr-only:not(:focus):not(:active) {
   clip: rect(0 0 0 0);
